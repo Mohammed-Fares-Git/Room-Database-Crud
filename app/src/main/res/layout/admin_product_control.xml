@@ -18,7 +18,7 @@
             android:id="@+id/admin_controle_product_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Product name !"
+            android:text="@string/product_name"
             android:textSize="35sp"
             android:gravity="center"
             android:textStyle="bold"
@@ -36,7 +36,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="price"/>
+            android:text="@string/price"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="images"/>
+            android:text="@string/images"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/admin_controle_product_rv_images"
             android:layout_width="wrap_content"
@@ -68,7 +68,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="sizes"/>
+            android:text="@string/sizes"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/admin_controle_product_rv_sizes"
             android:layout_width="wrap_content"
@@ -78,7 +78,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="colores"/>
+            android:text="@string/colors"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/admin_controle_product_rv_colors"
             android:layout_width="wrap_content"
@@ -89,7 +89,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="brand"/>
+            android:text="@string/brand"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="type"/>
+            android:text="@string/type"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

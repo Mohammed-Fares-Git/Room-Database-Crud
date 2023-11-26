@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="product_name">اسم المنتج!</string>
+    <string name="price">السعر</string>
+    <string name="images">الصور</string>
+    <string name="sizes">الأحجام</string>
+    <string name="colors">الألوان</string>
+    <string name="brand">العلامة التجارية</string>
+    <string name="type">النوع</string>
+</resources>

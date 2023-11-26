@@ -2,4 +2,15 @@
     <string name="app_name">Ecomerce_Project</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="product_name">Product name !!</string>
+    <string name="price">Price</string>
+    <string name="images">Images</string>
+    <string name="sizes">Sizes</string>
+    <string name="colors">Colors</string>
+    <string name="brand">Brand</string>
+    <string name="type">Type</string>
+
+
 </resources>
