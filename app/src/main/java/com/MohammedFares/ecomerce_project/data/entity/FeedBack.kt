@@ -18,11 +18,12 @@ import androidx.room.PrimaryKey
         onDelete = ForeignKey.CASCADE
     )
 ])
-data class Review(
+data class FeedBack(
     @PrimaryKey(autoGenerate = true)
     val reviewId: Long = 0,
     val clientId: Long,
     val productId: Long,
-    val reviewText: String,
-    val rating: Int
+    val feedBackText: String,
+    val rating: Int = 0,
+    val feedBackType: String
 )
