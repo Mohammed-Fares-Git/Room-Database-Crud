@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/authentification_graph">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/authentification_graph"
+    app:startDestination="@id/client_login">
 
+    <fragment
+        android:id="@+id/client_login"
+        android:name="com.MohammedFares.ecomerce_project.presentation.auth.client_login"
+        android:label="client_login"
+        tools:layout="@layout/client_login" >
+        <action
+            android:id="@+id/action_client_login_to_client_signin"
+            app:destination="@id/client_signin" />
+        <action
+            android:id="@+id/action_client_login_to_admin_login"
+            app:destination="@id/admin_login" />
+    </fragment>
+    <fragment
+        android:id="@+id/client_signin"
+        android:name="com.MohammedFares.ecomerce_project.presentation.auth.client_signin"
+        android:label="client_signin"
+        tools:layout="@layout/client_signin" >
+        <action
+            android:id="@+id/action_client_signin_to_client_login"
+            app:destination="@id/client_login" />
+    </fragment>
+    <fragment
+        android:id="@+id/admin_login"
+        android:name="com.MohammedFares.ecomerce_project.presentation.auth.admin_login"
+        android:label="admin_login"
+        tools:layout="@layout/admin_login" >
+        <action
+            android:id="@+id/action_admin_login_to_client_login"
+            app:destination="@id/client_login" />
+    </fragment>
 </navigation>
