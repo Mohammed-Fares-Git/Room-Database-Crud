@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Ecomerce_Project"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".presentation.login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
