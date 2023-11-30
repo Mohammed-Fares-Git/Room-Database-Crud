@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <corners
+        android:radius="@dimen/auth_form_raduis"/>
+
+    <solid
+        android:color="@color/auth_form_bg_color"/>
+
+    <stroke
+        android:width="@dimen/strok_normal_with"
+        android:color="@color/white"/>
+
+</shape>

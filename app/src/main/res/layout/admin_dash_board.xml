@@ -5,10 +5,9 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.admin.AdminDashBoard"
-    android:padding="20dp"
     android:theme="@style/AdminThem"
     android:orientation="vertical"
-    android:background="@drawable/admina_background">
+    android:gravity="center">
 
 
     <TextView
@@ -17,9 +16,9 @@
         android:layout_height="wrap_content"
         android:text="Administrator name"
         android:textStyle="bold"
-        android:textSize="35sp"
+        android:textSize="30sp"
         android:gravity="center"
-        android:padding="15dp"
+        android:padding="5dp"
         android:layout_marginBottom="30dp" />
 
     <GridLayout
@@ -30,9 +29,9 @@
             android:id="@+id/admin_dash_produts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="fill"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:layout_gravity="fill"
             app:cardElevation="8dp"
             app:cardCornerRadius="8dp"
             android:layout_margin="10dp"
@@ -52,15 +51,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Products"/>
+                    android:text="@string/admin_dashboard_products"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="fill"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:layout_gravity="fill"
             app:cardElevation="8dp"
             app:cardCornerRadius="8dp"
             android:layout_margin="10dp"
@@ -80,15 +79,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Products"/>
+                    android:text="@string/admin_dashboard_products"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="fill"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:layout_gravity="fill"
             app:cardElevation="8dp"
             app:cardCornerRadius="8dp"
             android:layout_margin="10dp"
@@ -108,15 +107,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Products"/>
+                    android:text="@string/admin_dashboard_products"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="fill"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:layout_gravity="fill"
             app:cardElevation="8dp"
             app:cardCornerRadius="8dp"
             android:layout_margin="10dp"
@@ -136,15 +135,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Products"/>
+                    android:text="@string/admin_dashboard_products"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="fill"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:layout_gravity="fill"
             app:cardElevation="8dp"
             app:cardCornerRadius="8dp"
             android:layout_margin="10dp"
@@ -164,15 +163,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Products"/>
+                    android:text="@string/admin_dashboard_products"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="fill"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:layout_gravity="fill"
             app:cardElevation="8dp"
             app:cardCornerRadius="8dp"
             android:layout_margin="10dp"
@@ -192,7 +191,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Products"/>
+                    android:text="@string/admin_dashboard_products"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </GridLayout>

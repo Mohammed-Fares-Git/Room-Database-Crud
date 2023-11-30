@@ -7,4 +7,28 @@
     <string name="colors">الألوان</string>
     <string name="brand">العلامة التجارية</string>
     <string name="type">النوع</string>
+
+    <string name="administratiom">الإدارة</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="email">البريد الإلكتروني</string>
+    <string name="pass">كلمة المرور</string>
+    <string name="f_pass">هل نسيت كلمة المرور؟</string>
+    <string name="signin">تسجيل الدخول</string>
+    <string name="c_n_a">إنشاء حساب جديد؟</string>
+
+    <string name="signup">تسجيل الدخول</string>
+    <string name="first_name_hint">الاسم الأول</string>
+    <string name="forget_password">هل نسيت كلمة المرور؟</string>
+    <string name="last_name_hint">الاسم الأخير</string>
+    <string name="email_hint">البريد الإلكتروني</string>
+    <string name="password_hint">كلمة المرور</string>
+    <string name="confirm_password_hint">تأكيد كلمة المرور</string>
+    <string name="female">أنثى</string>
+    <string name="male">ذكر</string>
+    <string name="signup_btn">تسجيل الدخول</string>
+
+
+    <string name="admin_dashboard_products">المنتجات</string>
+    <string name="no_products_found">عذرًا! لا توجد منتجات.</string>
+    <string name="unknown_problem">عذرًا! حدث خطأ ما.</string>
 </resources>

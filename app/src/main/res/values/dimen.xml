@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="min_text_size" type="style">20sp</item>
+    <item name="min_text_size" type="dimen">20sp</item>
+    <item name="inputs_width" type="dimen">300dp</item>
+    <item name="auth_form_raduis" type="dimen">10dp</item>
+    <item name="butoon_raduis" type="dimen">8dp</item>
+    <item name="strok_normal_with" type="dimen">1dp</item>
+    <dimen name="strok_pressed_with">2dp</dimen>
+
 </resources>

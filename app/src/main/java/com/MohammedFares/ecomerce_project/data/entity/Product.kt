@@ -16,12 +16,6 @@ import androidx.room.PrimaryKey
         parentColumns = ["typeId"],
         childColumns = ["typeId"],
         onDelete = ForeignKey.CASCADE
-    ),
-    ForeignKey(
-        entity = ProductColor::class,
-        parentColumns = ["colorId"],
-        childColumns = ["colorId"],
-        onDelete = ForeignKey.CASCADE
     )
 ])
 data class Product(
@@ -30,7 +24,7 @@ data class Product(
     val productName: String,
     val price: Double,
     val quantity: Int,
-    val brandId: Long,
-    val colorId: Long,
-    val typeId: Long
+    val mainImage: String,
+    val brandId: Long? = null,
+    val typeId: Long? = null
 )

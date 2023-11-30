@@ -7,32 +7,45 @@
 
     <fragment
         android:id="@+id/client_login"
-        android:name="com.MohammedFares.ecomerce_project.presentation.auth.client_login"
+        android:name="com.MohammedFares.ecomerce_project.presentation.auth.ClientLogin"
         android:label="client_login"
         tools:layout="@layout/client_login" >
         <action
             android:id="@+id/action_client_login_to_client_signin"
-            app:destination="@id/client_signin" />
+            app:destination="@id/client_signin"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            />
         <action
             android:id="@+id/action_client_login_to_admin_login"
-            app:destination="@id/admin_login" />
+            app:destination="@id/admin_login"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+     />
     </fragment>
     <fragment
         android:id="@+id/client_signin"
-        android:name="com.MohammedFares.ecomerce_project.presentation.auth.client_signin"
+        android:name="com.MohammedFares.ecomerce_project.presentation.auth.ClientSignin"
         android:label="client_signin"
         tools:layout="@layout/client_signin" >
+
         <action
             android:id="@+id/action_client_signin_to_client_login"
-            app:destination="@id/client_login" />
+            app:destination="@id/client_login"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"/>
     </fragment>
     <fragment
         android:id="@+id/admin_login"
-        android:name="com.MohammedFares.ecomerce_project.presentation.auth.admin_login"
+        android:name="com.MohammedFares.ecomerce_project.presentation.auth.AdminLogin"
         android:label="admin_login"
         tools:layout="@layout/admin_login" >
+
         <action
             android:id="@+id/action_admin_login_to_client_login"
-            app:destination="@id/client_login" />
+            app:destination="@id/client_login"
+
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"/>
     </fragment>
 </navigation>

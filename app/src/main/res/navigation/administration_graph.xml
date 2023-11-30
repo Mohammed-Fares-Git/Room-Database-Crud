@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/administration_graph.xml"
+    app:startDestination="@id/adminDashBoard">
+
+    <fragment
+        android:id="@+id/adminDashBoard"
+        android:name="com.MohammedFares.ecomerce_project.presentation.admin.AdminDashBoard"
+        android:label="admin_dash_board"
+        tools:layout="@layout/admin_dash_board" >
+        <action
+            android:id="@+id/action_adminDashBoard_to_productsForAdmin"
+            app:destination="@id/productsForAdmin"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"/>
+    </fragment>
+    <fragment
+        android:id="@+id/adminProductControl"
+        android:name="com.MohammedFares.ecomerce_project.presentation.admin.AdminProductControl"
+        android:label="admin_product_control"
+        tools:layout="@layout/admin_product_control" />
+    <fragment
+        android:id="@+id/productsForAdmin"
+        android:name="com.MohammedFares.ecomerce_project.presentation.admin.ProductsForAdmin"
+        android:label="products_for_admin"
+        tools:layout="@layout/products_for_admin" >
+        <action
+            android:id="@+id/action_productsForAdmin_to_adminProductControl"
+            app:destination="@id/adminProductControl"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"/>
+    </fragment>
+</navigation>

@@ -7,14 +7,11 @@ import com.MohammedFares.ecomerce_project.data.entity.Admin
 
 @Dao
 interface AdminDao {
-    @Query("SELECT * FROM admins")
-    suspend fun getAllAdmins(): List<Admin>
 
-    @Query("SELECT * FROM admins")
+    @Query("SELECT * FROM admins WHERE email = :email AND password = :password")
     suspend fun getAllAdmins(email: String, password: String): List<Admin>
-
-    @Query("SELECT * FROM admins WHERE adminId = :adminId")
-    suspend fun getAdminById(adminId: Long): Admin?
+    @Query("SELECT * FROM admins WHERE email = :email AND password = :password")
+    suspend fun getAdmin(email: String, password: String): Admin
 
     @Insert
     suspend fun insertAdmin(admin: Admin)

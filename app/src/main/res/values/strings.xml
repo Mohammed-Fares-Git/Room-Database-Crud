@@ -1,7 +1,26 @@
 <resources>
     <string name="app_name">Ecomerce_Project</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    //auth
+    <string name="administratiom">Administration</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="pass">Password</string>
+    <string name="f_pass">Forget password ?</string>
+    <string name="signin">Sign In</string>
+    <string name="c_n_a">create New Account ?</string>
+
+    <string name="signup">Sign Up</string>
+    <string name="first_name_hint">First name</string>
+    <string name="forget_password">Forget password?</string>
+    <string name="last_name_hint">Last name</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="confirm_password_hint">Confirm password</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+    <string name="signup_btn">Sign Up</string>
 
 
     <string name="product_name">Product name !!</string>
@@ -11,6 +30,12 @@
     <string name="colors">Colors</string>
     <string name="brand">Brand</string>
     <string name="type">Type</string>
+
+
+    <string name="admin_dashboard_products">Products</string>
+    <string name="no_products_found">Oops! No products found.</string>
+    <string name="unknown_problem">Oops! Something went wrong.</string>
+
 
 
 </resources>

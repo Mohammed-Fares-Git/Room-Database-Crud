@@ -1,14 +1,246 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.auth.client_signin">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.auth.ClientSignin"
+    android:padding="15dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/auth_forms_bg"
+        android:padding="30dp">
 
-</FrameLayout>
+
+
+
+
+
+        <TextView
+            android:id="@+id/usertype_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/lora_bold"
+            android:text="@string/signup"
+            android:textColor="@color/auth_form_text_color"
+            android:textSize="35sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+
+
+        <EditText
+            android:id="@+id/signup_first_name"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:drawableStart="@drawable/person_ic"
+            android:drawablePadding="10dp"
+            android:hint="@string/first_name_hint"
+            android:inputType="textEmailAddress"
+            android:paddingStart="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:singleLine="true"
+            android:textColor="@color/auth_form_text_color"
+            android:textColorHint="@color/hint_color" />
+        <TextView
+            android:id="@+id/first_name_feedback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Forget password?"
+            android:textColor="@color/error_text"
+            android:visibility="invisible"
+            />
+
+        <EditText
+            android:id="@+id/signup_last_name"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:drawableStart="@drawable/person_ic"
+            android:drawablePadding="10dp"
+            android:hint="@string/last_name_hint"
+            android:inputType="textEmailAddress"
+            android:paddingStart="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:singleLine="true"
+            android:textColor="@color/auth_form_text_color"
+            android:textColorHint="@color/hint_color" />
+        <TextView
+            android:id="@+id/last_name_feedback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Forget password?"
+            android:textColor="@color/error_text"
+            android:visibility="invisible"
+            />
+
+            <EditText
+                android:id="@+id/signup_email"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:drawableStart="@drawable/ic_email"
+                android:drawablePadding="10dp"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:singleLine="true"
+                android:textColor="@color/auth_form_text_color"
+                android:textColorHint="@color/hint_color" />
+            <TextView
+                android:id="@+id/email_feedback"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Forget password?"
+                android:textColor="@color/error_text"
+                android:visibility="invisible"
+                />
+
+
+            <EditText
+                android:id="@+id/signup_pass"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:drawableStart="@drawable/ic_lock"
+                android:drawablePadding="10dp"
+                android:hint="@string/pass"
+                android:inputType="textPassword"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:singleLine="true"
+                android:textColor="@color/auth_form_text_color"
+                android:textColorHint="@color/hint_color" />
+            <TextView
+                android:id="@+id/password_feedback"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Forget password?"
+                android:visibility="invisible"
+                android:textColor="@color/error_text" />
+
+        <EditText
+            android:id="@+id/signup_confirm_pass"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:drawableStart="@drawable/ic_lock"
+            android:drawablePadding="10dp"
+            android:hint="@string/confirm_password_hint"
+            android:inputType="textPassword"
+            android:paddingStart="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:singleLine="true"
+            android:textColor="@color/auth_form_text_color"
+            android:textColorHint="@color/hint_color" />
+        <TextView
+            android:id="@+id/password_confirm_feedback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Forget password?"
+            android:visibility="invisible"
+            android:textColor="@color/error_text" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginTop="10dp"
+
+            app:cardCornerRadius="@dimen/butoon_raduis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@android:color/transparent">
+
+            <RadioGroup
+                android:id="@+id/signup_sexe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/auth_btn_bg">
+                <RadioButton
+                    android:background="@drawable/rb_bg"
+                    android:gravity="center"
+                    android:button="@android:color/transparent"
+                    android:id="@+id/signup_rb_sex_f"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/female"
+                    android:buttonTint="@android:color/transparent"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:textSize="@dimen/min_text_size"
+                    android:textColor="@color/auth_form_text_color"/>
+                <RadioButton
+                    android:background="@drawable/rb_bg"
+                    android:gravity="center"
+                    android:id="@+id/signup_rb_sex_m"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/male"
+                    android:buttonTint="@android:color/transparent"
+                    android:layout_weight="1"
+                    android:button="@android:color/transparent"
+
+                    android:padding="10dp"
+                    android:textSize="@dimen/min_text_size"
+                    android:textColor="@color/auth_form_text_color"/>
+            </RadioGroup>
+        </androidx.cardview.widget.CardView>
+        <TextView
+            android:id="@+id/sexe_feedback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Forget password?"
+            android:visibility="invisible"
+            android:textColor="@color/error_text" />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/login_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/signup_btn"
+                android:textAlignment="center"
+                android:textColor="@color/auth_form_text_color"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/auth_btn_bg" />
+
+            <ProgressBar
+                android:id="@+id/login_progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
+                android:progressTint="@color/auth_form_text_color"
+                app:layout_constraintBottom_toTopOf="@+id/login_signup_btn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
+
+
+
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

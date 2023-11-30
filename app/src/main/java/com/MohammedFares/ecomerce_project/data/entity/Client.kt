@@ -13,5 +13,4 @@ data class Client(
     val password: String,
     val state: String,
     val gender: String
-    // Other fields you may want to add
 )

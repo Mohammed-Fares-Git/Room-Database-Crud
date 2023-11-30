@@ -8,12 +8,5 @@ import com.MohammedFares.ecomerce_project.data.entity.Client
 
 @Dao
 interface ClientDao {
-    @Query("SELECT * FROM clients")
-    suspend fun getAllClients(): List<Client>
 
-    @Query("SELECT * FROM clients WHERE clientId = :clientId")
-    suspend fun getClientById(clientId: Long): Client?
-
-    @Insert
-    suspend fun insertClient(client: Client)
 }
