@@ -29,10 +29,10 @@
             android:id="@+id/admin_controle_product_main_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/livreuse"/>
+            android:src="@drawable/livreuse"
+            android:layout_marginBottom="15dp"/>
 
 
-        <include layout="@layout/edit_button" android:id="@+id/admin_controle_edit_product_main_image"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,37 +56,94 @@
 
             <include layout="@layout/edit_button" android:id="@+id/admin_controle_edit_product_price"/>
         </LinearLayout>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/images"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/admin_controle_product_rv_images"
-            android:layout_width="wrap_content"
+
+
+
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="horizontal"/>
-        <include layout="@layout/edit_button" android:id="@+id/admin_controle_edit_product_images"/>
+            android:text="@string/images"/>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_weight="1"
+                    android:id="@+id/admin_controle_product_rv_images"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="horizontal"
+                    android:orientation="horizontal"/>
+                <include layout="@layout/add_button" android:id="@+id/admin_controle_edit_product_images"
+                    />
+
+            </LinearLayout>
+        </HorizontalScrollView>
+
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/sizes"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/admin_controle_product_rv_sizes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scrollbars="horizontal"/>
-        <include layout="@layout/edit_button" android:id="@+id/admin_controle_edit_product_sizes"/>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+
+                android:gravity="center">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/admin_controle_product_rv_sizes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="horizontal"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"/>
+                <include layout="@layout/add_button" android:id="@+id/admin_controle_edit_product_sizes"/>
+
+            </LinearLayout>
+        </HorizontalScrollView>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/colors"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/admin_controle_product_rv_colors"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scrollbars="horizontal"
-            android:layout_marginBottom="20dp"/>
-        <include layout="@layout/edit_button" android:id="@+id/admin_controle_edit_product_colors"/>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/admin_controle_product_rv_colors"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scrollbars="horizontal"
+                    android:orientation="horizontal"/>
+                <include layout="@layout/add_button" android:id="@+id/admin_controle_edit_product_colors"/>
+
+            </LinearLayout>
+        </HorizontalScrollView>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

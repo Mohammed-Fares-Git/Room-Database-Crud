@@ -20,7 +20,14 @@
         android:id="@+id/adminProductControl"
         android:name="com.MohammedFares.ecomerce_project.presentation.admin.AdminProductControl"
         android:label="admin_product_control"
-        tools:layout="@layout/admin_product_control" />
+        tools:layout="@layout/admin_product_control">
+        <argument
+            android:name="productId"
+            app:argType="long"
+            android:defaultValue="0L"
+        />
+
+    </fragment>
     <fragment
         android:id="@+id/productsForAdmin"
         android:name="com.MohammedFares.ecomerce_project.presentation.admin.ProductsForAdmin"

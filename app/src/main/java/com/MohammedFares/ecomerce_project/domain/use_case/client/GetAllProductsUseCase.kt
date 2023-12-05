@@ -1,4 +1,4 @@
-package com.MohammedFares.ecomerce_project.domain.use_case.admin
+package com.MohammedFares.ecomerce_project.domain.use_case.client
 
 import android.content.Context
 import com.MohammedFares.ecomerce_project.R
@@ -17,13 +17,10 @@ class GetAllProductsUseCase @Inject constructor(
     @ApplicationContext val ctx: Context,
     val repository: AdminRepository
 ) {
-    operator fun invoke(): Flow<Resource<List<ProductExpendable>>> = flow {
+    operator fun invoke(): Flow<Resource<List<ProductWithDetails>>> = flow {
         emit(Resource.Loading())
-        delay(500L)
         try {
-            val products = repository.getAllProducts().map {
-                ProductExpendable(it)
-            }
+            val products = repository.getAllProducts()
             if (products.isNotEmpty()) {
                 emit(Resource.Success(products))
             } else {

@@ -1,4 +1,4 @@
-package com.MohammedFares.ecomerce_project.presentation.viewmodel.auth.admin
+package com.MohammedFares.ecomerce_project.presentation.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AdminAuthViewModel @Inject constructor(
+class AdminLoginViewModel @Inject constructor(
     val auth: AdminAuthUseCase
 ): ViewModel() {
     private val _authStateFlow: MutableStateFlow<Resource<Admin>> = MutableStateFlow(Resource.Empty())

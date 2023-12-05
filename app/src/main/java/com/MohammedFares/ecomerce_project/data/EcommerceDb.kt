@@ -15,6 +15,7 @@ import com.MohammedFares.ecomerce_project.data.entity.Client
 import com.MohammedFares.ecomerce_project.data.entity.Product
 import com.MohammedFares.ecomerce_project.data.entity.ProductBrand
 import com.MohammedFares.ecomerce_project.data.entity.ProductColor
+import com.MohammedFares.ecomerce_project.data.entity.ProductLike
 import com.MohammedFares.ecomerce_project.data.entity.ProductSize
 import com.MohammedFares.ecomerce_project.data.entity.ProductSubImage
 import com.MohammedFares.ecomerce_project.data.entity.ProductType
@@ -27,7 +28,8 @@ import com.MohammedFares.ecomerce_project.data.entity.ProductType
     Product::class,
     ProductSize::class,
     ProductSubImage::class,
-    ProductColor::class
+    ProductColor::class,
+    ProductLike::class
 ], version = 1, exportSchema = false)
 abstract class EcommerceDb: RoomDatabase() {
     abstract fun adminDao(): AdminDao

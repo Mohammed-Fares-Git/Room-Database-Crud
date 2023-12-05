@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.MohammedFares.ecomerce_project.data.entity.ProductColor
 import com.MohammedFares.ecomerce_project.databinding.AdminColorItemBinding
 
-class AdminColorAdapter: ListAdapter<ProductColor, AdminColorAdapter.AdminColorViewHolder>(ColorDiffCallback()) {
+class AdminColorAdapter() : ListAdapter<ProductColor, AdminColorAdapter.AdminColorViewHolder>(ColorDiffCallback()) {
 
     class AdminColorViewHolder(val binding: AdminColorItemBinding): ViewHolder(binding.root)
 

@@ -4,9 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.MohammedFares.ecomerce_project.R
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
-
+@AndroidEntryPoint
 class ClientMian : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,7 +17,7 @@ class ClientMian : AppCompatActivity() {
 
         val loginState = false
 
-        if (!loginState) {
+        if (loginState) {
             startActivity(Intent(this@ClientMian,LoginMain::class.java))
         }
     }

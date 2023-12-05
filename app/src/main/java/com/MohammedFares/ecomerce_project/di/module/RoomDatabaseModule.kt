@@ -11,6 +11,7 @@ import com.MohammedFares.ecomerce_project.data.dao.ClientDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductBrandDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductColorDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductDao
+import com.MohammedFares.ecomerce_project.data.dao.ProductImagesDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductTypeDao
 import com.MohammedFares.ecomerce_project.data.entity.Admin
 import com.MohammedFares.ecomerce_project.data.entity.Product
@@ -77,8 +78,8 @@ object RoomDatabaseModule {
                         productDao.insertProduct(Product(productId = 1,productName = "product1", price = 1987.0, quantity = 1000, brandId = 1, typeId = 1, mainImage = "https://img-lcwaikiki.mncdn.com/mnresize/480/-/pim/productimages/20232/6484061/v2/l_20232-w32862z8-lcc-78-56-91-178_a.jpg"))
                         productDao.insertProduct(Product(productId = 2,productName = "product2", price = 8686.0, quantity = 1000, brandId = 2, typeId = 2, mainImage = "https://img-lcwaikiki.mncdn.com/mnresize/480/-/pim/productimages/20232/6470811/v1/l_20232-w31845z8-s8f-99-75-93-185_a.jpg"))
                         productDao.insertProduct(Product(productId = 3,productName = "product3", price = 665.0, quantity = 1000, brandId = 1, typeId = 3, mainImage = "https://img-lcwaikiki.mncdn.com/mnresize/480/-/pim/productimages/20232/6466928/v1/l_20232-w31507z8-l8n-103-82-86-187_a.jpg"))
-                        productDao.insertProduct(Product(productId = 4,productName = "product4", price = 231.0, quantity = 1000, brandId = 2, typeId = 2, mainImage = "https://img-lcwaikiki.mncdn.com/mnresize/480/-/pim/productimages/20232/6841875/v1/l_20232-w3h441z8-dnj-80-63-90-175_a.jpg"))
-                        productDao.insertProduct(Product(productId = 5,productName = "product5", price = 1000.0, quantity = 1000, brandId = 1, typeId = 1, mainImage = "https://img-lcwaikiki.mncdn.com/mnresize/480/-/pim/productimages/20232/6664452/v1/l_20232-w3ck07z8-fmp-75-61-88-178_a.jpg"))
+                        productDao.insertProduct(Product(productId = 4,productName = "product4", price = 231.0, quantity = 1000, brandId = 2, typeId = 2, mainImage = "https://img-lcwaikiki.mncdn.com/mnresize/480/-/pim/productimages/20232/6664452/v1/l_20232-w3ck07z8-fmp-75-61-88-178_a.jpg"))
+                        productDao.insertProduct(Product(productId = 5,productName = "product5", price = 1000.0, quantity = 1000, brandId = 1, typeId = 1, mainImage = "https://img-lcwaikiki.mncdn.com/mnresize/480/-/pim/productimages/20232/6841875/v1/l_20232-w3h441z8-dnj-80-63-90-175_a.jpg"))
 
                         adminDao.insertAdmin(Admin(firstname = "John", lastname = "Doe", email = "john@doe.com", password = "123"))
                         adminDao.insertAdmin(Admin(firstname = "Jane", lastname = "Doe", email = "jane@doe.com", password = "123"))
@@ -227,6 +228,12 @@ object RoomDatabaseModule {
     @Provides
     fun provideClientDao(ecommerceDb: EcommerceDb): ClientDao {
         return ecommerceDb.clientDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideImageDao(ecommerceDb: EcommerceDb): ProductImagesDao {
+        return ecommerceDb.imagetDao()
     }
 
     @Singleton

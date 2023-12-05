@@ -13,7 +13,7 @@ import com.MohammedFares.ecomerce_project.domain.model.ProductExpendable
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.qualifiers.ApplicationContext
 
-class AdminProductItemAdapter(val ctx: Context, val products: List<ProductExpendable>):
+class AdminProductItemAdapter(val ctx: Context, val products: List<ProductExpendable>,val onClickSeeMore: (id: Long) -> Unit):
     RecyclerView.Adapter<AdminProductItemAdapter.AdminProductItemViewHolder>() {
     inner class AdminProductItemViewHolder (val binding: AdminProductItemDetailsBinding): ViewHolder(binding.root)
 
@@ -65,6 +65,10 @@ class AdminProductItemAdapter(val ctx: Context, val products: List<ProductExpend
         holder.binding.root.setOnClickListener {
             product.isEpended = !product.isEpended
             notifyItemChanged(position)
+        }
+
+        holder.binding.seeMore.setOnClickListener {
+            onClickSeeMore(product.productWithDetails.product.productId)
         }
 
 

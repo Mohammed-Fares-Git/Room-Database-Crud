@@ -14,7 +14,7 @@ import com.MohammedFares.ecomerce_project.databinding.AdminProductImageItemBindi
 import com.MohammedFares.ecomerce_project.databinding.AdminSizeItemBinding
 import com.squareup.picasso.Picasso
 
-class AdminSubImagesAdapter: ListAdapter<ProductSubImage, AdminSubImagesAdapter.AdminSubImageViewHolder>(SubImagesDiffCallback()) {
+class AdminSubImagesAdapter(var onClickImage: (image: ProductSubImage) -> Unit = {}, var onLongClickImage: (image: ProductSubImage) -> Unit = {}): ListAdapter<ProductSubImage, AdminSubImagesAdapter.AdminSubImageViewHolder>(SubImagesDiffCallback()) {
 
     class AdminSubImageViewHolder(val binding: AdminProductImageItemBinding): ViewHolder(binding.root)
 
@@ -22,14 +22,14 @@ class AdminSubImagesAdapter: ListAdapter<ProductSubImage, AdminSubImagesAdapter.
     class SubImagesDiffCallback : DiffUtil.ItemCallback<ProductSubImage>() {
 
         override fun areItemsTheSame(oldItem: ProductSubImage, newItem: ProductSubImage): Boolean {
-            return oldItem==newItem
+            return oldItem == newItem
         }
 
         override fun areContentsTheSame(
             oldItem: ProductSubImage,
             newItem: ProductSubImage
         ): Boolean {
-            return oldItem.imageUrl == newItem.imageUrl
+            return oldItem.imageUrl == newItem.imageUrl && oldItem.imageId == newItem.imageId
         }
 
     }
@@ -41,6 +41,14 @@ class AdminSubImagesAdapter: ListAdapter<ProductSubImage, AdminSubImagesAdapter.
 
     override fun onBindViewHolder(holder: AdminSubImageViewHolder, position: Int) {
         val image = getItem(position).imageUrl
+
+        holder.binding.root.setOnClickListener {
+            onClickImage(getItem(position))
+        }
+        holder.binding.root.setOnLongClickListener {
+            onLongClickImage(getItem(position))
+            return@setOnLongClickListener true
+        }
 
         Picasso.get().load(image).resize(150,200).placeholder(R.drawable.no_connectio_50).into(holder.binding.productSubImage)
     }

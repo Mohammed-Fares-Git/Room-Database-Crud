@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -61,8 +62,8 @@ dependencies {
 
 
     // dagger hilt
-    implementation("com.google.dagger:hilt-android:2.44")
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
+    implementation("com.google.dagger:hilt-android:2.49")
+    kapt("com.google.dagger:hilt-android-compiler:2.49")
 
 
     // room database
@@ -70,7 +71,6 @@ dependencies {
 
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
-
     // To use Kotlin annotation processing tool (kapt)
     kapt("androidx.room:room-compiler:$room_version")
 
@@ -83,8 +83,9 @@ dependencies {
 
     implementation("com.squareup.picasso:picasso:2.8")
 
+    implementation("androidx.hilt:hilt-navigation-fragment:1.0.0")
+
+
+
 }
 
-kapt {
-    correctErrorTypes = true
-}

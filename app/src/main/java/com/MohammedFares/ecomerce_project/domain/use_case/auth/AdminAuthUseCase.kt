@@ -17,7 +17,7 @@ class AdminAuthUseCase @Inject constructor(
 ) {
     operator fun invoke(firstName: String, lastName: String): Flow<Resource<Admin>> = flow {
         emit(Resource.Loading())
-        delay(2500L)
+        delay(500L)
         try {
             val admin = authRepository.adminAuth(firstName,lastName)
             if (admin != null) {

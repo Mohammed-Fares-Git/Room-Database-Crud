@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.MohammedFares.ecomerce_project.R
 import com.MohammedFares.ecomerce_project.comon.Resource
@@ -27,6 +29,8 @@ class ProductsForAdmin : Fragment() {
     ): View? {
         binding = ProductsForAdminBinding.inflate(inflater,container,false)
 
+        val action = ProductsForAdminDirections.actionProductsForAdminToAdminProductControl(1)
+
         viewLifecycleOwner.lifecycleScope.launch {
             productsForAdminViewModel.prodctsStateFlow.collect {
                 when (it) {
@@ -39,8 +43,9 @@ class ProductsForAdmin : Fragment() {
                         showProgressBar()
                     }
                     is Resource.Success -> {
-                        Log.e("fares", it.data.toString())
+                        Log.e("fareskkk", it.data.toString())
                         showList(it.data!!)
+                        Toast.makeText(requireContext(), it.data.toString(), Toast.LENGTH_SHORT).show()
 
                     }
                 }
@@ -62,8 +67,12 @@ class ProductsForAdmin : Fragment() {
         binding.loading.visibility = View.GONE
     }
     private fun showList(p:List<ProductExpendable>) {
+        binding.adminProductsList.setHasFixedSize(true)
         binding.adminProductsList.layoutManager = LinearLayoutManager(this.requireContext())
-        binding.adminProductsList.adapter = AdminProductItemAdapter(this.requireContext(),p)
+        binding.adminProductsList.adapter = AdminProductItemAdapter(this.requireContext(),p) {
+            val action = ProductsForAdminDirections.actionProductsForAdminToAdminProductControl(it)
+            Navigation.findNavController(binding.root).navigate(action)
+        }
         binding.adminProductsList.visibility = View.VISIBLE
         binding.errMsg.visibility = View.GONE
         binding.loading.visibility = View.GONE

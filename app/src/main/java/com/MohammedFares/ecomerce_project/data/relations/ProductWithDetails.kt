@@ -5,6 +5,7 @@ import androidx.room.Relation
 import com.MohammedFares.ecomerce_project.data.entity.Product
 import com.MohammedFares.ecomerce_project.data.entity.ProductBrand
 import com.MohammedFares.ecomerce_project.data.entity.ProductColor
+import com.MohammedFares.ecomerce_project.data.entity.ProductLike
 import com.MohammedFares.ecomerce_project.data.entity.ProductSize
 import com.MohammedFares.ecomerce_project.data.entity.ProductSubImage
 import com.MohammedFares.ecomerce_project.data.entity.ProductType
@@ -37,4 +38,10 @@ data class ProductWithDetails(
         entityColumn = "productId"
     )
     val subImages: List<ProductSubImage>,
+
+    @Relation(
+        parentColumn = "productId",
+        entityColumn = "productId"
+    )
+    val likes: List<ProductLike>
 )

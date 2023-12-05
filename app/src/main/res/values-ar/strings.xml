@@ -31,4 +31,11 @@
     <string name="admin_dashboard_products">المنتجات</string>
     <string name="no_products_found">عذرًا! لا توجد منتجات.</string>
     <string name="unknown_problem">عذرًا! حدث خطأ ما.</string>
+
+    <string name="see_more">رؤية المزيد</string>
+
+
+    <string name="action_add">إضافة</string>
+    <string name="action_edit">تعديل</string>
+    <string name="action_delete">حذف</string>
 </resources>

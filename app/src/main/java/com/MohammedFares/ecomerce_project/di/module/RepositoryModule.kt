@@ -5,6 +5,7 @@ import com.MohammedFares.ecomerce_project.data.dao.ClientDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductBrandDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductColorDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductDao
+import com.MohammedFares.ecomerce_project.data.dao.ProductImagesDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductTypeDao
 import com.MohammedFares.ecomerce_project.data.entity.ProductType
 import com.MohammedFares.ecomerce_project.data.repository.AdminRepositoryImpl
@@ -28,8 +29,8 @@ object RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideAdminRepository(productDao: ProductDao, productBrandDao: ProductBrandDao, productColorDao: ProductColorDao, productType: ProductTypeDao, clientDao: ClientDao): AdminRepository {
-        return AdminRepositoryImpl(productDao,productType,productBrandDao,productColorDao,clientDao)
+    fun provideAdminRepository(productDao: ProductDao, productBrandDao: ProductBrandDao, productColorDao: ProductColorDao, productType: ProductTypeDao, clientDao: ClientDao, imagesDao: ProductImagesDao): AdminRepository {
+        return AdminRepositoryImpl(productDao,productType,productBrandDao,productColorDao,clientDao,imagesDao)
     }
 
 }

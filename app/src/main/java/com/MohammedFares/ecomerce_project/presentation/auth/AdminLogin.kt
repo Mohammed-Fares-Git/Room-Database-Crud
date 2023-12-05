@@ -10,15 +10,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.MohammedFares.ecomerce_project.R
 import com.MohammedFares.ecomerce_project.auth.AuthManager
 import com.MohammedFares.ecomerce_project.comon.Constantes
 import com.MohammedFares.ecomerce_project.comon.Resource
 import com.MohammedFares.ecomerce_project.databinding.AdminLoginBinding
 import com.MohammedFares.ecomerce_project.presentation.AdminMain
-import com.MohammedFares.ecomerce_project.presentation.viewmodel.auth.admin.AdminAuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 
@@ -28,7 +25,7 @@ class AdminLogin : Fragment() {
     private lateinit var binding: AdminLoginBinding
     private lateinit var authManager: AuthManager
 
-    val authViewModel: AdminAuthViewModel by viewModels()
+    val authViewModel: AdminLoginViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

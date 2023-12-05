@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="15dp"
+    android:gravity="center"
+    android:background="@drawable/auth_forms_bg"
+    >
+
+
+    <ImageView
+        android:id="@+id/dialog_image"
+        android:layout_width="300dp"
+        android:layout_height="400dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/upload_ic"/>
+
+    <EditText
+        android:maxLines="1"
+        android:id="@+id/dialog_et_image_url"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="name"
+        android:textColor="#fff"
+        android:textSize="25sp"
+        android:layout_marginBottom="10dp"
+        android:padding="15dp"
+        />
+
+    <include layout="@layout/edit_button" android:id="@+id/dialog_edit_btn" android:visibility="gone"/>
+    <include layout="@layout/add_button" android:id="@+id/dialog_add_btn"/>
+
+
+
+
+
+</LinearLayout>

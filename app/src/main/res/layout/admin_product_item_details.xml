@@ -127,7 +127,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 >
-                <include layout="@layout/edit_button"/>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/see_more"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/see_more"
+                    android:padding="15dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/see_more_btn"/>
             </LinearLayout>
 
         </LinearLayout>
