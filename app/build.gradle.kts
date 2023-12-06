@@ -85,6 +85,9 @@ dependencies {
 
     implementation("androidx.hilt:hilt-navigation-fragment:1.0.0")
 
+    
+    implementation("com.github.denzcoskun:ImageSlideshow:0.1.2")
+
 
 
 }

@@ -10,8 +10,10 @@ import com.MohammedFares.ecomerce_project.data.dao.ProductTypeDao
 import com.MohammedFares.ecomerce_project.data.entity.ProductType
 import com.MohammedFares.ecomerce_project.data.repository.AdminRepositoryImpl
 import com.MohammedFares.ecomerce_project.data.repository.AuthRepositoryImpl
+import com.MohammedFares.ecomerce_project.data.repository.ClientRepositoryImpl
 import com.MohammedFares.ecomerce_project.domain.repository.AdminRepository
 import com.MohammedFares.ecomerce_project.domain.repository.AuthRepository
+import com.MohammedFares.ecomerce_project.domain.repository.ClientRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,6 +33,12 @@ object RepositoryModule {
     @Provides
     fun provideAdminRepository(productDao: ProductDao, productBrandDao: ProductBrandDao, productColorDao: ProductColorDao, productType: ProductTypeDao, clientDao: ClientDao, imagesDao: ProductImagesDao): AdminRepository {
         return AdminRepositoryImpl(productDao,productType,productBrandDao,productColorDao,clientDao,imagesDao)
+    }
+
+    @Singleton
+    @Provides
+    fun provideClientRepository(productDao: ProductDao, productType: ProductTypeDao): ClientRepository {
+        return ClientRepositoryImpl(productDao,productType)
     }
 
 }

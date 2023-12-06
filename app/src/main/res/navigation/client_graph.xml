@@ -10,4 +10,19 @@
         android:name="com.MohammedFares.ecomerce_project.presentation.client.home_page"
         android:label="client_home_page"
         tools:layout="@layout/client_home_page" />
+    <fragment
+        android:id="@+id/favoritesPage"
+        android:name="com.MohammedFares.ecomerce_project.presentation.client.FavoritesPage"
+        android:label="favorites_page"
+        tools:layout="@layout/favorites_page" />
+    <fragment
+        android:id="@+id/cartPage"
+        android:name="com.MohammedFares.ecomerce_project.presentation.client.CartPage"
+        android:label="cart_page"
+        tools:layout="@layout/cart_page" />
+    <fragment
+        android:id="@+id/profilePage"
+        android:name="com.MohammedFares.ecomerce_project.presentation.client.ProfilePage"
+        android:label="profile_page"
+        tools:layout="@layout/profile_page" />
 </navigation>

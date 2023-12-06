@@ -11,7 +11,7 @@ import com.MohammedFares.ecomerce_project.data.relations.ProductWithDetails
 import com.MohammedFares.ecomerce_project.databinding.ClientProductItemBinding
 import com.squareup.picasso.Picasso
 
-class ProductsAdapter: ListAdapter<ProductWithDetails,ProductsAdapter.ProductsViewHolder>(ProductDiffCallback()) {
+class ProductsAdapter (val action: (id: Long)->Unit = {}): ListAdapter<ProductWithDetails,ProductsAdapter.ProductsViewHolder>(ProductDiffCallback()) {
     inner class ProductsViewHolder(val binding: ClientProductItemBinding): ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductsViewHolder {
@@ -24,6 +24,9 @@ class ProductsAdapter: ListAdapter<ProductWithDetails,ProductsAdapter.ProductsVi
         Picasso.get().load(product.product.mainImage).into(holder.binding.productImage)
         holder.binding.productName.text = product.product.productName
         holder.binding.productPrice.text = "${ product.product.price }"
+        holder.binding.root.setOnClickListener {
+            action(product.product.productId)
+        }
     }
 
 

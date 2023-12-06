@@ -38,4 +38,11 @@
     <string name="action_add">إضافة</string>
     <string name="action_edit">تعديل</string>
     <string name="action_delete">حذف</string>
+
+
+
+    <string name="home_title">الرئيسية</string>
+    <string name="profile_title">الملف الشخصي</string>
+    <string name="cart_title">السلة</string>
+    <string name="favorite_title">المفضلة</string>
 </resources>
