@@ -9,14 +9,27 @@
     >
 
 
-    <include layout="@layout/admin_size_item" android:id="@+id/sive_tv"/>
+    <include layout="@layout/admin_color_item" android:id="@+id/color_lay_out"/>
 
     <EditText
         android:maxLines="1"
-        android:id="@+id/dialog_et_image_url"
+        android:id="@+id/dialog_et_color_name"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:hint="@string/size"
+        android:hint="@string/color_name_hint"
+        android:textColorHint="#777"
+        android:textColor="#fff"
+        android:textSize="25sp"
+        android:layout_marginBottom="10dp"
+        android:padding="15dp"
+        />
+
+    <EditText
+        android:maxLines="1"
+        android:id="@+id/dialog_et_color_hex"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/hex_code_hint"
         android:textColorHint="#777"
         android:textColor="#fff"
         android:textSize="25sp"

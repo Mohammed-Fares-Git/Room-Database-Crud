@@ -9,4 +9,9 @@ import com.MohammedFares.ecomerce_project.data.entity.Client
 @Dao
 interface ClientDao {
 
+    @Insert
+    suspend fun insert (client: Client) : Long
+
+    @Query("SELECT * FROM clients WHERE email = :email AND password = :password")
+    suspend fun getClient(email: String, password: String): Client
 }

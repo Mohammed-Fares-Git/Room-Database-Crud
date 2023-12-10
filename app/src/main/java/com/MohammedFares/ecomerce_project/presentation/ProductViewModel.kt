@@ -6,6 +6,7 @@ import com.MohammedFares.ecomerce_project.comon.Resource
 import com.MohammedFares.ecomerce_project.data.entity.Admin
 import com.MohammedFares.ecomerce_project.data.relations.ProductWithDetails
 import com.MohammedFares.ecomerce_project.domain.model.ProductExpendable
+import com.MohammedFares.ecomerce_project.domain.model.ProductScreenState
 import com.MohammedFares.ecomerce_project.domain.use_case.admin.GetAllProductsUseCase
 import com.MohammedFares.ecomerce_project.domain.use_case.auth.AdminAuthUseCase
 import com.MohammedFares.ecomerce_project.domain.use_case.comon.GetProductByIdUseCase
@@ -24,14 +25,29 @@ class ProductViewModel @Inject constructor(
 
 
 
-    private val _stateStateFlow: MutableStateFlow<Resource<List<ProductExpendable>>> = MutableStateFlow(Resource.Empty())
-    val stateStateFlow: StateFlow<Resource<List<ProductExpendable>>> = _stateStateFlow
+    private val _productScreenState: MutableStateFlow<ProductScreenState> = MutableStateFlow(ProductScreenState())
+    val productScreenState: StateFlow<ProductScreenState> = _productScreenState
     fun getProduct(id: Long) {
         viewModelScope.launch {
             getProdct(id).collect {
                 _productsStateFlow.value = it
             }
         }
+    }
+
+    fun selectColor(id: Long) {
+        viewModelScope.launch {
+            _productScreenState.value = productScreenState.value.copy(
+                selctedColor = id
+            )
+        }
+
+    }
+
+    fun selectSize(id: Long) {
+        _productScreenState.value = productScreenState.value.copy(
+            selectedSize = id
+        )
     }
 
 

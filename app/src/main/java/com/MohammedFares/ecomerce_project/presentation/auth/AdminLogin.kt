@@ -49,7 +49,7 @@ class AdminLogin : Fragment() {
                     is Resource.Success -> {
                         hideProgressBar()
                         Toast.makeText(requireContext(),"${it.data?.firstname} ${it.data?.lastname}", Toast.LENGTH_LONG).show()
-                        authManager.login("${it.data!!.firstname} ${it.data!!.lastname}",it.data!!.email,Constantes.ADMIN_KEY)
+                        authManager.login("${it.data!!.firstname} ${it.data!!.lastname}",it.data.adminId,it.data!!.email,Constantes.ADMIN_KEY)
                         startActivity(Intent(requireActivity(),AdminMain::class.java))
                     }
                 }

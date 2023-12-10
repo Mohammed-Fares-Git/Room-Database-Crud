@@ -80,7 +80,6 @@
                 android:gravity="center">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:layout_weight="1"
                     android:id="@+id/admin_controle_product_rv_images"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

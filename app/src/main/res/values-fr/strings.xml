@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Projet E-commerce</string>
+
+    <!-- Auth -->
+    <string name="administratiom">Administration</string>
+    <string name="login">Connexion</string>
+    <string name="email">E-mail</string>
+    <string name="pass">Mot de passe</string>
+    <string name="f_pass">Mot de passe oublié ?</string>
+    <string name="signin">Se connecter</string>
+    <string name="c_n_a">Créer un nouveau compte ?</string>
+
+    <string name="signup">S\'inscrire</string>
+    <string name="first_name_hint">Prénom</string>
+    <string name="forget_password">Mot de passe oublié ?</string>
+    <string name="last_name_hint">Nom de famille</string>
+    <string name="email_hint">E-mail</string>
+    <string name="password_hint">Mot de passe</string>
+    <string name="confirm_password_hint">Confirmer le mot de passe</string>
+    <string name="female">Femme</string>
+    <string name="male">Homme</string>
+    <string name="signup_btn">S\'inscrire</string>
+
+    <string name="product_name">Nom du produit !!</string>
+    <string name="price">Prix</string>
+    <string name="images">Images</string>
+    <string name="sizes">Tailles</string>
+    <string name="size">Taille</string>
+    <string name="colors">Couleurs</string>
+    <string name="brand">Marque</string>
+    <string name="type">Type</string>
+
+    <string name="admin_dashboard_products">Produits</string>
+    <string name="no_products_found">Oups ! Aucun produit trouvé.</string>
+    <string name="unknown_problem">Oups ! Quelque chose s\'est mal passé.</string>
+
+    <string name="see_more">Voir plus</string>
+
+    <string name="action_add">Ajouter</string>
+    <string name="action_edit">Modifier</string>
+    <string name="action_delete">Supprimer</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Bonjour fragment vide</string>
+
+    <string name="home_title">Accueil</string>
+    <string name="profile_title">Profil</string>
+    <string name="cart_title">Panier</string>
+    <string name="favorite_title">Favoris</string>
+
+    <string name="image_url_hint">URL de l\'image</string>
+
+    <string name="color_name_hint">Nom de la couleur</string>
+    <string name="hex_code_hint">Code hexadécimal</string>
+    <string name="invalid_hex_code">Code hexadécimal invalide</string>
+    <string name="provide_valid_url">Fournir une URL valide</string>
+
+
+</resources>

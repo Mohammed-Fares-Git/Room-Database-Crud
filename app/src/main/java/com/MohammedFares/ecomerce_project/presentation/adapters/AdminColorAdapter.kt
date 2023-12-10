@@ -7,9 +7,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.MohammedFares.ecomerce_project.data.entity.ProductColor
+import com.MohammedFares.ecomerce_project.data.entity.ProductSize
 import com.MohammedFares.ecomerce_project.databinding.AdminColorItemBinding
 
-class AdminColorAdapter() : ListAdapter<ProductColor, AdminColorAdapter.AdminColorViewHolder>(ColorDiffCallback()) {
+class AdminColorAdapter(
+    var onClickColor: (color: ProductColor) -> Unit = {},
+    var onLongClickColor: (color: ProductColor) -> Unit = {}
+) : ListAdapter<ProductColor, AdminColorAdapter.AdminColorViewHolder>(ColorDiffCallback()) {
 
     class AdminColorViewHolder(val binding: AdminColorItemBinding): ViewHolder(binding.root)
 
@@ -26,6 +30,10 @@ class AdminColorAdapter() : ListAdapter<ProductColor, AdminColorAdapter.AdminCol
             holder.binding.colorHex.setBackgroundColor(Color.parseColor(color.colorHexCode))
         } catch (e: Exception) {
             holder.binding.colorHex.setBackgroundColor(Color.parseColor("#FFFFFFFF"))
+        }
+
+        holder.binding.root.setOnClickListener {
+            onClickColor(color)
         }
     }
     class ColorDiffCallback : DiffUtil.ItemCallback<ProductColor>() {

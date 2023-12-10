@@ -20,7 +20,7 @@
             android:id="@+id/size_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SL"
+            android:text="@string/size"
             android:textSize="@dimen/min_text_size"
             android:textColor="@color/auth_form_text_color"
             android:textStyle="bold"/>

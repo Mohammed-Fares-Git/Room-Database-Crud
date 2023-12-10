@@ -25,8 +25,8 @@ import javax.inject.Singleton
 object RepositoryModule {
     @Singleton
     @Provides
-    fun provideAuthRepository(adminDao: AdminDao): AuthRepository {
-        return AuthRepositoryImpl(adminDao)
+    fun provideAuthRepository(adminDao: AdminDao,clientDao: ClientDao): AuthRepository {
+        return AuthRepositoryImpl(adminDao,clientDao)
     }
 
     @Singleton

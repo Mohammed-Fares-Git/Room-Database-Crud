@@ -27,6 +27,7 @@
     <string name="price">Price</string>
     <string name="images">Images</string>
     <string name="sizes">Sizes</string>
+    <string name="size">Size</string>
     <string name="colors">Colors</string>
     <string name="brand">Brand</string>
     <string name="type">Type</string>
@@ -50,6 +51,16 @@
     <string name="profile_title">Profile</string>
     <string name="cart_title">Cart</string>
     <string name="favorite_title">Favorite</string>
+
+
+    <string name="image_url_hint">Image URL</string>
+
+    <string name="color_name_hint">Color Name</string>
+    <string name="hex_code_hint">Hex Code</string>
+
+    <string name="invalid_hex_code">Invalid hex code</string>
+    <string name="provide_valid_url">Provide valid URL</string>
+
 
 
 </resources>

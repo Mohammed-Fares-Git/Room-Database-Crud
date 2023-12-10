@@ -9,6 +9,7 @@
     android:layout_margin="5dp">
 
     <LinearLayout
+        android:id="@+id/size_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

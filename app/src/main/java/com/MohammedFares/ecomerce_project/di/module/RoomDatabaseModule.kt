@@ -14,6 +14,7 @@ import com.MohammedFares.ecomerce_project.data.dao.ProductDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductImagesDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductTypeDao
 import com.MohammedFares.ecomerce_project.data.entity.Admin
+import com.MohammedFares.ecomerce_project.data.entity.Client
 import com.MohammedFares.ecomerce_project.data.entity.Product
 import com.MohammedFares.ecomerce_project.data.entity.ProductBrand
 import com.MohammedFares.ecomerce_project.data.entity.ProductColor
@@ -60,7 +61,9 @@ object RoomDatabaseModule {
                         val imageDao = provideRoom(ctx).imagetDao()
 
 
-                        Log.e("fares", "start")
+
+
+                        clienDao.insert(Client(firstname = "Mohammed", lastname = "Fares", email =  "mohammed@fares.com", password = "123", gender = "h", state = "active"))
 
 
                         adminDao.insertAdmin(Admin(firstname = "Mohammed", lastname = "Fares", email =  "mohammed@fares.com", password = "123"))

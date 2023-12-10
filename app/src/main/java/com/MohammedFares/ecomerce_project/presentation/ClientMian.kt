@@ -6,12 +6,14 @@ import android.os.Bundle
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.MohammedFares.ecomerce_project.R
+import com.MohammedFares.ecomerce_project.auth.AuthManager
 import com.MohammedFares.ecomerce_project.databinding.ActivityClientMianBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 @AndroidEntryPoint
 class ClientMian : AppCompatActivity() {
+    private lateinit var authManager: AuthManager
     private lateinit var binding: ActivityClientMianBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,10 +25,14 @@ class ClientMian : AppCompatActivity() {
 
 
 
-        val loginState = false
+        authManager = AuthManager(this)
 
-        if (loginState) {
+        val loginState = authManager.isLoggedIn and authManager.isClientLoggedIn()
+
+
+        if (!loginState) {
             startActivity(Intent(this@ClientMian,LoginMain::class.java))
+            finish()
         }
 
 

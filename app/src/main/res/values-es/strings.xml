@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Proyecto de Comercio Electrónico</string>
+
+    <!-- Auth -->
+    <string name="administratiom">Administración</string>
+    <string name="login">Iniciar sesión</string>
+    <string name="email">Correo electrónico</string>
+    <string name="pass">Contraseña</string>
+    <string name="f_pass">¿Olvidaste la contraseña?</string>
+    <string name="signin">Iniciar sesión</string>
+    <string name="c_n_a">¿Crear una cuenta nueva?</string>
+
+    <string name="signup">Registrarse</string>
+    <string name="first_name_hint">Nombre</string>
+    <string name="forget_password">¿Olvidaste la contraseña?</string>
+    <string name="last_name_hint">Apellido</string>
+    <string name="email_hint">Correo electrónico</string>
+    <string name="password_hint">Contraseña</string>
+    <string name="confirm_password_hint">Confirmar contraseña</string>
+    <string name="female">Mujer</string>
+    <string name="male">Hombre</string>
+    <string name="signup_btn">Registrarse</string>
+
+    <string name="product_name">¡Nombre del producto!</string>
+    <string name="price">Precio</string>
+    <string name="images">Imágenes</string>
+    <string name="sizes">Tallas</string>
+    <string name="size">Talla</string>
+    <string name="colors">Colores</string>
+    <string name="brand">Marca</string>
+    <string name="type">Tipo</string>
+
+    <string name="admin_dashboard_products">Productos</string>
+    <string name="no_products_found">¡Oops! No se encontraron productos.</string>
+    <string name="unknown_problem">¡Oops! Algo salió mal.</string>
+
+    <string name="see_more">Ver más</string>
+
+    <string name="action_add">Agregar</string>
+    <string name="action_edit">Editar</string>
+    <string name="action_delete">Eliminar</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hola fragmento en blanco</string>
+
+    <string name="home_title">Inicio</string>
+    <string name="profile_title">Perfil</string>
+    <string name="cart_title">Carrito</string>
+    <string name="favorite_title">Favoritos</string>
+
+
+    <string name="image_url_hint">URL de la imagen</string>
+
+    <string name="color_name_hint">Nombre del color</string>
+    <string name="hex_code_hint">Código hexagonal</string>
+
+    <string name="invalid_hex_code">Código hexagonal no válido</string>
+    <string name="provide_valid_url">Fournir une URL valide</string>
+
+
+
+</resources>
