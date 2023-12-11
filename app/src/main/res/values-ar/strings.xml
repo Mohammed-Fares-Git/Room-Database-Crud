@@ -58,5 +58,10 @@
     <string name="invalid_hex_code">رمز هكس غير صالح</string>
     <string name="provide_valid_url">قدم رابط صحيح</string>
 
+    <string name="desc">الوصف</string>
+    <string name="quantity">الكمية</string>
+
+    <string name="moroccan_dirham_acronym">م.د</string>
+
 
 </resources>

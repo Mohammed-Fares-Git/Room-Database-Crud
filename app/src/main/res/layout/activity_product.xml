@@ -4,169 +4,163 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.ProductActivity"
     android:background="@color/white"
-    >
+    tools:context=".presentation.ProductActivity">
 
-
-    <RelativeLayout
-
-        android:id="@+id/slider_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        >
-
-        <com.denzcoskun.imageslider.ImageSlider
-            android:id="@+id/slider"
-            android:layout_width="match_parent"
-            android:layout_height="450dp"
-            app:iss_auto_cycle="true"
-            app:iss_period="1000"
-            app:iss_delay="1000"
-            app:iss_error_image="@drawable/main_bg"
-            app:iss_placeholder="@drawable/main_bg_2"
-            app:iss_text_align="CENTER"/>
-
-        <ImageView
-            android:layout_margin="15dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/arrow_back_24"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"/>
-        <ImageView
-            android:layout_margin="15dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/favorite_ic"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"/>
-
-
-    </RelativeLayout>
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/check_out"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/slider_container"
-        app:layout_constraintBottom_toTopOf="@id/check_out">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+
+                android:id="@+id/slider_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.denzcoskun.imageslider.ImageSlider
+                    android:id="@+id/slider"
+                    android:layout_width="match_parent"
+                    android:layout_height="450dp"
+                    app:iss_auto_cycle="true"
+                    app:iss_delay="1000"
+                    app:iss_error_image="@drawable/main_bg"
+                    app:iss_period="1000"
+                    app:iss_placeholder="@drawable/main_bg_2"
+                    app:iss_text_align="CENTER" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_margin="15dp"
+                    android:src="@drawable/arrow_back_24" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="15dp"
+                    android:src="@drawable/favorite_ic" />
+
+
+            </RelativeLayout>
+
             <LinearLayout
                 android:id="@+id/color_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
-                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:gravity="center"
-                >
+                app:layout_constraintTop_toBottomOf="@id/slider_container">
 
                 <TextView
                     android:id="@+id/product_name"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Product name"
-                    android:textSize="25sp"/>
+                    android:textColor="@color/black"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/colors_rv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_weight="1"
-                    tools:listitem="@layout/product_color_item"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/product_color_item" />
 
 
             </LinearLayout>
 
             <TextView
                 android:id="@+id/product_desc"
-                android:textSize="15sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:gravity="start"
                 android:text="hjsq  qkxjbjqx qxqjbxkjqhxkqjx  xxkxbkqxjq x x xkj ax a x akxazb xx axkzax x ak x ak xakx akxkakx ax  x  aa"
+                android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/color_container"
-                android:gravity="start"
-                />
+                app:layout_constraintTop_toBottomOf="@id/color_container" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/sizes_rv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
-                tools:listitem="@layout/product_size_item"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/product_desc"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                tools:listitem="@layout/product_size_item" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
-
-
 
 
     <LinearLayout
         android:id="@+id/check_out"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:orientation="horizontal"
-        >
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start|center"
+            android:layout_margin="10dp"
             android:layout_weight="1"
             android:text="1899 £"
-            android:textSize="25sp"
             android:textColor="@color/black"
-            android:textStyle="bold"
-            android:layout_margin="10dp"
-            />
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
         <androidx.cardview.widget.CardView
-            android:layout_margin="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="40dp"
-            app:cardBackgroundColor="@color/black"
-            app:cardElevation="8dp"
             android:layout_gravity="center_vertical|end"
-            >
+            android:layout_margin="10dp"
+            app:cardBackgroundColor="@color/black"
+            app:cardCornerRadius="40dp"
+            app:cardElevation="8dp">
 
             <androidx.appcompat.widget.AppCompatButton
-                android:padding="15dp"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textAllCaps="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
+                android:padding="15dp"
                 android:text="Add to Cart"
-                android:textColor="@color/white"/>
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
         </androidx.cardview.widget.CardView>
 
     </LinearLayout>

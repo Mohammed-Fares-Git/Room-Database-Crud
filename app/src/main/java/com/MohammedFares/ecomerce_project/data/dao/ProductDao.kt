@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.Update
 import com.MohammedFares.ecomerce_project.data.entity.Admin
 import com.MohammedFares.ecomerce_project.data.entity.Product
 import com.MohammedFares.ecomerce_project.data.relations.ProductWithDetails
@@ -12,6 +13,9 @@ import com.MohammedFares.ecomerce_project.data.relations.ProductWithDetails
 interface ProductDao {
     @Insert
     suspend fun insertProduct(product: Product): Long
+
+    @Update
+    suspend fun update(product: Product): Int
 
     @Query("SELECT * FROM products")
     suspend fun getAllProduct(): List<Product>
@@ -26,4 +30,7 @@ interface ProductDao {
     @Transaction
     @Query("SELECT * FROM products WHERE productId = :id")
     suspend fun getAllProductWithDetailsById(id: Long): ProductWithDetails
+
+
+
 }

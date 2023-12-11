@@ -59,5 +59,8 @@
     <string name="provide_valid_url">Fournir une URL valide</string>
 
 
+    <string name="desc">Descripción</string>
+    <string name="quantity">Cantidad</string>
+    <string name="moroccan_dirham_acronym">MAD</string>
 
 </resources>

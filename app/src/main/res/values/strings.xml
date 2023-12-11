@@ -31,6 +31,7 @@
     <string name="colors">Colors</string>
     <string name="brand">Brand</string>
     <string name="type">Type</string>
+    <string name="desc">Description</string>
 
 
     <string name="admin_dashboard_products">Products</string>
@@ -60,6 +61,9 @@
 
     <string name="invalid_hex_code">Invalid hex code</string>
     <string name="provide_valid_url">Provide valid URL</string>
+    <string name="quantity">Quantity</string>
+    <string name="moroccan_dirham_acronym">MAD</string>
+
 
 
 

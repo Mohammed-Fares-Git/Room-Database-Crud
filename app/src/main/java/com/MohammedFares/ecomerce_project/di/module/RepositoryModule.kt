@@ -6,6 +6,7 @@ import com.MohammedFares.ecomerce_project.data.dao.ProductBrandDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductColorDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductImagesDao
+import com.MohammedFares.ecomerce_project.data.dao.ProductSizeDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductTypeDao
 import com.MohammedFares.ecomerce_project.data.entity.ProductType
 import com.MohammedFares.ecomerce_project.data.repository.AdminRepositoryImpl
@@ -25,20 +26,39 @@ import javax.inject.Singleton
 object RepositoryModule {
     @Singleton
     @Provides
-    fun provideAuthRepository(adminDao: AdminDao,clientDao: ClientDao): AuthRepository {
-        return AuthRepositoryImpl(adminDao,clientDao)
+    fun provideAuthRepository(adminDao: AdminDao, clientDao: ClientDao): AuthRepository {
+        return AuthRepositoryImpl(adminDao, clientDao)
     }
 
     @Singleton
     @Provides
-    fun provideAdminRepository(productDao: ProductDao, productBrandDao: ProductBrandDao, productColorDao: ProductColorDao, productType: ProductTypeDao, clientDao: ClientDao, imagesDao: ProductImagesDao): AdminRepository {
-        return AdminRepositoryImpl(productDao,productType,productBrandDao,productColorDao,clientDao,imagesDao)
+    fun provideAdminRepository(
+        productDao: ProductDao,
+        productBrandDao: ProductBrandDao,
+        productColorDao: ProductColorDao,
+        productType: ProductTypeDao,
+        productSizeDao: ProductSizeDao,
+        clientDao: ClientDao,
+        imagesDao: ProductImagesDao
+    ): AdminRepository {
+        return AdminRepositoryImpl(
+            productDao,
+            productType,
+            productBrandDao,
+            productColorDao,
+            productSizeDao,
+            clientDao,
+            imagesDao
+        )
     }
 
     @Singleton
     @Provides
-    fun provideClientRepository(productDao: ProductDao, productType: ProductTypeDao): ClientRepository {
-        return ClientRepositoryImpl(productDao,productType)
+    fun provideClientRepository(
+        productDao: ProductDao,
+        productType: ProductTypeDao
+    ): ClientRepository {
+        return ClientRepositoryImpl(productDao, productType)
     }
 
 }

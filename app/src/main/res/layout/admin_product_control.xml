@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.admin.AdminProductControl"
     android:theme="@style/AdminThem"
+    android:background="#000"
     >
 
     <LinearLayout
@@ -54,14 +55,53 @@
                 android:textStyle="italic"
                 android:layout_weight="1"/>
 
-            <include layout="@layout/edit_button" android:id="@+id/admin_controle_edit_product_price"/>
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/desc"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+
+            <TextView
+                android:id="@+id/admin_controle_desc_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:paddingStart="10dp"
+                android:textStyle="italic"
+                android:layout_weight="1"/>
+
         </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/images"/>
+            android:text="@string/quantity"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+
+            <TextView
+                android:id="@+id/admin_controle_qnt_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:paddingStart="10dp"
+                android:textStyle="italic"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+        <include layout="@layout/edit_button" android:id="@+id/admin_controle_edit_product"/>
 
 
         <TextView
@@ -84,7 +124,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scrollbars="horizontal"
-                    android:orientation="horizontal"/>
+                    android:orientation="horizontal"
+                    tools:listitem="@layout/admin_product_image_item"/>
                 <include layout="@layout/add_button" android:id="@+id/admin_controle_edit_product_images"
                     />
 
@@ -113,7 +154,8 @@
                     android:layout_height="wrap_content"
                     android:scrollbars="horizontal"
                     android:layout_weight="1"
-                    android:orientation="horizontal"/>
+                    android:orientation="horizontal"
+                    tools:listitem="@layout/admin_size_item"/>
                 <include layout="@layout/add_button" android:id="@+id/admin_controle_edit_product_sizes"/>
 
             </LinearLayout>
@@ -138,7 +180,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:scrollbars="horizontal"
-                    android:orientation="horizontal"/>
+                    android:orientation="horizontal"
+                    tools:listitem="@layout/admin_color_item"/>
                 <include layout="@layout/add_button" android:id="@+id/admin_controle_edit_product_colors"/>
 
             </LinearLayout>
@@ -197,9 +240,6 @@
 
             <include layout="@layout/edit_button" android:id="@+id/admin_controle_edit_product_type"/>
         </LinearLayout>
-
-
-
 
 
     </LinearLayout>

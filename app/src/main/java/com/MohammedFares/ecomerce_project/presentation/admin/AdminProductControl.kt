@@ -83,6 +83,11 @@ class AdminProductControl : Fragment() {
                         }
 
                         binding.adminControleProductName.text = product?.product?.productName
+                        binding.adminControleDescTv.text = product?.product?.productDesc
+                        binding.adminControleQntTv.text = "${ product?.product?.quantity } ${requireActivity().getText(R.string.moroccan_dirham_acronym)}"
+                        binding.adminControleTvType.text = product?.type?.typeName
+                        Picasso.get().load(product?.type?.typeImage).resize(200,200).into(binding.adminControleImgType)
+
 
                         val imageAdapter = AdminSubImagesAdapter({
                             showImageDialog(
@@ -525,9 +530,7 @@ class AdminProductControl : Fragment() {
     fun showTypeDialog(
         context: Context,
         productType: ProductType? = null,
-        prdtId: Long = -1,
-        editAction: (productType: ProductType) -> Unit = {},
-        addAction: () -> Unit = {}
+        editAction: (productType: ProductType) -> Unit = {}
     ) {
         val inflater = LayoutInflater.from(context)
         dialogType = DialogTypeBinding.inflate(inflater)
@@ -563,10 +566,16 @@ class AdminProductControl : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
+            dialogType.dialogEditBtn.root.visibility = View.GONE
+            dialogType.dialogAddBtn.root.visibility = View.VISIBLE
             dialogType.dialogEditBtn.root.setOnClickListener {
-
-                editAction(productType)
-
+                val type_name = dialogType.dialogEtTyptName.text.toString()
+                val type_url = dialogType.dialogEtTypeUrl.text.toString()
+                val productTypeCopie = productType.copy(
+                    typeName = type_name,
+                    typeImage = type_url
+                )
+                adminProductControleViewModel.editProductType(productTypeCopie)
                 dialog.dismiss()
             }
 

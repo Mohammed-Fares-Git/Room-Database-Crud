@@ -22,6 +22,7 @@ data class Product(
     @PrimaryKey(autoGenerate = true)
     val productId: Long = 0,
     val productName: String,
+    val productDesc: String,
     val price: Double,
     val quantity: Int,
     val mainImage: String,
