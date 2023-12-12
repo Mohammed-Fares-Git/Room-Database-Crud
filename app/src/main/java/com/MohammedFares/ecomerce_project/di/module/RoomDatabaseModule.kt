@@ -19,6 +19,7 @@ import com.MohammedFares.ecomerce_project.data.entity.Client
 import com.MohammedFares.ecomerce_project.data.entity.Product
 import com.MohammedFares.ecomerce_project.data.entity.ProductBrand
 import com.MohammedFares.ecomerce_project.data.entity.ProductColor
+import com.MohammedFares.ecomerce_project.data.entity.ProductLike
 import com.MohammedFares.ecomerce_project.data.entity.ProductSize
 import com.MohammedFares.ecomerce_project.data.entity.ProductSubImage
 import com.MohammedFares.ecomerce_project.data.entity.ProductType
@@ -57,6 +58,7 @@ object RoomDatabaseModule {
                         val productDao = provideRoom(ctx).productDao()
                         val colorDao = provideRoom(ctx).productColorDao()
                         val sizeDao = provideRoom(ctx).productSizeDao()
+                        val likeDao = provideRoom(ctx).productLikeDao()
                         val brandDao = provideRoom(ctx).productBrandDao()
                         val typeDao = provideRoom(ctx).productTypeDao()
                         val imageDao = provideRoom(ctx).imagetDao()
@@ -75,11 +77,11 @@ object RoomDatabaseModule {
                         brandDao.insertBrand(ProductBrand(brandId = 1,brandName = "Nike", brandImage = "https://tse4.mm.bing.net/th?id=OIP.k0btW08ZcHA6fyuCw-q6vAHaDi&pid=Api&P=0&h=180"))
                         brandDao.insertBrand(ProductBrand(brandId = 2,brandName = "Adidas", brandImage = "https://tse4.mm.bing.net/th?id=OIP.HlG0ifdwU9yHd4BIKl5XzwHaFf&pid=Api&P=0&h=180"))
 
-                        typeDao.insertType(ProductType(typeId = 1,typeName = "T-Shirt", typeImage = "https://cdn-icons-png.flaticon.com/128/5510/5510120.png"))
-                        typeDao.insertType(ProductType(typeId = 2,typeName = "Jean", typeImage = "https://cdn-icons-png.flaticon.com/128/599/599580.png"))
-                        typeDao.insertType(ProductType(typeId = 3,typeName = "Dress", typeImage = "https://cdn-icons-png.flaticon.com/128/2390/2390065.png"))
+                        typeDao.insertType(ProductType(typeId = 1,typeName = "T-Shirt", typeImage = "https://img-lcwaikiki.mncdn.com/Resource/Images/Banner/311023all-circle4.jpg"))
+                        typeDao.insertType(ProductType(typeId = 2,typeName = "Jean", typeImage = "https://img-lcwaikiki.mncdn.com/Resource/Images/Banner/311023all-circle2.jpg"))
+                        typeDao.insertType(ProductType(typeId = 3,typeName = "Dress", typeImage = "https://img-lcwaikiki.mncdn.com/Resource/Images/Banner/311023all-circle3.jpg"))
 
-                        productDao.insertProduct(Product(productId = 1,productName = "product1", productDesc = "Chevilles et bas côtelés\n" +
+                        productDao.insertProduct(Product(productId = 1,productName = "product1", sold = 25, livreson = true, productDesc = "Chevilles et bas côtelés\n" +
                                 "Tailles de modèle\n" +
                                 "Poitrine: 78 cm Taille: 56 cm Hanche: 91 cm Longueur: 178 cm\n" +
                                 "Le mannequin porte la taille S.\n" +
@@ -178,7 +180,7 @@ object RoomDatabaseModule {
                         brandDao.insertBrand(ProductBrand(brandId = 3, brandName = "Puma", brandImage = "https://cdn-icons-png.flaticon.com/128/599/599597.png"))
                         brandDao.insertBrand(ProductBrand(brandId = 4, brandName = "Reebok", brandImage = "https://cdn-icons-png.flaticon.com/128/719/719067.png"))
 
-                        typeDao.insertType(ProductType(typeId = 4, typeName = "Sweater", typeImage = "https://cdn-icons-png.flaticon.com/128/3111/3111275.png"))
+                        typeDao.insertType(ProductType(typeId = 4, typeName = "Sweater", typeImage = "https://img-lcwaikiki.mncdn.com/Resource/Images/Banner/fr-2909-circle5.jpg"))
                         typeDao.insertType(ProductType(typeId = 5, typeName = "Shorts", typeImage = "https://cdn-icons-png.flaticon.com/128/1834/1834902.png"))
                         typeDao.insertType(ProductType(typeId = 6, typeName = "Shoes", typeImage = "https://cdn-icons-png.flaticon.com/128/1948/1948065.png"))
 
@@ -218,7 +220,7 @@ object RoomDatabaseModule {
                                 "Tissu: Tricot\n" +
                                 "Sous-marque: LCWAIKIKI Basic\n" +
                                 "Genre: Femme", price = 129.99, quantity = 800, brandId = 4, typeId = 6, mainImage = "https://img-lcwaikiki.mncdn.com/mnresize/480/-/pim/productimages/20232/6484061/v2/l_20232-w32862z8-lcc-78-56-91-178_a.jpg"))
-                        productDao.insertProduct(Product(productId = 8,productName = "Summer Dress", productDesc = "Chevilles et bas côtelés\n" +
+                        productDao.insertProduct(Product(productId = 8,productName = "Summer Dress", livreson = true, productDesc = "Chevilles et bas côtelés\n" +
                                 "Tailles de modèle\n" +
                                 "Poitrine: 78 cm Taille: 56 cm Hanche: 91 cm Longueur: 178 cm\n" +
                                 "Le mannequin porte la taille S.\n" +
@@ -236,7 +238,7 @@ object RoomDatabaseModule {
                                 "Tissu: Tricot\n" +
                                 "Sous-marque: LCWAIKIKI Basic\n" +
                                 "Genre: Femme", price = 79.99, quantity = 700, brandId = 3, typeId = 3, mainImage = "https://img-lcwaikiki.mncdn.com/mnresize/480/-/pim/productimages/20232/6466928/v1/l_20232-w31507z8-l8n-103-82-86-187_a.jpg"))
-                        productDao.insertProduct(Product(productId = 9,productName = "Athletic Shorts", productDesc = "Chevilles et bas côtelés\n" +
+                        productDao.insertProduct(Product(productId = 9,productName = "Athletic Shorts", livreson = true, productDesc = "Chevilles et bas côtelés\n" +
                                 "Tailles de modèle\n" +
                                 "Poitrine: 78 cm Taille: 56 cm Hanche: 91 cm Longueur: 178 cm\n" +
                                 "Le mannequin porte la taille S.\n" +
@@ -254,7 +256,7 @@ object RoomDatabaseModule {
                                 "Tissu: Tricot\n" +
                                 "Sous-marque: LCWAIKIKI Basic\n" +
                                 "Genre: Femme", price = 49.99, quantity = 1000, brandId = 4, typeId = 5, mainImage = "https://img-lcwaikiki.mncdn.com/mnresize/480/-/pim/productimages/20232/6484061/v2/l_20232-w32862z8-lcc-78-56-91-178_a.jpg"))
-                        productDao.insertProduct(Product(productId = 10,productName = "Casual T-Shirt", productDesc = "Chevilles et bas côtelés\n" +
+                        productDao.insertProduct(Product(productId = 10,productName = "Casual T-Shirt", sold = 70, livreson = true, productDesc = "Chevilles et bas côtelés\n" +
                                 "Tailles de modèle\n" +
                                 "Poitrine: 78 cm Taille: 56 cm Hanche: 91 cm Longueur: 178 cm\n" +
                                 "Le mannequin porte la taille S.\n" +
@@ -385,6 +387,11 @@ object RoomDatabaseModule {
                         imageDao.insertImage(ProductSubImage(productId = 6, imageUrl = "https://img-lcwaikiki.mncdn.com/mnresize/1024/-/pim/productimages/20222/6150426/v1/l_20222-w2ge78z8-s23-85-105-90-174_a3.jpg"))
                         imageDao.insertImage(ProductSubImage(productId = 6, imageUrl = "https://img-lcwaikiki.mncdn.com/mnresize/1024/-/pim/productimages/20222/6150426/v1/l_20222-w2ge78z8-s23-85-105-90-174_a3.jpg"))
 
+                        likeDao.insertLike(ProductLike(productId = 1, clientId = 1))
+                        likeDao.insertLike(ProductLike(productId = 4, clientId = 1))
+                        likeDao.insertLike(ProductLike(productId = 1, clientId = 1))
+                        likeDao.insertLike(ProductLike(productId = 7, clientId = 1))
+                        likeDao.insertLike(ProductLike(productId = 3, clientId = 1))
                     }
                 }
             })

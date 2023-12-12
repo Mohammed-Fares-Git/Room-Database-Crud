@@ -30,14 +30,11 @@ class ClientMian : AppCompatActivity() {
         val loginState = authManager.isLoggedIn and authManager.isClientLoggedIn()
 
 
-        if (!loginState) {
+        if (loginState) {
             startActivity(Intent(this@ClientMian,LoginMain::class.java))
             finish()
         }
-
-
         val navController = Navigation.findNavController(this, R.id.client_main_container);
-
         NavigationUI.setupWithNavController(binding.bnvMain, navController);
     }
 }

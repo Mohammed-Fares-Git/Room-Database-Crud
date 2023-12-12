@@ -86,7 +86,7 @@ class home_page : Fragment() {
                     }
                     is Resource.Success -> {
                         Toast.makeText(requireContext(), "success", Toast.LENGTH_SHORT).show()
-                        val adapter = ProductsAdapter {
+                        val adapter = ProductsAdapter (requireContext()) {
                             requireActivity().startActivity(Intent(requireContext(),ProductActivity::class.java).apply {
                                 this.putExtra(Constantes.PRODUCT_ID_KEY,it)
                             })

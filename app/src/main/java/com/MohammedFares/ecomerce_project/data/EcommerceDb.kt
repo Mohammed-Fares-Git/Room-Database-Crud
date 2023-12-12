@@ -8,6 +8,7 @@ import com.MohammedFares.ecomerce_project.data.dao.ProductBrandDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductColorDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductImagesDao
+import com.MohammedFares.ecomerce_project.data.dao.ProductLikeDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductSizeDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductTypeDao
 import com.MohammedFares.ecomerce_project.data.entity.Admin
@@ -36,6 +37,7 @@ abstract class EcommerceDb: RoomDatabase() {
     abstract fun clientDao(): ClientDao
     abstract fun productColorDao(): ProductColorDao
     abstract fun productSizeDao(): ProductSizeDao
+    abstract fun productLikeDao(): ProductLikeDao
     abstract fun productTypeDao(): ProductTypeDao
     abstract fun productBrandDao(): ProductBrandDao
     abstract fun productDao(): ProductDao

@@ -24,6 +24,8 @@ data class Product(
     val productName: String,
     val productDesc: String,
     val price: Double,
+    val sold: Int = 0,
+    val livreson: Boolean = false,
     val quantity: Int,
     val mainImage: String,
     val brandId: Long? = null,

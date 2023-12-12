@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.MohammedFares.ecomerce_project.R
 import com.MohammedFares.ecomerce_project.comon.Constantes
 import com.MohammedFares.ecomerce_project.comon.Resource
 import com.MohammedFares.ecomerce_project.databinding.ActivityProductBinding
@@ -63,7 +64,7 @@ class ProductActivity : AppCompatActivity() {
         }
         sizeAdapter.setSizes(emptyList())
         binding.sizesRv.setHasFixedSize(true)
-        binding.sizesRv.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,true)
+        binding.sizesRv.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
         binding.sizesRv.adapter = sizeAdapter
 
         lifecycleScope.launch {
@@ -85,6 +86,9 @@ class ProductActivity : AppCompatActivity() {
                             binding.productName.text = it.product.productName
                             val colors = it.colors
                             val sizes = it.sizes
+
+                            binding.productDesc.text = it.product.productDesc
+                            binding.prix.text = "${ it.product.price } ${getText(R.string.moroccan_dirham_acronym)}"
 
 
 
