@@ -46,12 +46,15 @@
                     android:layout_height="wrap_content"
                     android:padding="10dp"
                     android:layout_gravity="end"
-                    android:src="@drawable/edit_ic"
+                    android:src="@drawable/filter_ic"
                     android:background="@drawable/search_vtn"
                     />
             </LinearLayout>
 
+
+
         </androidx.cardview.widget.CardView>
+        <include layout="@layout/filter_tools" android:id="@+id/filter" android:visibility="gone"/>
     </LinearLayout>
 
 
@@ -87,7 +90,7 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/filter"
+                android:id="@+id/filter_rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

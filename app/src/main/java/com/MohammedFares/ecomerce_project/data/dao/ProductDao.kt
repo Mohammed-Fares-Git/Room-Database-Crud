@@ -26,6 +26,15 @@ interface ProductDao {
     @Query("SELECT * FROM products")
     suspend fun getAllProductsWithDetails(): List<ProductWithDetails>
 
+    /*
+    @Transaction
+    @Query("SELECT * FROM products WHERE productName LIKE '%' || :searchParam || '%' OR productDesc LIKE '%' || :searchParam || '%' OR gender LIKE '%' || :searchParam || '%' OR price = :searchParam")
+    suspend fun getAllProductsWithDetails(
+        searchParam: String = ""
+    ): List<ProductWithDetails>
+
+     */
+
 
     @Transaction
     @Query("SELECT * FROM products WHERE productId = :id")

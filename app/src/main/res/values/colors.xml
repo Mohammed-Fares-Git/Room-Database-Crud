@@ -6,6 +6,7 @@
     <color name="hint_color">#828384</color>
 
     <color name="error_text">#FF0000</color>
+    <color name="good_text">#4CAF50</color>
 
     <color name="temp">#E91E63</color>
 

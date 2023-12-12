@@ -3,6 +3,7 @@ package com.MohammedFares.ecomerce_project.data.entity
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import com.MohammedFares.ecomerce_project.comon.Constantes
 
 @Entity(tableName = "products", foreignKeys = [
     ForeignKey(
@@ -23,6 +24,7 @@ data class Product(
     val productId: Long = 0,
     val productName: String,
     val productDesc: String,
+    val gender: String = Constantes.ALL_KEY,
     val price: Double,
     val sold: Int = 0,
     val livreson: Boolean = false,

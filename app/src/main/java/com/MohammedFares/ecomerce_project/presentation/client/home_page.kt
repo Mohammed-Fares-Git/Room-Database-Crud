@@ -39,9 +39,9 @@ class home_page : Fragment() {
         //binding.products.isNestedScrollingEnabled = false
         binding.products.layoutManager = GridLayoutManager(requireContext(),2)
 
-        binding.filter.setHasFixedSize(true)
+        binding.filterRv.setHasFixedSize(true)
         //binding.products.isNestedScrollingEnabled = false
-        binding.filter.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+        binding.filterRv.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
 
 
 
@@ -63,13 +63,12 @@ class home_page : Fragment() {
                         is Resource.Success -> {
                             Toast.makeText(requireContext(), "success", Toast.LENGTH_SHORT).show()
                             val adapter = types.data?.let { TypesAdapter(it) }
-                            binding.filter.adapter = adapter
+                            binding.filterRv.adapter = adapter
                             Log.d("ahahhhhhh", types.data.toString())
                         }
                     }
                 }
             }
-
 
 
 
@@ -99,8 +98,32 @@ class home_page : Fragment() {
             }
         }
 
+        binding.filter.closeBtn.setOnClickListener {
+            hideFilter()
+        }
+        binding.searchTogel.setOnClickListener {
+            showFilter()
+        }
+
 
         return binding.root
     }
+
+
+    fun showFilter () {
+        binding.filter.root.visibility = View.VISIBLE
+        binding.poter.visibility = View.GONE
+        binding.filterRv.visibility = View.GONE
+    }
+
+
+    fun hideFilter () {
+        binding.filter.root.visibility = View.GONE
+        binding.poter.visibility = View.VISIBLE
+        binding.filterRv.visibility = View.VISIBLE
+    }
+
+
+
 
 }

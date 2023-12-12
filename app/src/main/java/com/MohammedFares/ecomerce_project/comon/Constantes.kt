@@ -6,4 +6,7 @@ object Constantes {
 
 
     const val PRODUCT_ID_KEY = "product_id"
+    const val ALL_KEY = "all"
+    const val MALE_KEY = "male"
+    const val FEMALE_KEY = "female"
 }
