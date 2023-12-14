@@ -13,6 +13,7 @@ data class ProductsListScreenState(
     var searchParam: String? = null,
     var selctedColor: String? = null,
     var selectedSize: String? = null,
+    var selctedGender: String? = null,
     var maxPrice: Int? = null,
     var freeDelevry: Boolean? = null,
     var promo: Boolean? = null

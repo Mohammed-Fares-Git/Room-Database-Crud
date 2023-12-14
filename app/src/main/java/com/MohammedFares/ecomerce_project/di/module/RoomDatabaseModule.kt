@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.MohammedFares.ecomerce_project.comon.Constantes
 import com.MohammedFares.ecomerce_project.data.EcommerceDb
 import com.MohammedFares.ecomerce_project.data.dao.AdminDao
 import com.MohammedFares.ecomerce_project.data.dao.ClientDao
@@ -81,7 +82,7 @@ object RoomDatabaseModule {
                         typeDao.insertType(ProductType(typeId = 2,typeName = "Jean", typeImage = "https://img-lcwaikiki.mncdn.com/Resource/Images/Banner/311023all-circle2.jpg"))
                         typeDao.insertType(ProductType(typeId = 3,typeName = "Dress", typeImage = "https://img-lcwaikiki.mncdn.com/Resource/Images/Banner/311023all-circle3.jpg"))
 
-                        productDao.insertProduct(Product(productId = 1,productName = "product1", sold = 25, livreson = true, productDesc = "Chevilles et bas côtelés\n" +
+                        productDao.insertProduct(Product(productId = 1,productName = "product1", sold = 25, livreson = true, gender = Constantes.FEMALE_KEY, productDesc = "Chevilles et bas côtelés\n" +
                                 "Tailles de modèle\n" +
                                 "Poitrine: 78 cm Taille: 56 cm Hanche: 91 cm Longueur: 178 cm\n" +
                                 "Le mannequin porte la taille S.\n" +
@@ -99,7 +100,7 @@ object RoomDatabaseModule {
                                 "Tissu: Tricot\n" +
                                 "Sous-marque: LCWAIKIKI Basic\n" +
                                 "Genre: Femme", price = 1987.0, quantity = 1000, brandId = 1, typeId = 1, mainImage = "https://img-lcwaikiki.mncdn.com/mnresize/480/-/pim/productimages/20232/6484061/v2/l_20232-w32862z8-lcc-78-56-91-178_a.jpg"))
-                        productDao.insertProduct(Product(productId = 2,productName = "product2", productDesc = "Chevilles et bas côtelés\n" +
+                        productDao.insertProduct(Product(productId = 2,productName = "product2", gender = Constantes.MALE_KEY, productDesc = "Chevilles et bas côtelés\n" +
                                 "Tailles de modèle\n" +
                                 "Poitrine: 78 cm Taille: 56 cm Hanche: 91 cm Longueur: 178 cm\n" +
                                 "Le mannequin porte la taille S.\n" +

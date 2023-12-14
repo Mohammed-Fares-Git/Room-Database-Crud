@@ -13,9 +13,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.MohammedFares.ecomerce_project.comon.Constantes
+import com.MohammedFares.ecomerce_project.comon.GenderOption
 import com.MohammedFares.ecomerce_project.comon.Resource
 import com.MohammedFares.ecomerce_project.databinding.ClientHomePageBinding
 import com.MohammedFares.ecomerce_project.presentation.ProductActivity
+import com.MohammedFares.ecomerce_project.presentation.adapters.FilterGenderAdapter
 import com.MohammedFares.ecomerce_project.presentation.adapters.ProductsAdapter
 import com.MohammedFares.ecomerce_project.presentation.adapters.TypesAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,16 +34,35 @@ class home_page : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+
+        val genderFilters: List<GenderOption> = listOf(GenderOption.Male, GenderOption.Female)
         // Inflate the layout for this fragment
-        binding = ClientHomePageBinding.inflate(inflater,container,false)
+        binding = ClientHomePageBinding.inflate(inflater, container, false)
 
         binding.products.setHasFixedSize(true)
         //binding.products.isNestedScrollingEnabled = false
-        binding.products.layoutManager = GridLayoutManager(requireContext(),2)
+        binding.products.layoutManager = GridLayoutManager(requireContext(), 2)
 
         binding.filterRv.setHasFixedSize(true)
         //binding.products.isNestedScrollingEnabled = false
-        binding.filterRv.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+        binding.filterRv.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+
+        val filterGenderAdapter = FilterGenderAdapter {
+            productsViewModel.setProductsLitState(
+                selectedGender = it
+            )
+        }
+        filterGenderAdapter.setFilters(genderFilters)
+        binding.filter.genderRv.setHasFixedSize(true)
+        binding.filter.genderRv.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.filter.genderRv.adapter = filterGenderAdapter
+
+
+
 
 
 
@@ -49,17 +70,20 @@ class home_page : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
 
             launch {
-                productsViewModel.typesStateFlow.collect {types->
+                productsViewModel.typesStateFlow.collect { types ->
                     when (types) {
                         is Resource.Empty -> {
                             Toast.makeText(requireContext(), "empty", Toast.LENGTH_SHORT).show()
                         }
+
                         is Resource.Error -> {
                             Toast.makeText(requireContext(), "error", Toast.LENGTH_SHORT).show()
                         }
+
                         is Resource.Loading -> {
                             Toast.makeText(requireContext(), "loading", Toast.LENGTH_SHORT).show()
                         }
+
                         is Resource.Success -> {
                             Toast.makeText(requireContext(), "success", Toast.LENGTH_SHORT).show()
                             val adapter = types.data?.let { TypesAdapter(it) }
@@ -70,6 +94,19 @@ class home_page : Fragment() {
                 }
             }
 
+            launch {
+                productsViewModel.productsListScreenState.collect {
+                    productsViewModel.getFilteredProducts(
+                        searchParam = "",
+                        delevry = it.freeDelevry,
+                        gender = it.selctedGender,
+                        type = null,
+                        maxPrice = null,
+                        minPrice = null
+                    )
+                }
+            }
+
 
 
             productsViewModel.productStateFlow.collect {
@@ -77,18 +114,25 @@ class home_page : Fragment() {
                     is Resource.Empty -> {
                         Toast.makeText(requireContext(), "empty", Toast.LENGTH_SHORT).show()
                     }
+
                     is Resource.Error -> {
                         Toast.makeText(requireContext(), "error", Toast.LENGTH_SHORT).show()
                     }
+
                     is Resource.Loading -> {
                         Toast.makeText(requireContext(), "loading", Toast.LENGTH_SHORT).show()
                     }
+
                     is Resource.Success -> {
                         Toast.makeText(requireContext(), "success", Toast.LENGTH_SHORT).show()
-                        val adapter = ProductsAdapter (requireContext()) {
-                            requireActivity().startActivity(Intent(requireContext(),ProductActivity::class.java).apply {
-                                this.putExtra(Constantes.PRODUCT_ID_KEY,it)
-                            })
+                        val adapter = ProductsAdapter(requireContext()) {
+                            requireActivity().startActivity(
+                                Intent(
+                                    requireContext(),
+                                    ProductActivity::class.java
+                                ).apply {
+                                    this.putExtra(Constantes.PRODUCT_ID_KEY, it)
+                                })
                         }
                         binding.products.adapter = adapter
                         adapter.submitList(it.data)
@@ -99,10 +143,24 @@ class home_page : Fragment() {
         }
 
         binding.filter.closeBtn.setOnClickListener {
+            productsViewModel.getProducts()
             hideFilter()
         }
         binding.searchTogel.setOnClickListener {
             showFilter()
+        }
+
+        binding.filter.filterFreeDelevry.setOnClickListener {
+            if (binding.filter.filterFreeDelevry.isChecked) {
+                productsViewModel.setProductsLitState(
+                    freeDelevry = true
+                )
+            }
+            else {
+                productsViewModel.setProductsLitState(
+                    freeDelevry = false
+                )
+            }
         }
 
 
@@ -110,20 +168,18 @@ class home_page : Fragment() {
     }
 
 
-    fun showFilter () {
+    fun showFilter() {
         binding.filter.root.visibility = View.VISIBLE
         binding.poter.visibility = View.GONE
         binding.filterRv.visibility = View.GONE
     }
 
 
-    fun hideFilter () {
+    fun hideFilter() {
         binding.filter.root.visibility = View.GONE
         binding.poter.visibility = View.VISIBLE
         binding.filterRv.visibility = View.VISIBLE
     }
-
-
 
 
 }

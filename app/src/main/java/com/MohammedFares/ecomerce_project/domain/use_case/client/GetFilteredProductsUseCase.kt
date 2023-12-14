@@ -17,44 +17,50 @@ class GetFilteredProductsUseCase @Inject constructor(
     @ApplicationContext val ctx: Context,
     val repository: AdminRepository
 ) {
-    operator fun invoke(searchParam: String = "", delevry: Boolean = false, gender: String? = null, type: String? = null, maxPrice: Int? = null, minPrice: Int? = null): Flow<Resource<List<ProductWithDetails>>> = flow {
+    operator fun invoke(searchParam: String = "", delevry: Boolean? = false, gender: String? = null, type: String? = null, maxPrice: Int? = null, minPrice: Int? = null): Flow<Resource<List<ProductWithDetails>>> = flow {
         emit(Resource.Loading())
         try {
 
-            var products = repository.getAllProducts()
+            val products = repository.getAllProducts()
+            var fiteredProducts = emptyList<ProductWithDetails>()
 
-            if (delevry) {
-                products = products.filter {productWithDetails->
-                    productWithDetails.product.livreson == delevry
+
+            delevry?.let {
+                if (delevry) {
+                    fiteredProducts = products.filter {productWithDetails->
+                        productWithDetails.product.livreson == delevry
+                    }
                 }
             }
 
+
             type?.let {
-                products = products.filter {productWithDetails->
+                fiteredProducts = products.filter {productWithDetails->
                     productWithDetails.type?.typeName == type
                 }
             }
 
             gender?.let {
-                products = products.filter {productWithDetails->
+                fiteredProducts = products.filter {productWithDetails->
                     productWithDetails.product.gender == gender
                 }
             }
 
             maxPrice?.let {
-                products = products.filter {productWithDetails ->
+                fiteredProducts = products.filter {productWithDetails ->
                     productWithDetails.product.price <= maxPrice
                 }
             }
 
             minPrice?.let {
-                products = products.filter {productWithDetails ->
+                fiteredProducts = products.filter {productWithDetails ->
                     productWithDetails.product.price >= minPrice
                 }
             }
 
-            if (products.isNotEmpty()) {
-                emit(Resource.Success(products))
+
+            if (fiteredProducts.isNotEmpty()) {
+                emit(Resource.Success(fiteredProducts))
             } else {
                 emit(Resource.Error(ctx.getString(R.string.no_products_found)))
             }

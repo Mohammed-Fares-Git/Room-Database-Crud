@@ -54,6 +54,7 @@ class HomePageViewModel @Inject constructor(
         searchParam: String? = null,
         selctedColor: String? = null,
         selectedSize: String? = null,
+        selectedGender: String? = null,
         maxPrice: Int? = null,
         freeDelevry: Boolean? = null,
         promo: Boolean? = null
@@ -62,6 +63,7 @@ class HomePageViewModel @Inject constructor(
             searchParam,
             selctedColor,
             selectedSize,
+            selectedGender,
             maxPrice,
             freeDelevry,
             promo
@@ -70,7 +72,7 @@ class HomePageViewModel @Inject constructor(
 
     fun getFilteredProducts(
         searchParam: String = "",
-        delevry: Boolean = false,
+        delevry: Boolean? = false,
         gender: String? = null,
         type: String? = null,
         maxPrice: Int? = null,
