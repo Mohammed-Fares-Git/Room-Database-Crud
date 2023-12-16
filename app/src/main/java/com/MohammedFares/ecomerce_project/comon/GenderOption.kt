@@ -4,7 +4,7 @@ import android.content.Context
 import com.MohammedFares.ecomerce_project.R
 
 
-sealed class GenderOption (val gender: String) {
+sealed class GenderOption (val gender: String, val isSelected: Boolean = false) {
     abstract fun getLocalizedLabel(context: Context): String
 
     object Male : GenderOption(Constantes.MALE_KEY) {

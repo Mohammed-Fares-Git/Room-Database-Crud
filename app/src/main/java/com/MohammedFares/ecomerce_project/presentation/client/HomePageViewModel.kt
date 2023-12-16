@@ -55,7 +55,9 @@ class HomePageViewModel @Inject constructor(
         selctedColor: String? = null,
         selectedSize: String? = null,
         selectedGender: String? = null,
+        selectedType: String? = null,
         maxPrice: Int? = null,
+        minPrice: Int? = null,
         freeDelevry: Boolean? = null,
         promo: Boolean? = null
     ) {
@@ -64,17 +66,28 @@ class HomePageViewModel @Inject constructor(
             selctedColor,
             selectedSize,
             selectedGender,
+            selectedType,
             maxPrice,
+            minPrice,
             freeDelevry,
             promo
         )
     }
 
+    fun setProductsLitState(
+        productsListScreenState: ProductsListScreenState
+    ) {
+        _productsListScreenState.value = productsListScreenState
+    }
+
     fun getFilteredProducts(
-        searchParam: String = "",
-        delevry: Boolean? = false,
+        searchParam: String? = "",
         gender: String? = null,
         type: String? = null,
+        size: String? = null,
+        color: String? = null,
+        promo: Boolean? = null,
+        delevry: Boolean? = false,
         maxPrice: Int? = null,
         minPrice: Int? = null
     ) {
@@ -84,6 +97,9 @@ class HomePageViewModel @Inject constructor(
                 delevry = delevry,
                 gender = gender,
                 type = type,
+                size = size,
+                color = color,
+                promo = promo,
                 maxPrice = maxPrice,
                 minPrice = minPrice
             ).collect {

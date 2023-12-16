@@ -6,13 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.MohammedFares.ecomerce_project.R
+import com.MohammedFares.ecomerce_project.comon.ClothingType
 import com.MohammedFares.ecomerce_project.comon.GenderOption
 import com.MohammedFares.ecomerce_project.databinding.FilterItemBinding
 import com.MohammedFares.ecomerce_project.domain.model.SelectebleColor
 
-class FilterGenderAdapter(val action:(gender: String)->Unit = {}, val ctx: Context) : RecyclerView.Adapter<FilterGenderAdapter.FilterViewHolder>() {
+class FilterTypeAdapter(val action:(type: String)->Unit = {}, val ctx: Context) : RecyclerView.Adapter<FilterTypeAdapter.FilterViewHolder>() {
 
-    private lateinit var filterItems: List<GenderOption>
+    private lateinit var filterItems: List<ClothingType>
 
     class FilterViewHolder(val binding: FilterItemBinding): ViewHolder(binding.root)
 
@@ -26,12 +27,11 @@ class FilterGenderAdapter(val action:(gender: String)->Unit = {}, val ctx: Conte
     override fun onBindViewHolder(holder: FilterViewHolder, position: Int) {
         val filter = filterItems.get(position)
 
-        holder.binding.fiterName.text = filter.getLocalizedLabel(ctx)
+        holder.binding.fiterName.text = filter.type
 
         holder.binding.root.setOnClickListener {
-            action(filter.gender)
+            action(filter.type)
         }
-
         if (filter.isSelected) {
             holder.binding.root.setCardBackgroundColor(
                 ctx.getColor(R.color.black)
@@ -41,7 +41,7 @@ class FilterGenderAdapter(val action:(gender: String)->Unit = {}, val ctx: Conte
     }
 
 
-    fun setFilters(filers: List<GenderOption>) {
+    fun setFilters(filers: List<ClothingType>) {
         this.filterItems = filers
         notifyDataSetChanged()
     }

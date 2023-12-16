@@ -4,6 +4,7 @@ import android.content.Context
 import com.MohammedFares.ecomerce_project.R
 import com.MohammedFares.ecomerce_project.comon.Resource
 import com.MohammedFares.ecomerce_project.data.entity.Admin
+import com.MohammedFares.ecomerce_project.data.entity.ProductColor
 import com.MohammedFares.ecomerce_project.data.relations.ProductWithDetails
 import com.MohammedFares.ecomerce_project.domain.model.ProductExpendable
 import com.MohammedFares.ecomerce_project.domain.repository.AdminRepository
@@ -17,7 +18,17 @@ class GetFilteredProductsUseCase @Inject constructor(
     @ApplicationContext val ctx: Context,
     val repository: AdminRepository
 ) {
-    operator fun invoke(searchParam: String = "", delevry: Boolean? = false, gender: String? = null, type: String? = null, maxPrice: Int? = null, minPrice: Int? = null): Flow<Resource<List<ProductWithDetails>>> = flow {
+    operator fun invoke(
+        searchParam: String? = "",
+        delevry: Boolean? = false,
+        promo: Boolean? = false,
+        gender: String? = null,
+        color: String? = null,
+        type: String? = null,
+        size: String? = null,
+        maxPrice: Int? = null,
+        minPrice: Int? = null
+    ): Flow<Resource<List<ProductWithDetails>>> = flow {
         emit(Resource.Loading())
         try {
 
@@ -27,7 +38,7 @@ class GetFilteredProductsUseCase @Inject constructor(
 
             delevry?.let {
                 if (delevry) {
-                    fiteredProducts = products.filter {productWithDetails->
+                    fiteredProducts = products.filter { productWithDetails ->
                         productWithDetails.product.livreson == delevry
                     }
                 }
@@ -35,25 +46,25 @@ class GetFilteredProductsUseCase @Inject constructor(
 
 
             type?.let {
-                fiteredProducts = products.filter {productWithDetails->
+                fiteredProducts = products.filter { productWithDetails ->
                     productWithDetails.type?.typeName == type
                 }
             }
 
             gender?.let {
-                fiteredProducts = products.filter {productWithDetails->
+                fiteredProducts = products.filter { productWithDetails ->
                     productWithDetails.product.gender == gender
                 }
             }
 
             maxPrice?.let {
-                fiteredProducts = products.filter {productWithDetails ->
+                fiteredProducts = products.filter { productWithDetails ->
                     productWithDetails.product.price <= maxPrice
                 }
             }
 
             minPrice?.let {
-                fiteredProducts = products.filter {productWithDetails ->
+                fiteredProducts = products.filter { productWithDetails ->
                     productWithDetails.product.price >= minPrice
                 }
             }

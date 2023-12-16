@@ -50,11 +50,11 @@ class home_page : Fragment() {
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
 
-        val filterGenderAdapter = FilterGenderAdapter {
-            productsViewModel.setProductsLitState(
-                selectedGender = it
+        val filterGenderAdapter = FilterGenderAdapter (ctx = requireActivity(), action = {selectedGender ->
+            productsViewModel.productsListScreenState.value.copy(
+                selctedGender = selectedGender
             )
-        }
+        })
         filterGenderAdapter.setFilters(genderFilters)
         binding.filter.genderRv.setHasFixedSize(true)
         binding.filter.genderRv.layoutManager =
@@ -97,12 +97,15 @@ class home_page : Fragment() {
             launch {
                 productsViewModel.productsListScreenState.collect {
                     productsViewModel.getFilteredProducts(
-                        searchParam = "",
+                        searchParam = it.searchParam,
                         delevry = it.freeDelevry,
                         gender = it.selctedGender,
-                        type = null,
-                        maxPrice = null,
-                        minPrice = null
+                        type = it.selctedType,
+                        size = it.selctedType,
+                        color = it.selctedColor,
+                        maxPrice = it.maxPrice,
+                        minPrice = it.minPrice,
+                        promo = it.promo
                     )
                 }
             }
