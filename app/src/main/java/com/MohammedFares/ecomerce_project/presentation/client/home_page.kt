@@ -179,6 +179,19 @@ class home_page : Fragment() {
         }
 
 
+        binding.filter.filterPromo.setOnClickListener {
+            if (binding.filter.filterFreeDelevry.isChecked) {
+                productsViewModel.setProductsLitState(
+                    promo = true
+                )
+            } else {
+                productsViewModel.setProductsLitState(
+                    promo = false
+                )
+            }
+        }
+
+
         return binding.root
     }
 
