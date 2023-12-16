@@ -68,5 +68,9 @@
 
 
 
+    <string name="t_shirt">T-shirt</string>
+    <string name="dress">Dress</string>
+    <string name="hoodie">Hoodie</string>
+
 
 </resources>

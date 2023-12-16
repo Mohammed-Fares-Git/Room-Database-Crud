@@ -12,12 +12,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.MohammedFares.ecomerce_project.comon.ClothingType
 import com.MohammedFares.ecomerce_project.comon.Constantes
 import com.MohammedFares.ecomerce_project.comon.GenderOption
 import com.MohammedFares.ecomerce_project.comon.Resource
 import com.MohammedFares.ecomerce_project.databinding.ClientHomePageBinding
 import com.MohammedFares.ecomerce_project.presentation.ProductActivity
 import com.MohammedFares.ecomerce_project.presentation.adapters.FilterGenderAdapter
+import com.MohammedFares.ecomerce_project.presentation.adapters.FilterTypeAdapter
 import com.MohammedFares.ecomerce_project.presentation.adapters.ProductsAdapter
 import com.MohammedFares.ecomerce_project.presentation.adapters.TypesAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,12 +33,12 @@ class home_page : Fragment() {
 
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
 
         val genderFilters: List<GenderOption> = listOf(GenderOption.Male, GenderOption.Female)
+        val typeFilters: List<ClothingType> = listOf(ClothingType.TShirt,ClothingType.Dress,ClothingType.Hoodie,ClothingType.TShirt,ClothingType.Dress)
         // Inflate the layout for this fragment
         binding = ClientHomePageBinding.inflate(inflater, container, false)
 
@@ -50,16 +52,29 @@ class home_page : Fragment() {
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
 
-        val filterGenderAdapter = FilterGenderAdapter (ctx = requireActivity(), action = {selectedGender ->
-            productsViewModel.productsListScreenState.value.copy(
-                selctedGender = selectedGender
-            )
-        })
+        val filterGenderAdapter =
+            FilterGenderAdapter(ctx = requireActivity(), action = { selectedGender ->
+                productsViewModel.productsListScreenState.value.copy(
+                    selctedGender = selectedGender
+                )
+            })
         filterGenderAdapter.setFilters(genderFilters)
         binding.filter.genderRv.setHasFixedSize(true)
         binding.filter.genderRv.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.filter.genderRv.adapter = filterGenderAdapter
+
+        val filterTypeAdapter =
+            FilterTypeAdapter(ctx = requireActivity(), action = { selectedType ->
+                productsViewModel.productsListScreenState.value.copy(
+                    selctedType = selectedType
+                )
+            })
+        filterTypeAdapter.setFilters(typeFilters)
+        binding.filter.typeRv.setHasFixedSize(true)
+        binding.filter.typeRv.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.filter.typeRv.adapter = filterTypeAdapter
 
 
 
@@ -129,13 +144,11 @@ class home_page : Fragment() {
                     is Resource.Success -> {
                         Toast.makeText(requireContext(), "success", Toast.LENGTH_SHORT).show()
                         val adapter = ProductsAdapter(requireContext()) {
-                            requireActivity().startActivity(
-                                Intent(
-                                    requireContext(),
-                                    ProductActivity::class.java
-                                ).apply {
-                                    this.putExtra(Constantes.PRODUCT_ID_KEY, it)
-                                })
+                            requireActivity().startActivity(Intent(
+                                requireContext(), ProductActivity::class.java
+                            ).apply {
+                                this.putExtra(Constantes.PRODUCT_ID_KEY, it)
+                            })
                         }
                         binding.products.adapter = adapter
                         adapter.submitList(it.data)
@@ -158,8 +171,7 @@ class home_page : Fragment() {
                 productsViewModel.setProductsLitState(
                     freeDelevry = true
                 )
-            }
-            else {
+            } else {
                 productsViewModel.setProductsLitState(
                     freeDelevry = false
                 )

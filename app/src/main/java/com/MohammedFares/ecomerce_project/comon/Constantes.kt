@@ -9,4 +9,10 @@ object Constantes {
     const val ALL_KEY = "all"
     const val MALE_KEY = "male"
     const val FEMALE_KEY = "female"
+
+
+    const val T_SHIRT = "t-shirt"
+    const val DRESS = "dress"
+    const val HOODIE = "hoodie"
+    const val TRICO = "trico"
 }
