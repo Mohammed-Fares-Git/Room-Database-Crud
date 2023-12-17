@@ -54,8 +54,10 @@ class home_page : Fragment() {
 
         val filterGenderAdapter =
             FilterGenderAdapter(ctx = requireActivity(), action = { selectedGender ->
-                productsViewModel.productsListScreenState.value.copy(
-                    selctedGender = selectedGender
+                productsViewModel.setProductsLitState(
+                    productsViewModel.productsListScreenState.value.copy(
+                        selctedGender = selectedGender
+                    )
                 )
             })
         filterGenderAdapter.setFilters(genderFilters)
@@ -66,8 +68,10 @@ class home_page : Fragment() {
 
         val filterTypeAdapter =
             FilterTypeAdapter(ctx = requireActivity(), action = { selectedType ->
-                productsViewModel.productsListScreenState.value.copy(
-                    selctedType = selectedType
+                productsViewModel.setProductsLitState(
+                    productsViewModel.productsListScreenState.value.copy(
+                        selctedType = selectedType
+                    )
                 )
             })
         filterTypeAdapter.setFilters(typeFilters)
@@ -169,11 +173,15 @@ class home_page : Fragment() {
         binding.filter.filterFreeDelevry.setOnClickListener {
             if (binding.filter.filterFreeDelevry.isChecked) {
                 productsViewModel.setProductsLitState(
-                    freeDelevry = true
+                    productsViewModel.productsListScreenState.value.copy(
+                        freeDelevry = true
+                    )
                 )
             } else {
                 productsViewModel.setProductsLitState(
-                    freeDelevry = false
+                    productsViewModel.productsListScreenState.value.copy(
+                        freeDelevry = false
+                    )
                 )
             }
         }
@@ -182,11 +190,31 @@ class home_page : Fragment() {
         binding.filter.filterPromo.setOnClickListener {
             if (binding.filter.filterFreeDelevry.isChecked) {
                 productsViewModel.setProductsLitState(
-                    promo = true
+                    productsViewModel.productsListScreenState.value.copy(
+                        promo = true
+                    )
                 )
             } else {
                 productsViewModel.setProductsLitState(
-                    promo = false
+                    productsViewModel.productsListScreenState.value.copy(
+                        promo = false
+                    )
+                )
+            }
+        }
+
+        binding.filter.filterFavorite.setOnClickListener {
+            if (binding.filter.filterFavorite.isChecked) {
+                productsViewModel.setProductsLitState(
+                    productsViewModel.productsListScreenState.value.copy(
+                        promo = true
+                    )
+                )
+            } else {
+                productsViewModel.setProductsLitState(
+                    productsViewModel.productsListScreenState.value.copy(
+                        promo = false
+                    )
                 )
             }
         }
