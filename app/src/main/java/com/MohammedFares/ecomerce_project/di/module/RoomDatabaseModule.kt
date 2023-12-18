@@ -13,6 +13,7 @@ import com.MohammedFares.ecomerce_project.data.dao.ProductBrandDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductColorDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductImagesDao
+import com.MohammedFares.ecomerce_project.data.dao.ProductLikeDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductSizeDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductTypeDao
 import com.MohammedFares.ecomerce_project.data.entity.Admin
@@ -78,9 +79,9 @@ object RoomDatabaseModule {
                         brandDao.insertBrand(ProductBrand(brandId = 1,brandName = "Nike", brandImage = "https://tse4.mm.bing.net/th?id=OIP.k0btW08ZcHA6fyuCw-q6vAHaDi&pid=Api&P=0&h=180"))
                         brandDao.insertBrand(ProductBrand(brandId = 2,brandName = "Adidas", brandImage = "https://tse4.mm.bing.net/th?id=OIP.HlG0ifdwU9yHd4BIKl5XzwHaFf&pid=Api&P=0&h=180"))
 
-                        typeDao.insertType(ProductType(typeId = 1,typeName = "T-Shirt", typeImage = "https://img-lcwaikiki.mncdn.com/Resource/Images/Banner/311023all-circle4.jpg"))
+                        typeDao.insertType(ProductType(typeId = 1,typeName = Constantes.T_SHIRT, typeImage = "https://img-lcwaikiki.mncdn.com/Resource/Images/Banner/311023all-circle4.jpg"))
                         typeDao.insertType(ProductType(typeId = 2,typeName = "Jean", typeImage = "https://img-lcwaikiki.mncdn.com/Resource/Images/Banner/311023all-circle2.jpg"))
-                        typeDao.insertType(ProductType(typeId = 3,typeName = "Dress", typeImage = "https://img-lcwaikiki.mncdn.com/Resource/Images/Banner/311023all-circle3.jpg"))
+                        typeDao.insertType(ProductType(typeId = 3,typeName = Constantes.DRESS, typeImage = "https://img-lcwaikiki.mncdn.com/Resource/Images/Banner/311023all-circle3.jpg"))
 
                         productDao.insertProduct(Product(productId = 1,productName = "product1", sold = 25, livreson = true, gender = Constantes.FEMALE_KEY, productDesc = "Chevilles et bas côtelés\n" +
                                 "Tailles de modèle\n" +
@@ -153,7 +154,7 @@ object RoomDatabaseModule {
                                 "Le col: Bougie\n" +
                                 "Tissu: Tricot\n" +
                                 "Sous-marque: LCWAIKIKI Basic\n" +
-                                "Genre: Femme", price = 231.0, quantity = 1000, brandId = 2, typeId = 2, mainImage = "https://img-lcwaikiki.mncdn.com/mnresize/480/-/pim/productimages/20232/6664452/v1/l_20232-w3ck07z8-fmp-75-61-88-178_a.jpg"))
+                                "Genre: Femme", price = 231.0, quantity = 1000, brandId = 2, typeId = 3, mainImage = "https://img-lcwaikiki.mncdn.com/mnresize/480/-/pim/productimages/20232/6664452/v1/l_20232-w3ck07z8-fmp-75-61-88-178_a.jpg"))
                         productDao.insertProduct(Product(productId = 5,productName = "product5", productDesc = "Chevilles et bas côtelés\n" +
                                 "Tailles de modèle\n" +
                                 "Poitrine: 78 cm Taille: 56 cm Hanche: 91 cm Longueur: 178 cm\n" +
@@ -171,7 +172,7 @@ object RoomDatabaseModule {
                                 "Le col: Bougie\n" +
                                 "Tissu: Tricot\n" +
                                 "Sous-marque: LCWAIKIKI Basic\n" +
-                                "Genre: Femme", price = 1000.0, quantity = 1000, brandId = 1, typeId = 1, mainImage = "https://img-lcwaikiki.mncdn.com/mnresize/480/-/pim/productimages/20232/6841875/v1/l_20232-w3h441z8-dnj-80-63-90-175_a.jpg"))
+                                "Genre: Femme", price = 1000.0, quantity = 1000, brandId = 1, typeId = 3, mainImage = "https://img-lcwaikiki.mncdn.com/mnresize/480/-/pim/productimages/20232/6841875/v1/l_20232-w3h441z8-dnj-80-63-90-175_a.jpg"))
 
                         adminDao.insertAdmin(Admin(firstname = "John", lastname = "Doe", email = "john@doe.com", password = "123"))
                         adminDao.insertAdmin(Admin(firstname = "Jane", lastname = "Doe", email = "jane@doe.com", password = "123"))
@@ -446,6 +447,12 @@ object RoomDatabaseModule {
     @Provides
     fun provideProductDao(ecommerceDb: EcommerceDb): ProductDao {
         return ecommerceDb.productDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideProductLikkeDao(ecommerceDb: EcommerceDb): ProductLikeDao {
+        return ecommerceDb.productLikeDao()
     }
 
 }

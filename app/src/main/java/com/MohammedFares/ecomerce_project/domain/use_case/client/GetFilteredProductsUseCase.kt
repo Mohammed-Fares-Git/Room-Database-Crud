@@ -44,6 +44,14 @@ class GetFilteredProductsUseCase @Inject constructor(
                 }
             }
 
+            promo?.let {
+                if (promo) {
+                    fiteredProducts = products.filter { productWithDetails ->
+                        productWithDetails.product.sold > 0
+                    }
+                }
+            }
+
 
             type?.let {
                 fiteredProducts = products.filter { productWithDetails ->

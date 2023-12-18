@@ -4,21 +4,28 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.MohammedFares.ecomerce_project.R
-import com.MohammedFares.ecomerce_project.data.entity.Product
-import com.MohammedFares.ecomerce_project.data.entity.ProductSubImage
+import com.MohammedFares.ecomerce_project.data.entity.ProductLike
 import com.MohammedFares.ecomerce_project.data.relations.ProductWithDetails
 import com.MohammedFares.ecomerce_project.databinding.ClientProductItemBinding
 import com.squareup.picasso.Picasso
 
-class ProductsAdapter (val ctx: Context, var clientId: Long = 1, val action: (id: Long)->Unit = {}): ListAdapter<ProductWithDetails,ProductsAdapter.ProductsViewHolder>(ProductDiffCallback()) {
-    inner class ProductsViewHolder(val binding: ClientProductItemBinding): ViewHolder(binding.root)
+class ProductsAdapter(
+    val ctx: Context,
+    var clientId: Long = 1,
+    val action: (id: Long) -> Unit = {},
+    val putLike: (productId: Long, clientId: Long) -> Unit = { productId: Long, clientId: Long -> },
+    val removeLike: (productLike: ProductLike) -> Unit = {}
+) : ListAdapter<ProductWithDetails, ProductsAdapter.ProductsViewHolder>(ProductDiffCallback()) {
+    inner class ProductsViewHolder(val binding: ClientProductItemBinding) : ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductsViewHolder {
-        val bind = ClientProductItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val bind =
+            ClientProductItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ProductsViewHolder(bind)
     }
 
@@ -26,13 +33,14 @@ class ProductsAdapter (val ctx: Context, var clientId: Long = 1, val action: (id
         val product = getItem(position)
         Picasso.get().load(product.product.mainImage).into(holder.binding.productImage)
         holder.binding.productName.text = product.product.productName
-        holder.binding.productPrice.text = "${ product.product.price } ${ctx.getText(R.string.moroccan_dirham_acronym)}"
+        holder.binding.productPrice.text =
+            "${product.product.price} ${ctx.getText(R.string.moroccan_dirham_acronym)}"
         holder.binding.root.setOnClickListener {
             action(product.product.productId)
         }
 
         if (product.product.sold > 0) {
-            holder.binding.productSold.text = "${ product.product.sold } %"
+            holder.binding.productSold.text = "${product.product.sold} %"
             holder.binding.productSold.visibility = View.VISIBLE
         }
 
@@ -49,7 +57,18 @@ class ProductsAdapter (val ctx: Context, var clientId: Long = 1, val action: (id
             holder.binding.isLiked.setImageResource(R.drawable.favorite_ic)
         }
 
+        holder.binding.isLiked.setOnClickListener {
+            if (likes.size > 0) {
+                removeLike(likes[0])
+                Toast.makeText(ctx, "disliked", Toast.LENGTH_SHORT).show()
+            } else {
+                putLike(product.product.productId, clientId)
+                Toast.makeText(ctx, "liked", Toast.LENGTH_SHORT).show()
+            }
+        }
+
     }
+
     class ProductDiffCallback : DiffUtil.ItemCallback<ProductWithDetails>() {
         override fun areItemsTheSame(
             oldItem: ProductWithDetails,

@@ -4,9 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.MohammedFares.ecomerce_project.comon.Resource
 import com.MohammedFares.ecomerce_project.data.entity.Admin
+import com.MohammedFares.ecomerce_project.data.entity.ProductLike
 import com.MohammedFares.ecomerce_project.data.relations.ProductWithDetails
 import com.MohammedFares.ecomerce_project.domain.model.ProductExpendable
 import com.MohammedFares.ecomerce_project.domain.model.ProductScreenState
+import com.MohammedFares.ecomerce_project.domain.repository.ClientRepository
 import com.MohammedFares.ecomerce_project.domain.use_case.admin.GetAllProductsUseCase
 import com.MohammedFares.ecomerce_project.domain.use_case.auth.AdminAuthUseCase
 import com.MohammedFares.ecomerce_project.domain.use_case.comon.GetProductByIdUseCase
@@ -18,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProductViewModel @Inject constructor(
-    val getProdct: GetProductByIdUseCase
+    val getProdct: GetProductByIdUseCase,
+    val clientRepository: ClientRepository
 ): ViewModel() {
     private val _productsStateFlow: MutableStateFlow<Resource<ProductWithDetails>> = MutableStateFlow(Resource.Empty())
     val prodctsStateFlow: StateFlow<Resource<ProductWithDetails>> = _productsStateFlow
@@ -48,6 +51,20 @@ class ProductViewModel @Inject constructor(
         _productScreenState.value = productScreenState.value.copy(
             selectedSize = id
         )
+    }
+
+    fun putLike(productId: Long, clientId: Long) {
+        viewModelScope.launch {
+            clientRepository.likeProduct(productId, clientId)
+            getProduct(productId)
+        }
+    }
+
+    fun removeLike(productLike: ProductLike) {
+        viewModelScope.launch {
+            clientRepository.removeLikeProduct(productLike)
+            getProduct(productLike.productId)
+        }
     }
 
 

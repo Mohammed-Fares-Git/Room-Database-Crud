@@ -11,8 +11,8 @@ object Constantes {
     const val FEMALE_KEY = "female"
 
 
-    const val T_SHIRT = "t-shirt"
-    const val DRESS = "dress"
-    const val HOODIE = "hoodie"
-    const val TRICO = "trico"
+    const val T_SHIRT = "T-Shirt"
+    const val DRESS = "Dress"
+    const val HOODIE = "Hoodie"
+    const val TRICO = "Trico"
 }

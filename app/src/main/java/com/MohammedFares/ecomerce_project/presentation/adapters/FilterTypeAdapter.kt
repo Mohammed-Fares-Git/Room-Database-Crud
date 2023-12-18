@@ -27,7 +27,7 @@ class FilterTypeAdapter(val action:(type: String)->Unit = {}, val ctx: Context) 
     override fun onBindViewHolder(holder: FilterViewHolder, position: Int) {
         val filter = filterItems.get(position)
 
-        holder.binding.fiterName.text = filter.type
+        holder.binding.fiterName.text = filter.getLocalizedLabel(ctx)
 
         holder.binding.root.setOnClickListener {
             action(filter.type)
@@ -37,7 +37,6 @@ class FilterTypeAdapter(val action:(type: String)->Unit = {}, val ctx: Context) 
                 ctx.getColor(R.color.black)
             )
         }
-
     }
 
 

@@ -36,7 +36,6 @@ class home_page : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
-
         val genderFilters: List<GenderOption> = listOf(GenderOption.Male, GenderOption.Female)
         val typeFilters: List<ClothingType> = listOf(ClothingType.TShirt,ClothingType.Dress,ClothingType.Hoodie,ClothingType.TShirt,ClothingType.Dress)
         // Inflate the layout for this fragment
@@ -68,8 +67,9 @@ class home_page : Fragment() {
 
         val filterTypeAdapter =
             FilterTypeAdapter(ctx = requireActivity(), action = { selectedType ->
+                Toast.makeText(requireContext(), selectedType, Toast.LENGTH_SHORT).show()
                 productsViewModel.setProductsLitState(
-                    productsViewModel.productsListScreenState.value.copy(
+                    productsViewModel.productsListScreenState.value.copy (
                         selctedType = selectedType
                     )
                 )
@@ -147,13 +147,17 @@ class home_page : Fragment() {
 
                     is Resource.Success -> {
                         Toast.makeText(requireContext(), "success", Toast.LENGTH_SHORT).show()
-                        val adapter = ProductsAdapter(requireContext()) {
+                        val adapter = ProductsAdapter(ctx = requireContext(), action =  {
                             requireActivity().startActivity(Intent(
                                 requireContext(), ProductActivity::class.java
                             ).apply {
                                 this.putExtra(Constantes.PRODUCT_ID_KEY, it)
                             })
-                        }
+                        }, putLike = { productId, clientId ->
+                            productsViewModel.putLike(productId,clientId)
+                        }, removeLike = { productLike ->
+                            productsViewModel.removeLike(productLike)
+                        })
                         binding.products.adapter = adapter
                         adapter.submitList(it.data)
                         Log.d("ahahhhhhh", it.data.toString())
@@ -178,11 +182,7 @@ class home_page : Fragment() {
                     )
                 )
             } else {
-                productsViewModel.setProductsLitState(
-                    productsViewModel.productsListScreenState.value.copy(
-                        freeDelevry = false
-                    )
-                )
+                productsViewModel.setProductsLitState()
             }
         }
 
@@ -197,7 +197,7 @@ class home_page : Fragment() {
             } else {
                 productsViewModel.setProductsLitState(
                     productsViewModel.productsListScreenState.value.copy(
-                        promo = false
+                        promo = null
                     )
                 )
             }
@@ -213,7 +213,7 @@ class home_page : Fragment() {
             } else {
                 productsViewModel.setProductsLitState(
                     productsViewModel.productsListScreenState.value.copy(
-                        promo = false
+                        promo = null
                     )
                 )
             }
