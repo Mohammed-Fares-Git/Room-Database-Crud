@@ -21,7 +21,7 @@
         android:id="@+id/dialog_et_image_url"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:hint="name"
+        android:hint="@string/image_url_hint"
         android:textColorHint="#777"
         android:textColor="#fff"
         android:textSize="25sp"

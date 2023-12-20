@@ -101,7 +101,7 @@ class AdminProductControl : Fragment() {
                         binding.adminControleEditProductImages.root.setOnClickListener {
                             showImageDialog(
                                 context = requireContext(),
-                                prdtId = product!!.product.productId,
+                                //prdtId = product!!.product.productId,
                                 addAction = {
                                     adminProductControleViewModel.addProdactImage(it)
                                     Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
@@ -192,7 +192,7 @@ class AdminProductControl : Fragment() {
     fun showImageDialog(
         context: Context,
         productSubImage: ProductSubImage? = null,
-        prdtId: Long = -1,
+        //prdtId: Long = -1,
         editAction: (productSubImage: ProductSubImage) -> Unit = {},
         addAction: (productSubImage: ProductSubImage) -> Unit = {}
     ) {
