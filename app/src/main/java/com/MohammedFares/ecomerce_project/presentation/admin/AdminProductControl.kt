@@ -214,6 +214,7 @@ class AdminProductControl : Fragment() {
             dialogImage.dialogAddBtn.root.visibility = View.GONE
 
             Picasso.get().load(it.imageUrl).into(dialogImage.dialogImage)
+            dialogImage.dialogEtImageUrl.text = Editable.Factory.getInstance().newEditable(it.imageUrl)
             dialogImage.dialogEditBtn.root.setOnClickListener {
 
                 editAction(productSubImage)
