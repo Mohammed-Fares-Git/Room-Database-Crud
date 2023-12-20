@@ -84,6 +84,7 @@ class AdminProductControl : Fragment() {
                         binding.adminControleQntTv.text = "${ product?.product?.quantity } ${requireActivity().getText(R.string.moroccan_dirham_acronym)}"
                         binding.adminControleTvType.text = product?.type?.typeName
                         Picasso.get().load(product?.type?.typeImage).resize(200,200).into(binding.adminControleImgType)
+                        Picasso.get().load(product?.type?.typeImage).resize(200,200).into(binding.adminControleBrandImage)
 
 
                         val imageAdapter = AdminSubImagesAdapter({
