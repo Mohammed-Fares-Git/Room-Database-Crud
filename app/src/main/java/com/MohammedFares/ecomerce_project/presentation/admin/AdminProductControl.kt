@@ -82,7 +82,8 @@ class AdminProductControl : Fragment() {
                         binding.adminControleProductName.text = product?.product?.productName
                         binding.adminControleDescTv.text = product?.product?.productDesc
                         binding.adminControleQntTv.text = "${ product?.product?.quantity } ${requireActivity().getText(R.string.moroccan_dirham_acronym)}"
-                        binding.adminControleTvType.text = product?.type?.typeName
+                        binding.adminControleBrandTv.text = product?.type?.typeName
+                        binding.adminControleTvType.text = product?.brand?.brandName
                         Picasso.get().load(product?.type?.typeImage).resize(200,200).into(binding.adminControleImgType)
                         Picasso.get().load(product?.type?.typeImage).resize(200,200).into(binding.adminControleBrandImage)
 
