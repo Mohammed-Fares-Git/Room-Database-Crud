@@ -6,7 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.admin.AdminProductControl"
     android:theme="@style/AdminThem"
-    android:background="#000"
     >
 
     <LinearLayout
@@ -40,6 +39,7 @@
             android:contentDescription="main image"
             android:text="@string/price"/>
         <LinearLayout
+            android:background="@drawable/texts_bg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -51,6 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="15644 £ "
+                android:padding="10dp"
                 android:paddingStart="10dp"
                 android:textStyle="italic"
                 android:layout_weight="1"/>
@@ -62,6 +63,7 @@
             android:text="@string/desc"/>
 
         <LinearLayout
+            android:background="@drawable/texts_bg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -69,6 +71,7 @@
 
 
             <TextView
+                android:padding="10dp"
                 android:id="@+id/admin_controle_desc_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -85,6 +88,7 @@
             android:text="@string/quantity"/>
 
         <LinearLayout
+            android:background="@drawable/texts_bg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -92,6 +96,7 @@
 
 
             <TextView
+                android:padding="10dp"
                 android:id="@+id/admin_controle_qnt_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

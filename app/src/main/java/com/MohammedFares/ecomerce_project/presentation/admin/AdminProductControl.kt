@@ -11,8 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.viewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -30,14 +28,12 @@ import com.MohammedFares.ecomerce_project.databinding.DialogColorBinding
 import com.MohammedFares.ecomerce_project.databinding.DialogImagesBinding
 import com.MohammedFares.ecomerce_project.databinding.DialogSizeBinding
 import com.MohammedFares.ecomerce_project.databinding.DialogTypeBinding
-import com.MohammedFares.ecomerce_project.databinding.ProductColorItemBinding
 import com.MohammedFares.ecomerce_project.presentation.adapters.AdminColorAdapter
 import com.MohammedFares.ecomerce_project.presentation.adapters.AdminSizesAdapter
 import com.MohammedFares.ecomerce_project.presentation.adapters.AdminSubImagesAdapter
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import kotlin.properties.Delegates
 
 @AndroidEntryPoint
 class AdminProductControl : Fragment() {
@@ -49,7 +45,7 @@ class AdminProductControl : Fragment() {
     private lateinit var dialogColor: DialogColorBinding
     private lateinit var dialogBrand: DialogBrandBinding
     private lateinit var dialogType: DialogTypeBinding
-    private var id: Long? = null
+    private var mainProductId: Long? = null
 
 
     //val adminProductControleViewModel: AdminProductControleViewModel by viewModels()
@@ -63,10 +59,10 @@ class AdminProductControl : Fragment() {
     ): View? {
         binding = AdminProductControlBinding.inflate(inflater, container, false)
 
-        id = args.productId ?: 1
+        mainProductId = args.productId ?: 1
 
 
-        adminProductControleViewModel.getProductById(id!!)
+        adminProductControleViewModel.getProductById(mainProductId!!)
         viewLifecycleOwner.lifecycleScope.launch {
             adminProductControleViewModel.productStateFlow.collect {
                 when (it) {
@@ -105,11 +101,7 @@ class AdminProductControl : Fragment() {
                                 context = requireContext(),
                                 prdtId = product!!.product.productId,
                                 addAction = {
-                                    Toast.makeText(
-                                        requireContext(),
-                                        "add image",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    adminProductControleViewModel.addProdactImage(it)
                                 })
                         }
                         binding.adminControleProductRvImages.layoutManager = LinearLayoutManager(
@@ -199,7 +191,7 @@ class AdminProductControl : Fragment() {
         productSubImage: ProductSubImage? = null,
         prdtId: Long = -1,
         editAction: (productSubImage: ProductSubImage) -> Unit = {},
-        addAction: () -> Unit = {}
+        addAction: (productSubImage: ProductSubImage) -> Unit = {}
     ) {
         val inflater = LayoutInflater.from(context)
         dialogImage = DialogImagesBinding.inflate(inflater)
@@ -231,6 +223,15 @@ class AdminProductControl : Fragment() {
 
         } ?: run {
             val url = dialogImage.dialogEtImageUrl.text.toString()
+            var image: ProductSubImage? = null
+            mainProductId?.let {
+                image = ProductSubImage(productId = it, imageUrl = url)
+            }
+
+            image?.let {
+                addAction(it)
+            }
+            dialog.dismiss()
         }
 
         dialogImage.dialogEtImageUrl.addTextChangedListener(object : TextWatcher {
