@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.MohammedFares.ecomerce_project.comon.Resource
 import com.MohammedFares.ecomerce_project.data.entity.Product
+import com.MohammedFares.ecomerce_project.data.entity.ProductBrand
 import com.MohammedFares.ecomerce_project.data.entity.ProductColor
 import com.MohammedFares.ecomerce_project.data.entity.ProductSize
 import com.MohammedFares.ecomerce_project.data.entity.ProductSubImage
@@ -57,26 +58,21 @@ class AdminProductControleViewModel @Inject constructor(
         }
 
 
-    fun addProductSize(id: Long, size: String) = viewModelScope.launch {
+    fun addProductSize(size: ProductSize) = viewModelScope.launch {
         repository.addProductSize(
-            ProductSize(
-                productId = id,
-                sizeName = size
-            )
+            size
         )
+        delay(500L)
+        getProductById(size.productId)
     }
 
     fun editProductSize(productSize: ProductSize) =
         viewModelScope.launch { repository.editProductSize(productSize) }
 
-    fun addProductColor(id: Long, name: String, hex: String) = viewModelScope.launch {
-        repository.addProductColor(
-            ProductColor(
-                productId = id,
-                colorName = name,
-                colorHexCode = hex
-            )
-        )
+    fun addProductColor(color: ProductColor) = viewModelScope.launch {
+        repository.addProductColor(color)
+        delay(500L)
+        getProductById(color.productId)
     }
 
     fun editProductColor(productColor: ProductColor) =
@@ -84,4 +80,5 @@ class AdminProductControleViewModel @Inject constructor(
 
     fun editProduct(product: Product) = viewModelScope.launch { repository.editProduct(product) }
     fun editProductType(productType: ProductType) = viewModelScope.launch { repository.editProductType(productType) }
+    fun editProductBrand(productBrand: ProductBrand) = viewModelScope.launch { repository.editProductBrand(productBrand) }
 }

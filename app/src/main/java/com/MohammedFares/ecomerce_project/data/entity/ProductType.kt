@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey
 data class ProductType(
     @PrimaryKey(autoGenerate = true)
     val typeId: Long = 0,
-    val typeName: String,
-    val typeImage: String
+    var typeName: String,
+    var typeImage: String
 ){
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

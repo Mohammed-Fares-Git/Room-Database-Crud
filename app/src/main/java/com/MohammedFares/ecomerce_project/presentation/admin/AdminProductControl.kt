@@ -127,7 +127,9 @@ class AdminProductControl : Fragment() {
                         binding.adminControleEditProductColors.root.setOnClickListener {
                             showColorDialog(
                                 context = requireContext(),
-                                prdtId = product!!.product.productId
+                                addAction = {
+                                    adminProductControleViewModel.addProductColor(it)
+                                }
                             )
                         }
                         binding.adminControleProductRvColors.layoutManager = LinearLayoutManager(
@@ -151,8 +153,8 @@ class AdminProductControl : Fragment() {
                         binding.adminControleEditProductSizes.root.setOnClickListener {
                             showSizeDialog(
                                 context = requireContext(),
-                                prdtId = product!!.product.productId,
                                 addAction = {
+                                    adminProductControleViewModel.addProductSize(it)
                                     Toast.makeText(requireContext(), "add size", Toast.LENGTH_SHORT)
                                         .show()
                                 })
@@ -169,14 +171,27 @@ class AdminProductControl : Fragment() {
                         binding.adminControleEditProductBrand.root.setOnClickListener {
                             showBrandDialog(
                                 context = requireContext(),
-                                productBrand = product!!.brand
+                                productBrand = product!!.brand,
+                                editAction = {
+                                    adminProductControleViewModel.editProductBrand(it)
+                                    mainProductId?.let {
+                                        adminProductControleViewModel.getProductById(it)
+                                    }
+                                }
+
                             )
                         }
 
                         binding.adminControleEditProductType.root.setOnClickListener {
                             showTypeDialog(
                                 context = requireContext(),
-                                productType = product!!.type
+                                productType = product!!.type,
+                                editAction = {
+                                    adminProductControleViewModel.editProductType(it)
+                                    mainProductId?.let {
+                                        adminProductControleViewModel.getProductById(it)
+                                    }
+                                }
                             )
                         }
 
@@ -286,9 +301,8 @@ class AdminProductControl : Fragment() {
     fun showSizeDialog(
         context: Context,
         productSize: ProductSize? = null,
-        prdtId: Long = -1,
         editAction: (productSize: ProductSize) -> Unit = {},
-        addAction: () -> Unit = {}
+        addAction: (productSize: ProductSize) -> Unit = {}
     ) {
         val inflater = LayoutInflater.from(context)
         dialogSize = DialogSizeBinding.inflate(inflater)
@@ -303,24 +317,45 @@ class AdminProductControl : Fragment() {
 
 
         dialogSize.dialogEditBtn.root.visibility = View.GONE
+        dialogSize.dialogEditBtn.root.isClickable = false
 
 
 
         productSize?.let {
             dialogSize.dialogEditBtn.root.visibility = View.VISIBLE
+            dialogSize.dialogEditBtn.root.isClickable = true
             dialogSize.dialogAddBtn.root.visibility = View.GONE
 
             dialogSize.siveTv.sizeName.text = it.sizeName
             dialogSize.dialogEditBtn.root.setOnClickListener {
 
+                if (dialogSize.dialogEtSize.text.isNotBlank()){
+                    productSize.sizeName = dialogSize.dialogEtSize.text.toString()
+                }
                 editAction(productSize)
 
                 dialog.dismiss()
             }
 
+        } ?: run {
+            dialogSize.dialogAddBtn.root.setOnClickListener {
+                val sizeName = dialogSize.dialogEtSize.text.toString()
+                var size: ProductSize? = null
+                mainProductId?.let {
+                    if (dialogSize.dialogEtSize.text.isNotBlank()) {
+                        size = ProductSize(productId = it, sizeName = sizeName)
+                    }
+                }
+
+
+                size?.let {
+                    addAction(it)
+                }
+                dialog.dismiss()
+            }
         }
 
-        dialogSize.dialogEtImageUrl.addTextChangedListener(object : TextWatcher {
+        dialogSize.dialogEtSize.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
 
@@ -348,9 +383,8 @@ class AdminProductControl : Fragment() {
     fun showColorDialog(
         context: Context,
         productColor: ProductColor? = null,
-        prdtId: Long = -1,
         editAction: (productColor: ProductColor) -> Unit = {},
-        addAction: () -> Unit = {}
+        addAction: (productColor: ProductColor) -> Unit = {}
     ) {
         val inflater = LayoutInflater.from(context)
         dialogColor = DialogColorBinding.inflate(inflater)
@@ -387,13 +421,35 @@ class AdminProductControl : Fragment() {
                 ).show()
             }
             dialogColor.dialogEditBtn.root.setOnClickListener {
+                if (dialogColor.dialogEtColorName.text.isNotBlank() && dialogColor.dialogEtColorHex.text.isNotBlank()) {
+                    productColor.colorName = dialogColor.dialogEtColorName.text.toString()
+                    productColor.colorHexCode = dialogColor.dialogEtColorName.text.toString()
+                }
 
                 editAction(productColor)
 
                 dialog.dismiss()
             }
 
+        } ?: run {
+            dialogColor.dialogAddBtn.root.setOnClickListener {
+                val colorName = dialogColor.dialogEtColorName.text.toString()
+                val colorHex = dialogColor.dialogEtColorHex.text.toString()
+                var color: ProductColor? = null
+                mainProductId?.let {
+                    if (dialogColor.dialogEtColorName.text.isNotBlank() && dialogColor.dialogEtColorHex.text.isNotBlank()) {
+                        color = ProductColor(productId = it, colorName = colorName, colorHexCode = colorHex)
+                    }
+                }
+
+
+                color?.let {
+                    addAction(it)
+                }
+                dialog.dismiss()
+            }
         }
+
 
         dialogColor.dialogEtColorHex.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -446,10 +502,11 @@ class AdminProductControl : Fragment() {
     fun showBrandDialog(
         context: Context,
         productBrand: ProductBrand? = null,
-        prdtId: Long = -1,
-        editAction: (productBrand: ProductBrand) -> Unit = {},
-        addAction: () -> Unit = {}
+        editAction: (productBrand: ProductBrand) -> Unit = {}
     ) {
+
+        var isImagevalid = true
+
         val inflater = LayoutInflater.from(context)
         dialogBrand = DialogBrandBinding.inflate(inflater)
 
@@ -478,6 +535,7 @@ class AdminProductControl : Fragment() {
             try {
                 Picasso.get().load(it.brandImage).into(dialogBrand.brandLayout.brandeImage)
             } catch (e: Exception) {
+                isImagevalid = false
                 Toast.makeText(
                     requireContext(),
                     requireActivity().getText(R.string.provide_valid_url),
@@ -486,6 +544,10 @@ class AdminProductControl : Fragment() {
             }
             dialogBrand.dialogEditBtn.root.setOnClickListener {
 
+                if (dialogBrand.dialogEtBrandName.text.isNotBlank() && dialogBrand.dialogEtBrandUrl.text.isNotBlank() && isImagevalid) {
+                    productBrand.brandName = dialogBrand.dialogEtBrandName.text.toString()
+                    productBrand.brandImage = dialogBrand.dialogEtBrandUrl.text.toString()
+                }
                 editAction(productBrand)
 
                 dialog.dismiss()
@@ -520,6 +582,7 @@ class AdminProductControl : Fragment() {
                     try {
                         Picasso.get().load(it.toString()).into(dialogBrand.brandLayout.brandeImage)
                     } catch (e: Exception) {
+                        isImagevalid = true
                         Toast.makeText(
                             requireContext(),
                             requireActivity().getText(R.string.provide_valid_url),
@@ -546,6 +609,9 @@ class AdminProductControl : Fragment() {
         productType: ProductType? = null,
         editAction: (productType: ProductType) -> Unit = {}
     ) {
+
+        var isImagevalid = true
+
         val inflater = LayoutInflater.from(context)
         dialogType = DialogTypeBinding.inflate(inflater)
 
@@ -574,6 +640,7 @@ class AdminProductControl : Fragment() {
             try {
                 Picasso.get().load(it.typeImage).into(dialogType.typeLayout.typeImage)
             } catch (e: Exception) {
+                isImagevalid = true
                 Toast.makeText(
                     requireContext(),
                     requireActivity().getText(R.string.provide_valid_url),
@@ -583,13 +650,13 @@ class AdminProductControl : Fragment() {
             dialogType.dialogEditBtn.root.visibility = View.GONE
             dialogType.dialogAddBtn.root.visibility = View.VISIBLE
             dialogType.dialogEditBtn.root.setOnClickListener {
-                val type_name = dialogType.dialogEtTyptName.text.toString()
-                val type_url = dialogType.dialogEtTypeUrl.text.toString()
-                val productTypeCopie = productType.copy(
-                    typeName = type_name,
-                    typeImage = type_url
-                )
-                adminProductControleViewModel.editProductType(productTypeCopie)
+
+
+                if (dialogType.dialogEtTyptName.text.isNotBlank() && dialogType.dialogEtTypeUrl.text.isNotBlank() && isImagevalid) {
+                    productType.typeName = dialogType.dialogEtTyptName.text.toString()
+                    productType.typeImage = dialogType.dialogEtTypeUrl.text.toString()
+                }
+                editAction(productType)
                 dialog.dismiss()
             }
 

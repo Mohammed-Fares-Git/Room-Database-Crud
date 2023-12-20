@@ -13,7 +13,7 @@
 
     <EditText
         android:maxLines="1"
-        android:id="@+id/dialog_et_image_url"
+        android:id="@+id/dialog_et_size"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:hint="@string/size"

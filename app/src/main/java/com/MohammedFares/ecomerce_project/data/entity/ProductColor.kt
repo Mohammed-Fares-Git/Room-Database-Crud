@@ -16,6 +16,6 @@ data class ProductColor(
     @PrimaryKey(autoGenerate = true)
     val colorId: Long = 0,
     val productId: Long,
-    val colorName: String,
-    val colorHexCode: String
+    var colorName: String,
+    var colorHexCode: String
 )

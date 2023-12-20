@@ -16,5 +16,5 @@ data class ProductSize(
     @PrimaryKey(autoGenerate = true)
     val sizeId: Long = 0,
     val productId: Long,
-    val sizeName: String,
+    var sizeName: String,
 )

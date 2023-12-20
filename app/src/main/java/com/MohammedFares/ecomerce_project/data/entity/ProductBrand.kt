@@ -7,6 +7,6 @@ import androidx.room.PrimaryKey
 data class ProductBrand(
     @PrimaryKey(autoGenerate = true)
     val brandId: Long = 0,
-    val brandName: String,
-    val brandImage: String
+    var brandName: String,
+    var brandImage: String
 )
