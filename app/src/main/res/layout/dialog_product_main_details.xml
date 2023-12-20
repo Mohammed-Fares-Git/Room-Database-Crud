@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/auth_forms_bg"
+    >
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="550dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="15dp"
+            android:gravity="center">
+
+
+            <ImageView
+                android:id="@+id/dialog_image"
+                android:layout_width="300dp"
+                android:layout_height="400dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/upload_ic"/>
+
+            <EditText
+                android:maxLines="1"
+                android:id="@+id/dialog_et_product_name"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/product_name"
+                android:textColorHint="#777"
+                android:textColor="#fff"
+                android:textSize="25sp"
+                android:layout_marginBottom="10dp"
+                android:padding="15dp"
+                />
+
+            <EditText
+                android:maxLines="5"
+                android:id="@+id/dialog_et_product_desc"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/desc"
+                android:textColorHint="#777"
+                android:textColor="#fff"
+                android:textSize="15sp"
+                android:layout_marginBottom="10dp"
+                android:padding="15dp"
+                />
+
+            <EditText
+                android:maxLines="1"
+                android:inputType="number"
+                android:id="@+id/dialog_et_product_price"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/price"
+                android:textColorHint="#777"
+                android:textColor="#fff"
+                android:textSize="25sp"
+                android:layout_marginBottom="10dp"
+                android:padding="15dp"
+                />
+
+
+            <EditText
+                android:maxLines="1"
+                android:inputType="number"
+                android:id="@+id/dialog_et_product_quantity"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/quantity"
+                android:textColorHint="#777"
+                android:textColor="#fff"
+                android:textSize="25sp"
+                android:layout_marginBottom="10dp"
+                android:padding="15dp"
+                />
+
+            <RadioGroup
+                android:id="@+id/product_gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/auth_btn_bg">
+                <RadioButton
+                    android:background="@drawable/rb_bg"
+                    android:gravity="center"
+                    android:button="@android:color/transparent"
+                    android:id="@+id/product_rb_sex_f"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/female"
+                    android:buttonTint="@android:color/transparent"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:textSize="@dimen/min_text_size"
+                    android:textColor="@color/auth_form_text_color"/>
+                <RadioButton
+                    android:background="@drawable/rb_bg"
+                    android:gravity="center"
+                    android:id="@+id/product_rb_sex_m"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/male"
+                    android:buttonTint="@android:color/transparent"
+                    android:layout_weight="1"
+                    android:button="@android:color/transparent"
+
+                    android:padding="10dp"
+                    android:textSize="@dimen/min_text_size"
+                    android:textColor="@color/auth_form_text_color"/>
+            </RadioGroup>
+
+            <EditText
+                android:maxLines="1"
+                android:id="@+id/dialog_et_product_main_image_url"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/image_url_hint"
+                android:textColorHint="#777"
+                android:textColor="#fff"
+                android:textSize="25sp"
+                android:layout_marginBottom="10dp"
+                android:padding="15dp"
+                />
+
+            <Switch
+                android:id="@+id/dialog_switch_pf"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:text="Finger print"
+                android:textSize="25sp"
+                android:textColor="#fff"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/switch_bg"
+                android:padding="15dp"
+                />
+
+            <EditText
+                android:maxLines="1"
+                android:inputType="number"
+                android:id="@+id/dialog_et_product_promotion"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/promotion"
+                android:text="0"
+                android:textColorHint="#777"
+                android:textColor="#fff"
+                android:textSize="25sp"
+                android:layout_marginBottom="10dp"
+                android:padding="15dp"
+                />
+
+            <include layout="@layout/edit_button" android:id="@+id/dialog_edit_btn" android:visibility="gone"/>
+            <include layout="@layout/add_button" android:id="@+id/dialog_add_btn"/>
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+
+
+
+
+</LinearLayout>

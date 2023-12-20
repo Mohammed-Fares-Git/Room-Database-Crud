@@ -63,5 +63,6 @@
     <string name="quantity">Cantidad</string>
     <string name="moroccan_dirham_acronym">MAD</string>
     <string name="free_delivery">Entrega gratuita</string>
+    <string name="promotion">Promotion</string>
 
 </resources>
