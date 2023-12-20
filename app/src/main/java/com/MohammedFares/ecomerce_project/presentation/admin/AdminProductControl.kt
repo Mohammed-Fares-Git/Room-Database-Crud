@@ -647,8 +647,6 @@ class AdminProductControl : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-            dialogType.dialogEditBtn.root.visibility = View.GONE
-            dialogType.dialogAddBtn.root.visibility = View.VISIBLE
             dialogType.dialogEditBtn.root.setOnClickListener {
 
 
