@@ -12,6 +12,7 @@ import com.MohammedFares.ecomerce_project.data.relations.ProductWithDetails
 import com.MohammedFares.ecomerce_project.domain.repository.AdminRepository
 import com.MohammedFares.ecomerce_project.domain.use_case.comon.GetProductByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -36,11 +37,18 @@ class AdminProductControleViewModel @Inject constructor(
 
 
     fun addProdactImage(productSubImage: ProductSubImage) = viewModelScope.launch {
-        repository.addProductImage(productSubImage)
+            repository.addProductImage(productSubImage)
+            delay(500L)
+            getProductById(productSubImage.productId)
+
     }
 
     fun editPeodactImage(productSubImage: ProductSubImage) =
-        viewModelScope.launch { repository.editProductImage(productSubImage) }
+        viewModelScope.launch {
+            repository.editProductImage(productSubImage)
+            delay(500L)
+            getProductById(productSubImage.productId)
+        }
 
     fun deletePeodactImage(productSubImage: ProductSubImage) =
         viewModelScope.launch {

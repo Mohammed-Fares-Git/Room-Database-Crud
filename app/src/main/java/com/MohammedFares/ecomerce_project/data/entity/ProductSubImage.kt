@@ -16,5 +16,5 @@ data class ProductSubImage(
     @PrimaryKey(autoGenerate = true)
     val imageId: Long = 0,
     val productId: Long,
-    val imageUrl: String,
+    var imageUrl: String,
 )

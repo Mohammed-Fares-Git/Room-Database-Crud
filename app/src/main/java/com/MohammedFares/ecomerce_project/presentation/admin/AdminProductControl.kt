@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -91,6 +92,7 @@ class AdminProductControl : Fragment() {
                                 productSubImage = it,
                                 editAction = {
                                     adminProductControleViewModel.editPeodactImage(it)
+                                    Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
                                 })
                         }, {
                             adminProductControleViewModel.deletePeodactImage(it)
@@ -102,6 +104,7 @@ class AdminProductControl : Fragment() {
                                 prdtId = product!!.product.productId,
                                 addAction = {
                                     adminProductControleViewModel.addProdactImage(it)
+                                    Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
                                 })
                         }
                         binding.adminControleProductRvImages.layoutManager = LinearLayoutManager(
@@ -206,16 +209,20 @@ class AdminProductControl : Fragment() {
 
 
         dialogImage.dialogEditBtn.root.visibility = View.GONE
+        dialogImage.dialogEditBtn.root.isClickable = false
 
 
 
         productSubImage?.let {
             dialogImage.dialogEditBtn.root.visibility = View.VISIBLE
+            dialogImage.dialogEditBtn.root.isClickable = true
             dialogImage.dialogAddBtn.root.visibility = View.GONE
 
             Picasso.get().load(it.imageUrl).into(dialogImage.dialogImage)
             dialogImage.dialogEtImageUrl.text = Editable.Factory.getInstance().newEditable(it.imageUrl)
             dialogImage.dialogEditBtn.root.setOnClickListener {
+
+                productSubImage.imageUrl = dialogImage.dialogEtImageUrl.text.toString()
 
                 editAction(productSubImage)
 
@@ -223,16 +230,21 @@ class AdminProductControl : Fragment() {
             }
 
         } ?: run {
-            val url = dialogImage.dialogEtImageUrl.text.toString()
-            var image: ProductSubImage? = null
-            mainProductId?.let {
-                image = ProductSubImage(productId = it, imageUrl = url)
+            dialogImage.dialogAddBtn.root.setOnClickListener { view ->
+                val url = dialogImage.dialogEtImageUrl.text.toString()
+                var image: ProductSubImage? = null
+                mainProductId?.let {
+                    image = ProductSubImage(productId = it, imageUrl = url)
+                }
+
+                Log.d("fares_err", image.toString())
+
+                image?.let {
+                    addAction(it)
+                }
+                dialog.dismiss()
             }
 
-            image?.let {
-                addAction(it)
-            }
-            dialog.dismiss()
         }
 
         dialogImage.dialogEtImageUrl.addTextChangedListener(object : TextWatcher {
