@@ -8,6 +8,7 @@ import com.MohammedFares.ecomerce_project.data.dao.ProductImagesDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductLikeDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductTypeDao
 import com.MohammedFares.ecomerce_project.data.entity.Product
+import com.MohammedFares.ecomerce_project.data.entity.ProductBrand
 import com.MohammedFares.ecomerce_project.data.entity.ProductLike
 import com.MohammedFares.ecomerce_project.data.entity.ProductSubImage
 import com.MohammedFares.ecomerce_project.data.entity.ProductType
@@ -19,7 +20,8 @@ import javax.inject.Inject
 class ClientRepositoryImpl @Inject constructor(
     val product: ProductDao,
     val likeDao: ProductLikeDao,
-    val type: ProductTypeDao
+    val type: ProductTypeDao,
+    val brand: ProductBrandDao
 ) :ClientRepository{
     override suspend fun getAllProducts(): List<Product> {
         return emptyList()
@@ -27,6 +29,10 @@ class ClientRepositoryImpl @Inject constructor(
 
     override suspend fun getTypes(): List<ProductType> {
         return type.getAll()
+    }
+
+    override suspend fun getBrands(): List<ProductBrand> {
+        return brand.getAll()
     }
 
     override suspend fun likeProduct(productId: Long, clienttId: Long) {

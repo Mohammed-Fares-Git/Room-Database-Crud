@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
@@ -23,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.MohammedFares.ecomerce_project.R
 import com.MohammedFares.ecomerce_project.comon.Constantes
 import com.MohammedFares.ecomerce_project.comon.Resource
+import com.MohammedFares.ecomerce_project.comon.Utils
 import com.MohammedFares.ecomerce_project.data.entity.Product
 import com.MohammedFares.ecomerce_project.data.entity.ProductBrand
 import com.MohammedFares.ecomerce_project.data.entity.ProductColor
@@ -74,6 +76,7 @@ class AdminProductControl : Fragment() {
 
 
         adminProductControleViewModel.getProductById(mainProductId!!)
+
         viewLifecycleOwner.lifecycleScope.launch {
             adminProductControleViewModel.productStateFlow.collect {
                 when (it) {
@@ -110,6 +113,15 @@ class AdminProductControl : Fragment() {
                             adminProductControleViewModel.deletePeodactImage(it)
                         })
 
+                        binding.adminControleEditProduct.root.setOnClickListener {
+                            showProductDetailsDialog(
+                                requireContext(),
+                                product!!.product
+                                ) {
+                                adminProductControleViewModel.editProduct(it)
+                            }
+                        }
+
                         binding.adminControleEditProductImages.root.setOnClickListener {
                             showImageDialog(
                                 context = requireContext(),
@@ -119,6 +131,7 @@ class AdminProductControl : Fragment() {
                                     Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
                                 })
                         }
+
                         binding.adminControleProductRvImages.layoutManager = LinearLayoutManager(
                             requireContext(),
                             LinearLayoutManager.HORIZONTAL,
@@ -723,8 +736,15 @@ class AdminProductControl : Fragment() {
     fun showProductDetailsDialog(
         context: Context,
         product: Product,
-        editAction: (productSubImage: ProductSubImage) -> Unit = {}
+        editAction: (product: Product) -> Unit = {}
     ) {
+
+        var selectedTypeId: Long = 1
+        var selectedBrandId: Long = 1
+        var editedProduct: Product = product
+        var types = mutableListOf<ProductType>()
+        var brands = mutableListOf<ProductBrand>()
+
         val inflater = LayoutInflater.from(context)
         dialogProductDetails = DialogProductMainDetailsBinding.inflate(inflater)
 
@@ -758,61 +778,161 @@ class AdminProductControl : Fragment() {
             dialogProductDetails.dialogEtProductQuantity.text = Editable.Factory.getInstance().newEditable(it.quantity.toString())
             dialogProductDetails.dialogSwitchDelevry.isChecked = it.livreson
             if (it.gender == Constantes.MALE_KEY) {
-                dialogProductDetails.productRbSexF.isSelected = true
+                dialogProductDetails.productRbSexF.isChecked = true
             } else {
-                dialogProductDetails.productRbSexM.isSelected = true
+                dialogProductDetails.productRbSexM.isChecked = true
             }
 
-            lifecycleScope.launch {
+            val typeId = it.typeId
+            val brandId = it.brandId
+
+            viewLifecycleOwner.lifecycleScope.launch {
+
                 launch {
-                    dialogViewModel.typesStateFlow.collect {
+
+
+                    dialogViewModel.brandsStateFlow.collect {
                         when (it) {
                             is Resource.Empty -> {}
                             is Resource.Error -> {}
                             is Resource.Loading -> {}
                             is Resource.Success -> {
-                                val types = mutableListOf<ProductType>()
                                 it.data!!.map {
-                                    types.add(it)
+                                    brands.add(it)
                                 }
-                                val typesAdapter = object : ArrayAdapter<ProductType>(requireContext(),R.layout.type_selection_item,types) {
-                                    override fun getView(
-                                        position: Int,
-                                        convertView: View?,
-                                        parent: ViewGroup
-                                    ): View {
+                                val brandsAdapter = object : ArrayAdapter<ProductBrand>(requireContext(), R.layout.type_selection_item, brands) {
+                                    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                                        return createItemView(position, convertView, parent)
+                                    }
 
-                                        val itemView = super.getView(position, convertView, parent)
+                                    override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+                                        return createItemView(position, convertView, parent)
+                                    }
+
+                                    private fun createItemView(position: Int, convertView: View?, parent: ViewGroup): View {
+                                        val itemView = convertView ?: LayoutInflater.from(context)
+                                            .inflate(R.layout.type_selection_item, parent, false)
+
                                         try {
-                                            Picasso.get().load(types[position].typeImage).resize(100,100).into(itemView.findViewById<ImageView>(R.id.selection_item_image))
-                                        } catch (e: Exception){
-
+                                            Picasso.get().load(brands[position].brandImage).resize(100, 100)
+                                                .into(itemView.findViewById<ImageView>(R.id.selection_item_image))
+                                        } catch (e: Exception) {
+                                            // Handle Picasso exception
                                         }
-                                        1
-                                        itemView.findViewById<TextView>(R.id.selection_item_name).text = types[position].typeName
+
+                                        itemView.findViewById<TextView>(R.id.selection_item_name).text = brands[position].brandName
 
                                         return itemView
                                     }
+                                }
 
-                                    override fun getDropDownView(
-                                        position: Int,
-                                        convertView: View?,
-                                        parent: ViewGroup
-                                    ): View {
-                                        return super.getDropDownView(position, convertView, parent)
+
+                                dialogProductDetails.selectBrand.root.adapter = brandsAdapter
+
+                                var selectedBrand = 0
+
+                                brands.forEach { productBrand ->
+                                    if (productBrand.brandId == brandId) {
+                                        selectedBrand = brands.indexOf(productBrand)
                                     }
                                 }
 
-                                dialogProductDetails.selectType.root.adapter = typesAdapter
+                                dialogProductDetails.selectBrand.root.setSelection(selectedBrand)
                             }
                         }
                     }
                 }
+
+
+                dialogViewModel.typesStateFlow.collect {
+                    when (it) {
+                        is Resource.Empty -> {}
+                        is Resource.Error -> {}
+                        is Resource.Loading -> {
+                            Toast.makeText(requireContext(), "types", Toast.LENGTH_SHORT).show()
+                        }
+                        is Resource.Success -> {
+                            it.data!!.map {
+                                types.add(it)
+                            }
+                            val typesAdapter = object : ArrayAdapter<ProductType>(requireContext(), R.layout.type_selection_item, types) {
+                                override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                                    return createItemView(position, convertView, parent)
+                                }
+
+                                override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+                                    return createItemView(position, convertView, parent)
+                                }
+
+                                private fun createItemView(position: Int, convertView: View?, parent: ViewGroup): View {
+                                    val itemView = convertView ?: LayoutInflater.from(context)
+                                        .inflate(R.layout.type_selection_item, parent, false)
+
+                                    try {
+                                        Picasso.get().load(types[position].typeImage).resize(100, 100)
+                                            .into(itemView.findViewById<ImageView>(R.id.selection_item_image))
+                                    } catch (e: Exception) {
+                                        // Handle Picasso exception
+                                    }
+
+                                    itemView.findViewById<TextView>(R.id.selection_item_name).text = types[position].typeName
+
+                                    return itemView
+                                }
+                            }
+
+
+                            dialogProductDetails.selectType.root.adapter = typesAdapter
+
+                            var selectedType = 0
+
+                            types.forEach { productType ->
+                                if (productType.typeId == typeId) {
+                                    selectedType = types.indexOf(productType)
+                                }
+                            }
+
+                            dialogProductDetails.selectType.root.setSelection(selectedType)
+                        }
+                    }
+                }
+
+
             }
+
+
+
+            dialogProductDetails.selectType.root.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    selectedTypeId = types[p2].typeId
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                    selectedTypeId = 1
+                }
+            }
+
+            dialogProductDetails.selectBrand.root.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    selectedBrandId = brands[p2].brandId
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                    selectedBrandId = 1
+                }
+            }
+
 
 
             dialogProductDetails.dialogEditBtn.root.setOnClickListener {
 
+
+                Utils.validateProductForm(dialogProductDetails,product,selectedTypeId,selectedBrandId)?.let {
+                    editedProduct = it
+                }
+
+
+                editAction(editedProduct)
 
 
                 dialog.dismiss()
@@ -854,6 +974,7 @@ class AdminProductControl : Fragment() {
 
         dialog.show()
     }
+
 
 
 }

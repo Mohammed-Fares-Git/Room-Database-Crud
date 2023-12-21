@@ -9,6 +9,7 @@ import com.MohammedFares.ecomerce_project.data.dao.ProductImagesDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductLikeDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductSizeDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductTypeDao
+import com.MohammedFares.ecomerce_project.data.entity.ProductBrand
 import com.MohammedFares.ecomerce_project.data.entity.ProductType
 import com.MohammedFares.ecomerce_project.data.repository.AdminRepositoryImpl
 import com.MohammedFares.ecomerce_project.data.repository.AuthRepositoryImpl
@@ -58,9 +59,10 @@ object RepositoryModule {
     fun provideClientRepository(
         productDao: ProductDao,
         productLikeDao: ProductLikeDao,
-        productType: ProductTypeDao
+        productType: ProductTypeDao,
+        productBrand: ProductBrandDao
     ): ClientRepository {
-        return ClientRepositoryImpl(productDao, productLikeDao, productType)
+        return ClientRepositoryImpl(productDao, productLikeDao, productType, productBrand)
     }
 
 }

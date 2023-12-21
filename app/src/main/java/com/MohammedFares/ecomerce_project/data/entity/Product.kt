@@ -22,14 +22,14 @@ import com.MohammedFares.ecomerce_project.comon.Constantes
 data class Product(
     @PrimaryKey(autoGenerate = true)
     val productId: Long = 0,
-    val productName: String,
-    val productDesc: String,
+    var productName: String,
+    var productDesc: String,
     val gender: String = Constantes.ALL_KEY,
     val price: Double,
-    val sold: Int = 0,
+    var sold: Int = 0,
     val livreson: Boolean = false,
-    val quantity: Int,
-    val mainImage: String,
-    val brandId: Long? = null,
-    val typeId: Long? = null
+    var quantity: Int,
+    var mainImage: String,
+    var brandId: Long? = null,
+    var typeId: Long? = null
 )

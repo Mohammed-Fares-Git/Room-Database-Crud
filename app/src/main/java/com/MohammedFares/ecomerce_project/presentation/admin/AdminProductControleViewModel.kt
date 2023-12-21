@@ -78,7 +78,11 @@ class AdminProductControleViewModel @Inject constructor(
     fun editProductColor(productColor: ProductColor) =
         viewModelScope.launch { repository.editProductColor(productColor) }
 
-    fun editProduct(product: Product) = viewModelScope.launch { repository.editProduct(product) }
+    fun editProduct(product: Product) = viewModelScope.launch {
+        repository.editProduct(product)
+        delay(500L)
+        getProductById(product.productId)
+    }
     fun editProductType(productType: ProductType) = viewModelScope.launch { repository.editProductType(productType) }
     fun editProductBrand(productBrand: ProductBrand) = viewModelScope.launch { repository.editProductBrand(productBrand) }
 }
