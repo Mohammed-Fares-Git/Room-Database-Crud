@@ -129,8 +129,11 @@
                 android:padding="15dp"
                 />
 
+            <include layout="@layout/admin_type_selection" android:id="@+id/select_type"/>
+            <include layout="@layout/admin_type_selection" android:id="@+id/select_brand"/>
+
             <Switch
-                android:id="@+id/dialog_switch_pf"
+                android:id="@+id/dialog_switch_delevry"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:text="Finger print"

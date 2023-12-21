@@ -10,14 +10,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.viewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.MohammedFares.ecomerce_project.R
+import com.MohammedFares.ecomerce_project.comon.Constantes
 import com.MohammedFares.ecomerce_project.comon.Resource
+import com.MohammedFares.ecomerce_project.data.entity.Product
 import com.MohammedFares.ecomerce_project.data.entity.ProductBrand
 import com.MohammedFares.ecomerce_project.data.entity.ProductColor
 import com.MohammedFares.ecomerce_project.data.entity.ProductSize
@@ -27,6 +33,7 @@ import com.MohammedFares.ecomerce_project.databinding.AdminProductControlBinding
 import com.MohammedFares.ecomerce_project.databinding.DialogBrandBinding
 import com.MohammedFares.ecomerce_project.databinding.DialogColorBinding
 import com.MohammedFares.ecomerce_project.databinding.DialogImagesBinding
+import com.MohammedFares.ecomerce_project.databinding.DialogProductMainDetailsBinding
 import com.MohammedFares.ecomerce_project.databinding.DialogSizeBinding
 import com.MohammedFares.ecomerce_project.databinding.DialogTypeBinding
 import com.MohammedFares.ecomerce_project.presentation.adapters.AdminColorAdapter
@@ -46,11 +53,14 @@ class AdminProductControl : Fragment() {
     private lateinit var dialogColor: DialogColorBinding
     private lateinit var dialogBrand: DialogBrandBinding
     private lateinit var dialogType: DialogTypeBinding
+    private lateinit var dialogProductDetails: DialogProductMainDetailsBinding
     private var mainProductId: Long? = null
 
 
     //val adminProductControleViewModel: AdminProductControleViewModel by viewModels()
     val adminProductControleViewModel: AdminProductControleViewModel by hiltNavGraphViewModels(R.id.administration_graph_xml)
+    //val dialogViewModel: AdminProductControlDialogViewModel by hiltNavGraphViewModels(R.id.administration_graph_xml)
+    val dialogViewModel: AdminProductControlDialogViewModel by viewModels()
 
     val args: AdminProductControlArgs by navArgs()
 
@@ -699,6 +709,142 @@ class AdminProductControl : Fragment() {
             }
 
             override fun afterTextChanged(p0: Editable?) {}
+
+        })
+
+        dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
+        dialog.window?.setBackgroundDrawableResource(R.drawable.auth_forms_bg)
+
+
+        dialog.show()
+    }
+
+
+    fun showProductDetailsDialog(
+        context: Context,
+        product: Product,
+        editAction: (productSubImage: ProductSubImage) -> Unit = {}
+    ) {
+        val inflater = LayoutInflater.from(context)
+        dialogProductDetails = DialogProductMainDetailsBinding.inflate(inflater)
+
+        val builder = AlertDialog.Builder(context)
+        val view = dialogProductDetails.root
+
+
+        builder.setView(view)
+
+        val dialog = builder.create()
+
+
+        dialogProductDetails.dialogEditBtn.root.visibility = View.VISIBLE
+        dialogProductDetails.dialogEditBtn.root.isClickable = true
+        dialogProductDetails.dialogAddBtn.root.visibility = View.GONE
+        dialogProductDetails.dialogAddBtn.root.isClickable = false
+
+
+
+
+
+        product.also {
+
+
+            Picasso.get().load(it.mainImage).into(dialogProductDetails.dialogImage)
+            dialogProductDetails.dialogEtProductMainImageUrl.text = Editable.Factory.getInstance().newEditable(it.mainImage)
+            dialogProductDetails.dialogEtProductName.text = Editable.Factory.getInstance().newEditable(it.productName)
+            dialogProductDetails.dialogEtProductDesc.text = Editable.Factory.getInstance().newEditable(it.productDesc)
+            dialogProductDetails.dialogEtProductPrice.text = Editable.Factory.getInstance().newEditable(it.price.toString())
+            dialogProductDetails.dialogEtProductPromotion.text = Editable.Factory.getInstance().newEditable(it.sold.toString())
+            dialogProductDetails.dialogEtProductQuantity.text = Editable.Factory.getInstance().newEditable(it.quantity.toString())
+            dialogProductDetails.dialogSwitchDelevry.isChecked = it.livreson
+            if (it.gender == Constantes.MALE_KEY) {
+                dialogProductDetails.productRbSexF.isSelected = true
+            } else {
+                dialogProductDetails.productRbSexM.isSelected = true
+            }
+
+            lifecycleScope.launch {
+                launch {
+                    dialogViewModel.typesStateFlow.collect {
+                        when (it) {
+                            is Resource.Empty -> {}
+                            is Resource.Error -> {}
+                            is Resource.Loading -> {}
+                            is Resource.Success -> {
+                                val types = mutableListOf<ProductType>()
+                                it.data!!.map {
+                                    types.add(it)
+                                }
+                                val typesAdapter = object : ArrayAdapter<ProductType>(requireContext(),R.layout.type_selection_item,types) {
+                                    override fun getView(
+                                        position: Int,
+                                        convertView: View?,
+                                        parent: ViewGroup
+                                    ): View {
+
+                                        val itemView = super.getView(position, convertView, parent)
+                                        try {
+                                            Picasso.get().load(types[position].typeImage).resize(100,100).into(itemView.findViewById<ImageView>(R.id.selection_item_image))
+                                        } catch (e: Exception){
+
+                                        }
+                                        1
+                                        itemView.findViewById<TextView>(R.id.selection_item_name).text = types[position].typeName
+
+                                        return itemView
+                                    }
+
+                                    override fun getDropDownView(
+                                        position: Int,
+                                        convertView: View?,
+                                        parent: ViewGroup
+                                    ): View {
+                                        return super.getDropDownView(position, convertView, parent)
+                                    }
+                                }
+
+                                dialogProductDetails.selectType.root.adapter = typesAdapter
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            dialogProductDetails.dialogEditBtn.root.setOnClickListener {
+
+
+
+                dialog.dismiss()
+            }
+
+        }
+
+        dialogProductDetails.dialogEtProductMainImageUrl.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                p0?.let {
+                    if (it.length >= 0) {
+                        try {
+                            Picasso.get().load(it.toString()).placeholder(R.drawable.upload_ic)
+                                .into(dialogProductDetails.dialogImage)
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                requireContext(),
+                                requireActivity().getText(R.string.provide_valid_url),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
 
         })
 
