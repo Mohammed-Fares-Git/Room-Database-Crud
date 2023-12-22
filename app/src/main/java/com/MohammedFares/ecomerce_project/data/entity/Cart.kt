@@ -16,6 +16,5 @@ data class Cart(
     @PrimaryKey(autoGenerate = true)
     val cartId: Long = 0,
     val clientId: Long,
-    val createdAt: Long,
     var isCheckedOut: Boolean = false
 )

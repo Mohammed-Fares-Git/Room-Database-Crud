@@ -8,6 +8,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.MohammedFares.ecomerce_project.comon.Constantes
 import com.MohammedFares.ecomerce_project.data.EcommerceDb
 import com.MohammedFares.ecomerce_project.data.dao.AdminDao
+import com.MohammedFares.ecomerce_project.data.dao.CartDao
+import com.MohammedFares.ecomerce_project.data.dao.CartItemDao
 import com.MohammedFares.ecomerce_project.data.dao.ClientDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductBrandDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductColorDao
@@ -64,6 +66,8 @@ object RoomDatabaseModule {
                         val brandDao = provideRoom(ctx).productBrandDao()
                         val typeDao = provideRoom(ctx).productTypeDao()
                         val imageDao = provideRoom(ctx).imagetDao()
+                        val cartDao = provideRoom(ctx).cartDao()
+                        val cartItemDao = provideRoom(ctx).cartItemDao()
 
 
 
@@ -435,6 +439,18 @@ object RoomDatabaseModule {
     @Provides
     fun provideProductSizeDao(ecommerceDb: EcommerceDb): ProductSizeDao {
         return ecommerceDb.productSizeDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideCartDao(ecommerceDb: EcommerceDb): CartDao {
+        return ecommerceDb.cartDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideCartItemDao(ecommerceDb: EcommerceDb): CartItemDao {
+        return ecommerceDb.cartItemDao()
     }
 
     @Singleton

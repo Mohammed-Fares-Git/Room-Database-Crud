@@ -22,6 +22,10 @@ class AuthManager( private val context: Context) {
         get() = sharedPreferences.getLong(KEY_ID, 1)
         set(value) = sharedPreferences.edit().putLong(KEY_ID, value).apply()
 
+    var cartId: Long
+        get() = sharedPreferences.getLong(KEY_CART_ID,-1)
+        set(value) = sharedPreferences.edit().putLong(KEY_CART_ID, value).apply()
+
     var email: String?
         get() = sharedPreferences.getString(KEY_EMAIL, null)
         set(value) = sharedPreferences.edit().putString(KEY_EMAIL, value).apply()
@@ -61,5 +65,6 @@ class AuthManager( private val context: Context) {
         private const val KEY_EMAIL = "email"
         private const val KEY_PROFILE = "profile"
         private const val KEY_IS_LOGGED_IN = "isLoggedIn"
+        private const val KEY_CART_ID = "cartId"
     }
 }

@@ -15,4 +15,8 @@ object Constantes {
     const val DRESS = "Dress"
     const val HOODIE = "Hoodie"
     const val TRICO = "Trico"
+
+
+
+    const val NO_CART_ID: Long = -1
 }

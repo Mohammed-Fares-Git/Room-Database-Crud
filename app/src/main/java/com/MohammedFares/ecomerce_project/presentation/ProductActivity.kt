@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.MohammedFares.ecomerce_project.R
+import com.MohammedFares.ecomerce_project.auth.AuthManager
 import com.MohammedFares.ecomerce_project.comon.Constantes
 import com.MohammedFares.ecomerce_project.comon.Resource
 import com.MohammedFares.ecomerce_project.data.entity.ProductLike
@@ -29,14 +30,20 @@ import kotlinx.coroutines.withContext
 @AndroidEntryPoint
 class ProductActivity : AppCompatActivity() {
 
+
     private lateinit var binding: ActivityProductBinding
     private lateinit var intent: Intent
     private lateinit var selectebleColors: List<SelectebleColor>
     private lateinit var selectebleSizes: List<SelectebleSize>
     private lateinit var colorAdapter: ColorAdapter2
     private lateinit var sizeAdapter: SizeAdapter2
-
+    private lateinit var authManager: AuthManager
     val clientId: Long = 1
+
+    var cartId: Long = -1
+
+
+
 
 
     val productViewModel: ProductViewModel by viewModels()
@@ -44,6 +51,8 @@ class ProductActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityProductBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        authManager = AuthManager(this)
 
 
         intent = getIntent()
@@ -69,6 +78,18 @@ class ProductActivity : AppCompatActivity() {
         binding.sizesRv.setHasFixedSize(true)
         binding.sizesRv.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
         binding.sizesRv.adapter = sizeAdapter
+
+
+        binding.addToCartBtn.setOnClickListener {
+
+            if (cartId != Constantes.NO_CART_ID) {
+                Toast.makeText(baseContext, "add to cart", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(baseContext, "failed to add to cart", Toast.LENGTH_SHORT).show()
+            }
+
+            finish()
+        }
 
         lifecycleScope.launch {
 

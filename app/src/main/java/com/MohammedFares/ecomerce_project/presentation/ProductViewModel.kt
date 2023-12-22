@@ -67,5 +67,11 @@ class ProductViewModel @Inject constructor(
         }
     }
 
+    fun addToCart(productId: Long, cartId: Long): Boolean {
+        return false
+    }
+
+
+
 
 }
