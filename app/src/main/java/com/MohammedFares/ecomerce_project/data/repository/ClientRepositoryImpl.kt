@@ -66,5 +66,9 @@ class ClientRepositoryImpl @Inject constructor(
         return cartProducts.creat(cart)
     }
 
+    override suspend fun currentCart(clientId: Long): List<Cart> {
+        return cartProducts.getCurrentCart(clientId)
+    }
+
 
 }
