@@ -5,7 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.MohammedFares.ecomerce_project.data.entity.Cart
 import com.MohammedFares.ecomerce_project.domain.repository.ClientRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -25,11 +28,18 @@ class ClientViewModel @Inject constructor(
             client.getCartItemsCount(cartId)
         }.await()
     }
-    fun getCurrentCart(clientId: Long) = viewModelScope.launch {
+    fun getCurrentCart(clientId: Long, action: (cart: Cart)->Unit): Job = viewModelScope.launch {
         var nonCheckedOutCartsCount = async { client.getCurrentCarts(clientId) }
 
         if (nonCheckedOutCartsCount.await() < 1) {
             client.creatCart(Cart(clientId = clientId))
+            delay(500L)
+            getCurrentCart(clientId) {
+                action(it)
+            }
+        } else {
+            val cart = async{ client.currentCart(clientId) }
+            action(cart.await()[0])
         }
     }
 }

@@ -16,6 +16,9 @@ interface CartDao {
     @Query("SELECT COUNT(*) as carts_count FROM cart_table WHERE isCheckedOut = 0 AND clientId = :clientId")
     suspend fun getNonCheckedOutCart(clientId: Long): Int
 
+    @Query("SELECT * FROM cart_table WHERE isCheckedOut = 0 AND clientId = :clientId LIMIT 1")
+    suspend fun getCurrentCart(clientId: Long): List<Cart>
+
 
     @Query("SELECT COUNT(*) as cart_items_cont FROM cart_table as cart JOIN cart_items as item ON cart.cartId = item.cartId")
     suspend fun getCartItemsCount(): Int

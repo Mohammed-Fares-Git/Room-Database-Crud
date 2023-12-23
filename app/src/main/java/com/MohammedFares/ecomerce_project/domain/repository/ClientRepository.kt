@@ -18,4 +18,5 @@ interface ClientRepository {
     suspend fun getCarts(): List<Cart>
     suspend fun getCurrentCarts(clientId: Long): Int
     suspend fun creatCart(cart: Cart): Long
+    suspend fun currentCart(clientI: Long): List<Cart>
 }
