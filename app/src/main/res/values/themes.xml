@@ -1,9 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.Ecomerce_Project" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <style name="Base.Theme.Ecomerce_Project" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:statusBarColor">@color/black</item>
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">#B7777777</item>
     </style>
 
     <style name="Theme.Ecomerce_Project" parent="Base.Theme.Ecomerce_Project" />

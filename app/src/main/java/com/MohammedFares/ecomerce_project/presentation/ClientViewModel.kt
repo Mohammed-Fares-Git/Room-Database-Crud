@@ -24,22 +24,27 @@ class ClientViewModel @Inject constructor(
     val cartItemsCountStateFlow: StateFlow<Int> = _cartItemsCountStateFlow
 
     fun getCartItemsCount(cartId: Long) = viewModelScope.launch {
-        _cartItemsCountStateFlow.value = async {
-            client.getCartItemsCount(cartId)
-        }.await()
+            client.getCartItemsCount(cartId).collect {
+                _cartItemsCountStateFlow.value = it
+            }
     }
-    fun getCurrentCart(clientId: Long, action: (cart: Cart)->Unit): Job = viewModelScope.launch {
+    fun getCurrentCart(clientId: Long, action: (cartId: Long)->Unit): Job = viewModelScope.launch {
         var nonCheckedOutCartsCount = async { client.getCurrentCarts(clientId) }
 
         if (nonCheckedOutCartsCount.await() < 1) {
-            client.creatCart(Cart(clientId = clientId))
-            delay(500L)
+            val id = client.creatCart(Cart(clientId = clientId))
+
+            action(id)
+            /*
+            delay(50L)
             getCurrentCart(clientId) {
                 action(it)
             }
+
+             */
         } else {
             val cart = async{ client.currentCart(clientId) }
-            action(cart.await()[0])
+            action(cart.await()[0].cartId)
         }
     }
 }

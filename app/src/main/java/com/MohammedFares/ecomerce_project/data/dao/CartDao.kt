@@ -6,6 +6,7 @@ import androidx.room.Query
 import com.MohammedFares.ecomerce_project.data.entity.Admin
 import com.MohammedFares.ecomerce_project.data.entity.Cart
 import com.MohammedFares.ecomerce_project.data.entity.Client
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CartDao {
@@ -20,8 +21,8 @@ interface CartDao {
     suspend fun getCurrentCart(clientId: Long): List<Cart>
 
 
-    @Query("SELECT COUNT(*) as cart_items_cont FROM cart_table as cart JOIN cart_items as item ON cart.cartId = item.cartId")
-    suspend fun getCartItemsCount(): Int
+    @Query("SELECT COUNT(*) as cart_items_cont FROM cart_table as cart JOIN cart_items as item ON cart.cartId = item.cartId WHERE cart.cartId = :cartId")
+    fun getCartItemsCount(cartId: Long): Flow<Int>
 
 
 }

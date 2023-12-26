@@ -13,6 +13,7 @@ import com.MohammedFares.ecomerce_project.auth.AuthManager
 import com.MohammedFares.ecomerce_project.data.entity.Cart
 import com.MohammedFares.ecomerce_project.databinding.ActivityClientMianBinding
 import com.MohammedFares.ecomerce_project.databinding.UtilBadgeBinding
+import com.google.android.material.badge.BadgeDrawable
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
@@ -22,7 +23,8 @@ import kotlinx.coroutines.runBlocking
 class ClientMian : AppCompatActivity() {
     private lateinit var authManager: AuthManager
     private lateinit var binding: ActivityClientMianBinding
-    private lateinit var badgeBinding: UtilBadgeBinding
+    //private lateinit var badgeBinding: UtilBadgeBinding
+    private lateinit var badge: BadgeDrawable
     val clientViewModel: ClientViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,22 +35,26 @@ class ClientMian : AppCompatActivity() {
 
 
 
+
+
+
         authManager = AuthManager(this)
 
         val loginState = authManager.isLoggedIn and authManager.isClientLoggedIn()
 
 
-        if (!loginState) {
+        if (loginState) {
             startActivity(Intent(this@ClientMian,LoginMain::class.java))
             finish()
         } else {
             val navController = Navigation.findNavController(this, R.id.client_main_container);
             NavigationUI.setupWithNavController(binding.bnvMain, navController);
 
+            val cartMenuItem: MenuItem = binding.bnvMain.menu.findItem(R.id.cartPage)
+            badge = binding.bnvMain.getOrCreateBadge(cartMenuItem.itemId)
 
-            val cartMenuItem: MenuItem = binding.bnvMain.menu.getItem(R.id.cartPage)
 
-            badgeBinding = UtilBadgeBinding.inflate(layoutInflater,binding.bnvMain,false)
+            //badgeBinding = UtilBadgeBinding.inflate(layoutInflater,binding.bnvMain,false)
 
 
 
@@ -65,11 +71,11 @@ class ClientMian : AppCompatActivity() {
 
                 clientViewModel.cartItemsCountStateFlow.collect {
                     if (it > 0) {
-                        badgeBinding.badge.setNumber(it)
-                        cartMenuItem.actionView = badgeBinding.badge
+                        badge.isVisible = true
+                        badge.number = it
                     } else {
-                        badgeBinding.badge.setText("walo!")
-                        cartMenuItem.actionView = badgeBinding.badge
+                        badge.isVisible = false
+                        badge.number = it
                     }
                 }
             }
@@ -79,8 +85,8 @@ class ClientMian : AppCompatActivity() {
 
     }
 
-    private fun setCartId(it: Cart) {
-        authManager.cartId = it.cartId
+    private fun setCartId(it: Long) {
+        authManager.cartId = it
     }
 
     private suspend fun retrySetCartId() {

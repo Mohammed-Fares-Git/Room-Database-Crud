@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingEnd="5dp">
+    android:paddingEnd="5dp"
+    android:layout_marginTop="5dp">
     <androidx.cardview.widget.CardView
         android:layout_margin="5dp"
         app:cardElevation="3dp"
@@ -15,6 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/image"
             android:layout_width="100dp"
             android:layout_height="150dp"
             android:scaleType="centerCrop"
@@ -36,6 +38,7 @@
 
 
     <TextView
+        android:id="@+id/product_size"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="size : M"
@@ -46,6 +49,7 @@
         app:layout_constraintStart_toStartOf="@id/product_name_tv"/>
 
     <ImageView
+        android:id="@+id/is_liked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/favorite_ic"
@@ -71,6 +75,7 @@
             app:cardElevation="3dp">
 
             <androidx.appcompat.widget.AppCompatImageButton
+
                 android:id="@+id/remove"
                 android:padding="3dp"
                 android:layout_width="wrap_content"
@@ -127,7 +132,7 @@
         />
 
     <View
-        android:id="@+id/hr_1"
+        android:id="@+id/hr_bottom"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="#777"

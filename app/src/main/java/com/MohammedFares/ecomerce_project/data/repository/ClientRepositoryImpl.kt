@@ -10,14 +10,18 @@ import com.MohammedFares.ecomerce_project.data.dao.ProductImagesDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductLikeDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductTypeDao
 import com.MohammedFares.ecomerce_project.data.entity.Cart
+import com.MohammedFares.ecomerce_project.data.entity.CartItem
 import com.MohammedFares.ecomerce_project.data.entity.Product
 import com.MohammedFares.ecomerce_project.data.entity.ProductBrand
 import com.MohammedFares.ecomerce_project.data.entity.ProductLike
 import com.MohammedFares.ecomerce_project.data.entity.ProductSubImage
 import com.MohammedFares.ecomerce_project.data.entity.ProductType
+import com.MohammedFares.ecomerce_project.data.relations.CartItemDetails
 import com.MohammedFares.ecomerce_project.data.relations.ProductWithDetails
 import com.MohammedFares.ecomerce_project.domain.repository.AdminRepository
 import com.MohammedFares.ecomerce_project.domain.repository.ClientRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
 class ClientRepositoryImpl @Inject constructor(
@@ -25,7 +29,7 @@ class ClientRepositoryImpl @Inject constructor(
     val likeDao: ProductLikeDao,
     val type: ProductTypeDao,
     val cartProducts: CartDao,
-    val cartItem: CartItemDao,
+    val cartItemDao: CartItemDao,
     val brand: ProductBrandDao
 ) :ClientRepository{
     override suspend fun getAllProducts(): List<Product> {
@@ -48,14 +52,17 @@ class ClientRepositoryImpl @Inject constructor(
         likeDao.delete(productLike)
     }
 
-    override suspend fun getCartItemsCount(cartId: Long): Int {
-        return 0
+    override fun getCartItemsCount(cartId: Long): Flow<Int> {
+        return cartProducts.getCartItemsCount(cartId)
     }
 
     override suspend fun getCarts(): List<Cart> {
         return emptyList()
     }
 
+    override suspend fun getCartItems(cartId: Long): List<CartItemDetails> {
+        return cartItemDao.getCartItems(cartId)
+    }
 
 
     override suspend fun getCurrentCarts(clientId: Long): Int {
@@ -68,6 +75,14 @@ class ClientRepositoryImpl @Inject constructor(
 
     override suspend fun currentCart(clientId: Long): List<Cart> {
         return cartProducts.getCurrentCart(clientId)
+    }
+
+    override suspend fun addToCart(cartItem: CartItem): Long {
+        return cartItemDao.addToCart(cartItem)
+    }
+
+    override suspend fun removeFromCart(cartItem: CartItem): Int {
+        return cartItemDao.removeFromCart(cartItem)
     }
 
 

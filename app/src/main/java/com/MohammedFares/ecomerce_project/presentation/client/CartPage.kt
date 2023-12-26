@@ -5,56 +5,99 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.MohammedFares.ecomerce_project.R
+import com.MohammedFares.ecomerce_project.auth.AuthManager
+import com.MohammedFares.ecomerce_project.comon.Resource
+import com.MohammedFares.ecomerce_project.databinding.CartPageBinding
+import com.MohammedFares.ecomerce_project.presentation.adapters.CartItemsAdapter
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [CartPage.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class CartPage : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var authManager: AuthManager
+
+    private lateinit var binding: CartPageBinding
+    private lateinit var adapter: CartItemsAdapter
+    val cartPageViewModel: CartPageViewModel by viewModels()
+    var cartId: Long? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.cart_page, container, false)
+        binding = CartPageBinding.inflate(inflater,container,false)
+
+
+        authManager = AuthManager(requireContext())
+
+        adapter = CartItemsAdapter(
+            deleteAction = {
+                cartPageViewModel.removeFromCart(it)
+            }
+        )
+        binding.cartItemsRv.layoutManager = LinearLayoutManager(requireContext())
+        binding.cartItemsRv.adapter = adapter
+
+
+
+        if (true) {
+
+            cartId = 1
+
+            viewLifecycleOwner.lifecycleScope.launch {
+
+                cartPageViewModel.itemesStateFlow.collect {
+                    when (it) {
+                        is Resource.Empty -> {}
+                        is Resource.Error -> {
+                            Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                        }
+                        is Resource.Loading -> {}
+                        is Resource.Success -> {
+                            val cartItems = it.data
+
+                            adapter.submitList(cartItems)
+                            var price = 0.0
+
+                            binding.totalPrice.text = "sssssssss"
+
+                            cartItems?.forEach {
+                                price += it.cartItem.quantity * it.product.price
+                            }
+
+                            binding.totalPrice.text = "${ price } ${R.string.moroccan_dirham_acronym}"
+                        }
+                    }
+                }
+
+                cartId?.let {
+                    cartPageViewModel.getProduct(it)
+                }
+                }
+
+            viewLifecycleOwner.lifecycleScope.launch { cartId?.let {
+                cartPageViewModel.getCartItemsCount(it)
+                cartPageViewModel.cartItemsCountStateFlow.collect {
+                    binding.cartItemsNbr.text = it.toString()
+                }
+            } }
+
+
+
+        }
+
+
+
+
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CartPage.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CartPage().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }

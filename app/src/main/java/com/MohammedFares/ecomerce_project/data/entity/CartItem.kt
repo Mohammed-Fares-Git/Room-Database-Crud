@@ -22,5 +22,7 @@ data class CartItem(
     val cartItemId: Long = 0,
     val cartId: Long,
     val productId: Long,
-    val quantity: Int
+    var sizeId: Long? = null,
+    var colorId: Long? = null,
+    var quantity: Int = 1
 )

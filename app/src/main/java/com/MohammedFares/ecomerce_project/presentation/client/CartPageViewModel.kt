@@ -1,4 +1,4 @@
-package com.MohammedFares.ecomerce_project.presentation
+package com.MohammedFares.ecomerce_project.presentation.client
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -6,12 +6,14 @@ import com.MohammedFares.ecomerce_project.comon.Resource
 import com.MohammedFares.ecomerce_project.data.entity.Admin
 import com.MohammedFares.ecomerce_project.data.entity.CartItem
 import com.MohammedFares.ecomerce_project.data.entity.ProductLike
+import com.MohammedFares.ecomerce_project.data.relations.CartItemDetails
 import com.MohammedFares.ecomerce_project.data.relations.ProductWithDetails
 import com.MohammedFares.ecomerce_project.domain.model.ProductExpendable
 import com.MohammedFares.ecomerce_project.domain.model.ProductScreenState
 import com.MohammedFares.ecomerce_project.domain.repository.ClientRepository
 import com.MohammedFares.ecomerce_project.domain.use_case.admin.GetAllProductsUseCase
 import com.MohammedFares.ecomerce_project.domain.use_case.auth.AdminAuthUseCase
+import com.MohammedFares.ecomerce_project.domain.use_case.client.GetCartItemsUseCase
 import com.MohammedFares.ecomerce_project.domain.use_case.comon.GetProductByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,45 +22,36 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProductViewModel @Inject constructor(
-    val getProdct: GetProductByIdUseCase,
+class CartPageViewModel @Inject constructor(
+    val getCartItemsUseCase: GetCartItemsUseCase,
     val clientRepository: ClientRepository
 ): ViewModel() {
-    private val _productsStateFlow: MutableStateFlow<Resource<ProductWithDetails>> = MutableStateFlow(Resource.Empty())
-    val prodctsStateFlow: StateFlow<Resource<ProductWithDetails>> = _productsStateFlow
+    private val _ItemesStateFlow: MutableStateFlow<Resource<List<CartItemDetails>>> = MutableStateFlow(Resource.Success(
+        emptyList()
+    ))
+    val itemesStateFlow: StateFlow<Resource<List<CartItemDetails>>> = _ItemesStateFlow
 
 
+    private val _cartItemsCountStateFlow = MutableStateFlow<Int>(0)
+    val cartItemsCountStateFlow: StateFlow<Int> = _cartItemsCountStateFlow
 
-    private val _productScreenState: MutableStateFlow<ProductScreenState> = MutableStateFlow(ProductScreenState())
-    val productScreenState: StateFlow<ProductScreenState> = _productScreenState
+    fun getCartItemsCount(cartId: Long) = viewModelScope.launch {
+        clientRepository.getCartItemsCount(cartId).collect {
+            _cartItemsCountStateFlow.value = it
+        }
+    }
+
+
     fun getProduct(id: Long) {
         viewModelScope.launch {
-            getProdct(id).collect {
-                _productsStateFlow.value = it
-                it.data?.let {
-                    selectColor(it.colors[0].colorId)
-                    selectSize(it.sizes[0].sizeId)
-                }
+            getCartItemsUseCase(id).collect {
+                _ItemesStateFlow.value = it
             }
         }
     }
 
-    fun selectColor(id: Long) {
-        viewModelScope.launch {
-            _productScreenState.value = productScreenState.value.copy(
-                selctedColor = id
-            )
-        }
-
-    }
 
 
-
-    fun selectSize(id: Long) {
-        _productScreenState.value = productScreenState.value.copy(
-            selectedSize = id
-        )
-    }
 
     fun putLike(productId: Long, clientId: Long) {
         viewModelScope.launch {
@@ -74,11 +67,28 @@ class ProductViewModel @Inject constructor(
         }
     }
 
-    fun addToCart(cartItem: CartItem) {
+    fun moreOfThat(cartItem: CartItem) {
         viewModelScope.launch {
-            clientRepository.addToCart(cartItem)
+
+            getProduct(cartItem.cartId)
         }
     }
+
+    fun lessOfThat(cartItem: CartItem) {
+        viewModelScope.launch {
+
+            getProduct(cartItem.cartItemId)
+        }
+    }
+
+    fun removeFromCart(cartItem: CartItem) {
+        viewModelScope.launch {
+            clientRepository.removeFromCart(cartItem)
+            getProduct(cartItem.cartId)
+        }
+    }
+
+
 
 
 

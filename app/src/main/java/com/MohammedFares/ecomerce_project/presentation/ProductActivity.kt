@@ -12,6 +12,7 @@ import com.MohammedFares.ecomerce_project.R
 import com.MohammedFares.ecomerce_project.auth.AuthManager
 import com.MohammedFares.ecomerce_project.comon.Constantes
 import com.MohammedFares.ecomerce_project.comon.Resource
+import com.MohammedFares.ecomerce_project.data.entity.CartItem
 import com.MohammedFares.ecomerce_project.data.entity.ProductLike
 import com.MohammedFares.ecomerce_project.databinding.ActivityProductBinding
 import com.MohammedFares.ecomerce_project.domain.model.SelectebleColor
@@ -38,9 +39,12 @@ class ProductActivity : AppCompatActivity() {
     private lateinit var colorAdapter: ColorAdapter2
     private lateinit var sizeAdapter: SizeAdapter2
     private lateinit var authManager: AuthManager
-    val clientId: Long = 1
+    private lateinit var cartItem: CartItem
+    var clientId: Long = 1
 
     var cartId: Long = -1
+
+    var productId: Long = -1
 
 
 
@@ -55,12 +59,14 @@ class ProductActivity : AppCompatActivity() {
         authManager = AuthManager(this)
 
 
+
+
         intent = getIntent()
 
         intent?.let {
             if (it.hasExtra(Constantes.PRODUCT_ID_KEY)) {
-                val id = it.getLongExtra(Constantes.PRODUCT_ID_KEY,1L)
-                productViewModel.getProduct(id)
+                productId = it.getLongExtra(Constantes.PRODUCT_ID_KEY,1L)
+                productViewModel.getProduct(productId)
             }
         }
 
@@ -72,7 +78,7 @@ class ProductActivity : AppCompatActivity() {
         binding.colorsRv.adapter = colorAdapter
         sizeAdapter = SizeAdapter2 (ctx = this) {
             productViewModel.selectSize(it)
-            Toast.makeText(this@ProductActivity, "clicked ${it}", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this@ProductActivity, "clicked ${it}", Toast.LENGTH_SHORT).show()
         }
         sizeAdapter.setSizes(emptyList())
         binding.sizesRv.setHasFixedSize(true)
@@ -80,120 +86,134 @@ class ProductActivity : AppCompatActivity() {
         binding.sizesRv.adapter = sizeAdapter
 
 
-        binding.addToCartBtn.setOnClickListener {
+        if (!authManager.isClientLoggedIn()) {
 
-            if (cartId != Constantes.NO_CART_ID) {
-                Toast.makeText(baseContext, "add to cart", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(baseContext, "failed to add to cart", Toast.LENGTH_SHORT).show()
+            clientId = authManager.id
+            cartId = authManager.cartId
+
+            cartItem = CartItem(cartId = cartId, productId = productId)
+
+            binding.addToCartBtn.setOnClickListener {
+
+                if (cartId != Constantes.NO_CART_ID) {
+                    productViewModel.addToCart(cartItem)
+                } else {
+                    Toast.makeText(baseContext, "failed to add to cart", Toast.LENGTH_SHORT).show()
+                }
+
+                finish()
             }
 
+            lifecycleScope.launch {
+
+
+                productViewModel.prodctsStateFlow.collect {
+                    when (it) {
+                        is Resource.Empty -> Unit
+                        is Resource.Error -> Unit
+                        is Resource.Loading -> Unit
+                        is Resource.Success -> {
+                            val imageList = ArrayList<SlideModel>()
+
+                            it.data?.let {
+
+                                var likes =  emptyList<ProductLike>()
+
+                                likes = it.likes.filter { productLike ->
+                                    productLike.clientId == clientId
+                                }
+
+                                if (likes.size > 0) {
+                                    binding.isProductLiked.setImageResource(R.drawable.heart_solid_24)
+                                } else {
+                                    binding.isProductLiked.setImageResource(R.drawable.favorite_ic)
+                                }
+                                binding.isProductLiked.setOnClickListener {view ->
+                                    if (likes.size > 0) {
+                                        productViewModel.removeLike(it.likes[0])
+                                    } else {
+                                        productViewModel.putLike(it.product.productId, clientId)
+                                    }
+                                }
+
+
+
+                                it.subImages.forEach {image->
+                                    imageList.add(SlideModel(image.imageUrl))
+                                }
+
+                                binding.slider.setImageList(imageList)
+                                binding.productName.text = it.product.productName
+                                val colors = it.colors
+                                val sizes = it.sizes
+
+                                binding.productDesc.text = it.product.productDesc
+                                binding.prix.text = "${ it.product.price } ${getText(R.string.moroccan_dirham_acronym)}"
+
+
+
+
+
+                                selectebleColors = colors.map {
+                                    SelectebleColor(it)
+                                }
+
+                                selectebleSizes = sizes.map {
+                                    SelectebleSize(it)
+                                }
+                                colorAdapter.setColors(selectebleColors)
+                                sizeAdapter.setSizes(selectebleSizes)
+
+                            }
+                            launch {
+                                productViewModel.productScreenState.collect {screenState->
+                                    //Log.d("ahahhhhhh", screenState.toString())
+                                    //Toast.makeText(this@ProductActivity, "maaaaaa", Toast.LENGTH_SHORT).show()
+                                    cartItem.sizeId = screenState.selectedSize
+                                    cartItem.colorId = screenState.selctedColor
+
+                                    colorAdapter.setColors(emptyList())
+                                    sizeAdapter.setSizes(emptyList())
+                                    selectebleColors = selectebleColors.map {color->
+                                        if (color.color.colorId == screenState.selctedColor) {
+                                            color.isSelected = true
+                                        } else {
+                                            color.isSelected = false
+                                        }
+                                        color
+                                    }
+                                    //Log.w("ahahhhhhh", newSelectebleColors.toString())
+
+
+
+                                    selectebleSizes = selectebleSizes.map {size->
+                                        if (size.size.sizeId == screenState.selectedSize) {
+                                            size.isSelected = true
+                                        } else {
+                                            size.isSelected = false
+                                        }
+                                        size
+                                    }
+                                    //Log.w("ahahhhhhh", newSelectebleSizes.toString())
+                                    withContext(Dispatchers.Main) {
+                                        colorAdapter.setColors(selectebleColors)
+                                        sizeAdapter.setSizes(selectebleSizes)
+
+                                    }
+
+                                }
+                            }
+
+
+                        }
+                    }
+                }
+
+            }
+        } else {
             finish()
         }
 
-        lifecycleScope.launch {
-
-
-            productViewModel.prodctsStateFlow.collect {
-                when (it) {
-                    is Resource.Empty -> Unit
-                    is Resource.Error -> Unit
-                    is Resource.Loading -> Unit
-                    is Resource.Success -> {
-                        val imageList = ArrayList<SlideModel>()
-
-                        it.data?.let {
-
-                            var likes =  emptyList<ProductLike>()
-
-                            likes = it.likes.filter { productLike ->
-                                productLike.clientId == clientId
-                            }
-
-                            if (likes.size > 0) {
-                                binding.isProductLiked.setImageResource(R.drawable.heart_solid_24)
-                            } else {
-                                binding.isProductLiked.setImageResource(R.drawable.favorite_ic)
-                            }
-                            binding.isProductLiked.setOnClickListener {view ->
-                                if (likes.size > 0) {
-                                    productViewModel.removeLike(it.likes[0])
-                                } else {
-                                    productViewModel.putLike(it.product.productId, clientId)
-                                }
-                            }
-
-
-
-                            it.subImages.forEach {image->
-                                imageList.add(SlideModel(image.imageUrl))
-                            }
-
-                            binding.slider.setImageList(imageList)
-                            binding.productName.text = it.product.productName
-                            val colors = it.colors
-                            val sizes = it.sizes
-
-                            binding.productDesc.text = it.product.productDesc
-                            binding.prix.text = "${ it.product.price } ${getText(R.string.moroccan_dirham_acronym)}"
-
-
-
-
-
-                            selectebleColors = colors.map {
-                                SelectebleColor(it)
-                            }
-
-                            selectebleSizes = sizes.map {
-                                SelectebleSize(it)
-                            }
-                            colorAdapter.setColors(selectebleColors)
-                            sizeAdapter.setSizes(selectebleSizes)
-
-                        }
-                        launch {
-                            productViewModel.productScreenState.collect {screenState->
-                                //Log.d("ahahhhhhh", screenState.toString())
-                                Toast.makeText(this@ProductActivity, "maaaaaa", Toast.LENGTH_SHORT).show()
-                                colorAdapter.setColors(emptyList())
-                                sizeAdapter.setSizes(emptyList())
-                                selectebleColors = selectebleColors.map {color->
-                                    if (color.color.colorId == screenState.selctedColor) {
-                                        color.isSelected = true
-                                    } else {
-                                        color.isSelected = false
-                                    }
-                                    color
-                                }
-                                //Log.w("ahahhhhhh", newSelectebleColors.toString())
-
-
-
-                                selectebleSizes = selectebleSizes.map {size->
-                                    if (size.size.sizeId == screenState.selectedSize) {
-                                        size.isSelected = true
-                                    } else {
-                                        size.isSelected = false
-                                    }
-                                    size
-                                }
-                                //Log.w("ahahhhhhh", newSelectebleSizes.toString())
-                                withContext(Dispatchers.Main) {
-                                    colorAdapter.setColors(selectebleColors)
-                                    sizeAdapter.setSizes(selectebleSizes)
-
-                                }
-
-                            }
-                        }
-
-
-                    }
-                }
-            }
-
-        }
 
 
     }

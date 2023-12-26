@@ -32,6 +32,12 @@ class home_page : Fragment() {
     val productsViewModel: HomePageViewModel by viewModels()
 
 
+    override fun onResume() {
+        super.onResume()
+        productsViewModel.getProduct()
+    }
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -81,9 +87,7 @@ class home_page : Fragment() {
         binding.filter.typeRv.adapter = filterTypeAdapter
 
 
-
-
-
+        productsViewModel.getProduct()
 
 
         viewLifecycleOwner.lifecycleScope.launch {
