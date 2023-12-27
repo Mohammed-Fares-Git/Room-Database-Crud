@@ -15,6 +15,7 @@ import com.MohammedFares.ecomerce_project.comon.Resource
 import com.MohammedFares.ecomerce_project.data.entity.Cart
 import com.MohammedFares.ecomerce_project.data.entity.Order
 import com.MohammedFares.ecomerce_project.databinding.CartPageBinding
+import com.MohammedFares.ecomerce_project.presentation.ClientRootViewModel
 import com.MohammedFares.ecomerce_project.presentation.adapters.CartItemsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -31,7 +32,8 @@ class CartPage : Fragment() {
     private lateinit var order: Order
     private lateinit var cart: Cart
     val cartPageViewModel: CartPageViewModel by viewModels()
-    var cartId: Long? = null
+    val rootViewModel: ClientRootViewModel by viewModels()
+    var cartId: Long = -1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,22 +63,22 @@ class CartPage : Fragment() {
 
             cartId = authManager.cartId
 
+            rootViewModel.setCartId(cartId)
+
             order = Order(clientId = authManager.id, cartId = authManager.cartId, orderDate = System.currentTimeMillis() / 1000)
 
 
             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
-                if (cartPageViewModel.getCart(cartId!!).size > 0) {
-                    cart = cartPageViewModel.getCart(cartId!!).first()
+                if (cartPageViewModel.getCart(cartId).size > 0 && cartId.toInt() != -1) {
+                    cart = cartPageViewModel.getCart(cartId).first()
                 }
             }
 
 
             viewLifecycleOwner.lifecycleScope.launch {
-                cartId?.let {
-                    cartPageViewModel.getCartItemsCount(it)
-                    cartPageViewModel.cartItemsCountStateFlow.collect {
-                        binding.cartItemsNbr.text = it.toString()
-                    }
+                cartPageViewModel.getCartItemsCount(cartId)
+                cartPageViewModel.cartItemsCountStateFlow.collect {
+                    binding.cartItemsNbr.text = it.toString()
                 }
             }
 
@@ -107,6 +109,27 @@ class CartPage : Fragment() {
                 }
 
 
+            }
+
+            viewLifecycleOwner.lifecycleScope.launch {
+                rootViewModel.cartIdStateFlow.collect {id->
+
+                    if (cartId != id) {
+                        rootViewModel.getCartItemsCount(cartId)
+                    }
+
+                    cartId = id
+                    authManager.cartId = id
+
+                    val carts = cartPageViewModel.getCart(cartId)
+
+                    rootViewModel.getCurrentCart(id) {
+                        if (carts.size > 0 && cartId.toInt() != -1) {
+                            cart = carts.first()
+                        }
+
+                    }
+                }
             }
 
 
