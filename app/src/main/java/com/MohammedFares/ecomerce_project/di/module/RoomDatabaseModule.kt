@@ -1,7 +1,6 @@
 package com.MohammedFares.ecomerce_project.di.module
 
 import android.content.Context
-import android.util.Log
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
@@ -11,6 +10,7 @@ import com.MohammedFares.ecomerce_project.data.dao.AdminDao
 import com.MohammedFares.ecomerce_project.data.dao.CartDao
 import com.MohammedFares.ecomerce_project.data.dao.CartItemDao
 import com.MohammedFares.ecomerce_project.data.dao.ClientDao
+import com.MohammedFares.ecomerce_project.data.dao.OrderDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductBrandDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductColorDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductDao
@@ -27,8 +27,6 @@ import com.MohammedFares.ecomerce_project.data.entity.ProductLike
 import com.MohammedFares.ecomerce_project.data.entity.ProductSize
 import com.MohammedFares.ecomerce_project.data.entity.ProductSubImage
 import com.MohammedFares.ecomerce_project.data.entity.ProductType
-import com.MohammedFares.ecomerce_project.data.repository.AuthRepositoryImpl
-import com.MohammedFares.ecomerce_project.domain.repository.AuthRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -463,6 +461,12 @@ object RoomDatabaseModule {
     @Provides
     fun provideProductDao(ecommerceDb: EcommerceDb): ProductDao {
         return ecommerceDb.productDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideOrderDao(ecommerceDb: EcommerceDb): OrderDao {
+        return ecommerceDb.orderDao()
     }
 
     @Singleton

@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.MohammedFares.ecomerce_project.comon.Resource
 import com.MohammedFares.ecomerce_project.data.entity.Admin
+import com.MohammedFares.ecomerce_project.data.entity.Cart
 import com.MohammedFares.ecomerce_project.data.entity.CartItem
+import com.MohammedFares.ecomerce_project.data.entity.Order
 import com.MohammedFares.ecomerce_project.data.entity.ProductLike
 import com.MohammedFares.ecomerce_project.data.relations.CartItemDetails
 import com.MohammedFares.ecomerce_project.data.relations.ProductWithDetails
@@ -39,6 +41,24 @@ class CartPageViewModel @Inject constructor(
         clientRepository.getCartItemsCount(cartId).collect {
             _cartItemsCountStateFlow.value = it
         }
+    }
+
+
+    fun getOrdersCount(clientId: Long) = viewModelScope.launch {
+        clientRepository.getOrdersCount(clientId).collect {
+            _cartItemsCountStateFlow.value = it
+        }
+    }
+
+
+    fun checkOut(order: Order, cart: Cart) = viewModelScope.launch {
+        updateCart(cart).join()
+        clientRepository.order(order)
+    }
+
+    fun updateCart(cart: Cart) = viewModelScope.launch {
+        cart.isCheckedOut = true
+        clientRepository.updateCart(cart)
     }
 
 
@@ -86,6 +106,10 @@ class CartPageViewModel @Inject constructor(
             clientRepository.removeFromCart(cartItem)
             getProduct(cartItem.cartId)
         }
+    }
+
+    suspend fun getCart(cartId: Long):  List<Cart>{
+        return clientRepository.getCart(cartId)
     }
 
 

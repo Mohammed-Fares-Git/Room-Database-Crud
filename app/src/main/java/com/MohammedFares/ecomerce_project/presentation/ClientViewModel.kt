@@ -6,6 +6,7 @@ import com.MohammedFares.ecomerce_project.data.entity.Cart
 import com.MohammedFares.ecomerce_project.domain.repository.ClientRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay

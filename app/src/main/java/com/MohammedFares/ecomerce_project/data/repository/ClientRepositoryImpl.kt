@@ -3,6 +3,7 @@ package com.MohammedFares.ecomerce_project.data.repository
 import com.MohammedFares.ecomerce_project.data.dao.CartDao
 import com.MohammedFares.ecomerce_project.data.dao.CartItemDao
 import com.MohammedFares.ecomerce_project.data.dao.ClientDao
+import com.MohammedFares.ecomerce_project.data.dao.OrderDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductBrandDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductColorDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductDao
@@ -11,6 +12,7 @@ import com.MohammedFares.ecomerce_project.data.dao.ProductLikeDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductTypeDao
 import com.MohammedFares.ecomerce_project.data.entity.Cart
 import com.MohammedFares.ecomerce_project.data.entity.CartItem
+import com.MohammedFares.ecomerce_project.data.entity.Order
 import com.MohammedFares.ecomerce_project.data.entity.Product
 import com.MohammedFares.ecomerce_project.data.entity.ProductBrand
 import com.MohammedFares.ecomerce_project.data.entity.ProductLike
@@ -30,6 +32,7 @@ class ClientRepositoryImpl @Inject constructor(
     val type: ProductTypeDao,
     val cartProducts: CartDao,
     val cartItemDao: CartItemDao,
+    val orderDao: OrderDao,
     val brand: ProductBrandDao
 ) :ClientRepository{
     override suspend fun getAllProducts(): List<Product> {
@@ -83,6 +86,26 @@ class ClientRepositoryImpl @Inject constructor(
 
     override suspend fun removeFromCart(cartItem: CartItem): Int {
         return cartItemDao.removeFromCart(cartItem)
+    }
+
+    override suspend fun order(order: Order): Long {
+        return orderDao.creat(order)
+    }
+
+    override suspend fun updateOrder(order: Order): Int {
+        return 0
+    }
+
+    override suspend fun getOrdersCount(clientId: Long): Flow<Int> {
+        return orderDao.getOrdersCount(clientId)
+    }
+
+    override suspend fun getCart(cartId: Long): List<Cart> {
+        return cartProducts.getCartById(cartId)
+    }
+
+    override suspend fun updateCart(cart: Cart): Int {
+        return cartProducts.update(cart)
     }
 
 

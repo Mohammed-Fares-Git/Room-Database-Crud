@@ -67,7 +67,7 @@ class ClientMian : AppCompatActivity() {
                     }
                 ).join()
 
-                clientViewModel.getCartItemsCount(authManager.id)
+                clientViewModel.getCartItemsCount(authManager.cartId)
 
                 clientViewModel.cartItemsCountStateFlow.collect {
                     if (it > 0) {

@@ -23,6 +23,6 @@ data class Order(
     val orderId: Long = 0,
     val clientId: Long,
     val cartId: Long,
-    val totalPrice: Double,
+    var totalPrice: Double = 0.0,
     val orderDate: Long
 )

@@ -97,6 +97,7 @@ class ProductActivity : AppCompatActivity() {
 
                 if (cartId != Constantes.NO_CART_ID) {
                     productViewModel.addToCart(cartItem)
+                    Toast.makeText(baseContext, "add to ${cartId} cart", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(baseContext, "failed to add to cart", Toast.LENGTH_SHORT).show()
                 }

@@ -2,6 +2,7 @@ package com.MohammedFares.ecomerce_project.domain.repository
 
 import com.MohammedFares.ecomerce_project.data.entity.Cart
 import com.MohammedFares.ecomerce_project.data.entity.CartItem
+import com.MohammedFares.ecomerce_project.data.entity.Order
 import com.MohammedFares.ecomerce_project.data.entity.Product
 import com.MohammedFares.ecomerce_project.data.entity.ProductBrand
 import com.MohammedFares.ecomerce_project.data.entity.ProductLike
@@ -25,4 +26,11 @@ interface ClientRepository {
     suspend fun currentCart(clientI: Long): List<Cart>
     suspend fun addToCart(cartItem: CartItem): Long
     suspend fun removeFromCart(cartItem: CartItem): Int
+    suspend fun order(order: Order): Long
+    suspend fun updateOrder(order: Order): Int
+    suspend fun getOrdersCount(clientId: Long): Flow<Int>
+    suspend fun getCart(cartId: Long): List<Cart>
+    suspend fun updateCart(cart: Cart): Int
+
+
 }
