@@ -4,6 +4,7 @@ import com.MohammedFares.ecomerce_project.data.dao.AdminDao
 import com.MohammedFares.ecomerce_project.data.dao.CartDao
 import com.MohammedFares.ecomerce_project.data.dao.CartItemDao
 import com.MohammedFares.ecomerce_project.data.dao.ClientDao
+import com.MohammedFares.ecomerce_project.data.dao.OrderDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductBrandDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductColorDao
 import com.MohammedFares.ecomerce_project.data.dao.ProductDao
@@ -64,9 +65,10 @@ object RepositoryModule {
         productType: ProductTypeDao,
         cart: CartDao,
         cartItemDao: CartItemDao,
+        orderDao: OrderDao,
         productBrand: ProductBrandDao
     ): ClientRepository {
-        return ClientRepositoryImpl(productDao, productLikeDao, productType, cart, cartItemDao, productBrand)
+        return ClientRepositoryImpl(productDao, productLikeDao, productType, cart, cartItemDao, orderDao, productBrand)
     }
 
 }
