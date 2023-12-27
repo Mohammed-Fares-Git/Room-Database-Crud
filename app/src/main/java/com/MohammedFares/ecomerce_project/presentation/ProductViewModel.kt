@@ -36,8 +36,10 @@ class ProductViewModel @Inject constructor(
             getProdct(id).collect {
                 _productsStateFlow.value = it
                 it.data?.let {
-                    selectColor(it.colors[0].colorId)
-                    selectSize(it.sizes[0].sizeId)
+                    if (it.colors.size > 0)
+                        selectColor(it.colors[0].colorId)
+                    if (it.sizes.size > 0)
+                        selectSize(it.sizes[0].sizeId)
                 }
             }
         }

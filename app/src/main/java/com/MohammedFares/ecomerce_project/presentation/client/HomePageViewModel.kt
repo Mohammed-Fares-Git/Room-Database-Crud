@@ -54,26 +54,26 @@ class HomePageViewModel @Inject constructor(
     }
 
     fun setProductsLitState(
-        searchParam: String? = null,
-        selctedColor: String? = null,
-        selectedSize: String? = null,
-        selectedGender: String? = null,
-        selectedType: String? = null,
-        maxPrice: Int? = null,
-        minPrice: Int? = null,
-        freeDelevry: Boolean? = null,
-        promo: Boolean? = null
+        searchParam: String? = _productsListScreenState.value.searchParam,
+        selctedColor: String? = _productsListScreenState.value.selctedColor,
+        selectedSize: String? = _productsListScreenState.value.selectedSize,
+        selectedGender: String? = _productsListScreenState.value.selctedGender,
+        selectedType: String? = _productsListScreenState.value.selctedType,
+        maxPrice: Int? = _productsListScreenState.value.maxPrice,
+        minPrice: Int? = _productsListScreenState.value.minPrice,
+        freeDelevry: Boolean? = _productsListScreenState.value.freeDelevry,
+        promo: Boolean? = _productsListScreenState.value.promo
     ) {
-        _productsListScreenState.value = ProductsListScreenState(
-            searchParam,
-            selctedColor,
-            selectedSize,
-            selectedGender,
-            selectedType,
-            maxPrice,
-            minPrice,
-            freeDelevry,
-            promo
+        _productsListScreenState.value = _productsListScreenState.value.copy(
+            searchParam = searchParam,
+            selctedColor = selctedColor,
+            selectedSize = selectedSize,
+            selctedGender = selectedGender,
+            selctedType = selectedType,
+            maxPrice = maxPrice,
+            minPrice = minPrice,
+            freeDelevry = freeDelevry,
+            promo = promo
         )
     }
 
@@ -83,29 +83,9 @@ class HomePageViewModel @Inject constructor(
         _productsListScreenState.value = productsListScreenState
     }
 
-    fun getFilteredProducts(
-        searchParam: String? = "",
-        gender: String? = null,
-        type: String? = null,
-        size: String? = null,
-        color: String? = null,
-        promo: Boolean? = null,
-        delevry: Boolean? = false,
-        maxPrice: Int? = null,
-        minPrice: Int? = null
-    ) {
+    fun getFilteredProducts(productsListScreenState: ProductsListScreenState) {
         viewModelScope.launch {
-            getFilteredProduct(
-                searchParam = searchParam,
-                delevry = delevry,
-                gender = gender,
-                type = type,
-                size = size,
-                color = color,
-                promo = promo,
-                maxPrice = maxPrice,
-                minPrice = minPrice
-            ).collect {
+            getFilteredProduct(productsListScreenState).collect {
                 _productStateFlow.value = it
             }
         }

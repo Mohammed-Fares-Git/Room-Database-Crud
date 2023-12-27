@@ -19,6 +19,7 @@ import com.MohammedFares.ecomerce_project.presentation.ClientRootViewModel
 import com.MohammedFares.ecomerce_project.presentation.adapters.CartItemsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -52,9 +53,23 @@ class CartPage : Fragment() {
         binding.cartItemsRv.layoutManager = LinearLayoutManager(requireContext())
         binding.cartItemsRv.adapter = adapter
 
+        cartPageViewModel.getCartItemsCount(authManager.cartId)
+
         binding.checkOutBtn.setOnClickListener {
 
-            cartPageViewModel.checkOut(order, cart)
+            if (cartId.toInt() != -1) {
+                cartPageViewModel.checkOut(order, cart){
+                    rootViewModel.getCurrentCart(1) {
+                        authManager.cartId
+                        rootViewModel.setCartId(authManager.cartId)
+                    }
+                }
+                cartPageViewModel.getCartItemsCount(authManager.cartId)
+                cartPageViewModel.getProduct(authManager.cartId)
+            } else {
+                Toast.makeText(requireContext(), "can't ${cartId}", Toast.LENGTH_SHORT).show()
+            }
+
         }
 
 
@@ -62,21 +77,28 @@ class CartPage : Fragment() {
         if (true) {
 
             cartId = authManager.cartId
+            cartId = 1
+
+
 
             rootViewModel.setCartId(cartId)
 
-            order = Order(clientId = authManager.id, cartId = authManager.cartId, orderDate = System.currentTimeMillis() / 1000)
+            order = Order(clientId = 1, cartId = cartId, orderDate = System.currentTimeMillis() / 1000)
 
 
             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
-                if (cartPageViewModel.getCart(cartId).size > 0 && cartId.toInt() != -1) {
-                    cart = cartPageViewModel.getCart(cartId).first()
+                rootViewModel.getCurrentCart(1) {
+                    authManager.cartId = it
+                    cartId = authManager.cartId
+                    rootViewModel.setCartId(it)
+                }.join()
+                if (cartPageViewModel.getCart(authManager.cartId).size > 0 && authManager.cartId.toInt() != -1) {
+                    cart = cartPageViewModel.getCart(authManager.cartId).first()
                 }
             }
 
 
             viewLifecycleOwner.lifecycleScope.launch {
-                cartPageViewModel.getCartItemsCount(cartId)
                 cartPageViewModel.cartItemsCountStateFlow.collect {
                     binding.cartItemsNbr.text = it.toString()
                 }
@@ -111,31 +133,45 @@ class CartPage : Fragment() {
 
             }
 
+
             viewLifecycleOwner.lifecycleScope.launch {
                 rootViewModel.cartIdStateFlow.collect {id->
 
-                    if (cartId != id) {
+                    /*
+                    if (cartId != id && id.toInt() != -1) {
                         rootViewModel.getCartItemsCount(cartId)
                     }
 
-                    cartId = id
-                    authManager.cartId = id
+                    if (id.toInt() != -1) {
+                        cartId = id
+                        authManager.cartId = id
 
-                    val carts = cartPageViewModel.getCart(cartId)
+                        val carts = async(Dispatchers.IO){ cartPageViewModel.getCart(cartId) }.await()
 
-                    rootViewModel.getCurrentCart(id) {
-                        if (carts.size > 0 && cartId.toInt() != -1) {
-                            cart = carts.first()
+                        rootViewModel.getCurrentCart(id) {
+                            if (carts.size > 0 && cartId.toInt() != -1) {
+                                cart = carts.first()
+                            }
+
                         }
-
                     }
+
+                     */
+
+
+
+
                 }
             }
+
+
 
 
             cartId?.let {
                 cartPageViewModel.getProduct(it)
             }
+
+            cartPageViewModel.getProduct(authManager.cartId)
 
         }
 

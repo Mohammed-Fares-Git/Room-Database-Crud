@@ -7,10 +7,13 @@ import com.MohammedFares.ecomerce_project.data.entity.Admin
 import com.MohammedFares.ecomerce_project.data.entity.ProductColor
 import com.MohammedFares.ecomerce_project.data.relations.ProductWithDetails
 import com.MohammedFares.ecomerce_project.domain.model.ProductExpendable
+import com.MohammedFares.ecomerce_project.domain.model.ProductScreenState
+import com.MohammedFares.ecomerce_project.domain.model.ProductsListScreenState
 import com.MohammedFares.ecomerce_project.domain.repository.AdminRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
@@ -19,15 +22,7 @@ class GetFilteredProductsUseCase @Inject constructor(
     val repository: AdminRepository
 ) {
     operator fun invoke(
-        searchParam: String? = "",
-        delevry: Boolean? = false,
-        promo: Boolean? = false,
-        gender: String? = null,
-        color: String? = null,
-        type: String? = null,
-        size: String? = null,
-        maxPrice: Int? = null,
-        minPrice: Int? = null
+        state: ProductsListScreenState
     ): Flow<Resource<List<ProductWithDetails>>> = flow {
         emit(Resource.Loading())
         try {
@@ -36,16 +31,20 @@ class GetFilteredProductsUseCase @Inject constructor(
             var fiteredProducts = emptyList<ProductWithDetails>()
 
 
-            delevry?.let {
-                if (delevry) {
+            state.freeDelevry?.let {
+                if (it) {
                     fiteredProducts = products.filter { productWithDetails ->
-                        productWithDetails.product.livreson == delevry
+                        productWithDetails.product.livreson == true
+                    }
+                } else {
+                    fiteredProducts = products.filter { productWithDetails ->
+                        productWithDetails.product.livreson == false || productWithDetails.product.livreson == null
                     }
                 }
             }
 
-            promo?.let {
-                if (promo) {
+            state.promo?.let {
+                if (it) {
                     fiteredProducts = products.filter { productWithDetails ->
                         productWithDetails.product.sold > 0
                     }
@@ -53,39 +52,43 @@ class GetFilteredProductsUseCase @Inject constructor(
             }
 
 
-            type?.let {
+            state.selctedType?.let {
                 fiteredProducts = products.filter { productWithDetails ->
-                    productWithDetails.type?.typeName == type
+                    productWithDetails.type?.typeName == it
                 }
             }
 
-            gender?.let {
+            state.selctedGender?.let {
                 fiteredProducts = products.filter { productWithDetails ->
-                    productWithDetails.product.gender == gender
+                    productWithDetails.product.gender == it
                 }
             }
 
-            maxPrice?.let {
+            state.maxPrice?.let {
                 fiteredProducts = products.filter { productWithDetails ->
-                    productWithDetails.product.price <= maxPrice
+                    productWithDetails.product.price <= it
                 }
             }
 
-            minPrice?.let {
+            state.minPrice?.let {
                 fiteredProducts = products.filter { productWithDetails ->
-                    productWithDetails.product.price >= minPrice
+                    productWithDetails.product.price >= it
                 }
             }
 
 
-            if (fiteredProducts.isNotEmpty()) {
+            if (fiteredProducts.isNotEmpty() && fiteredProducts.size > 0) {
                 emit(Resource.Success(fiteredProducts))
             } else {
-                emit(Resource.Error(ctx.getString(R.string.no_products_found)))
+                //emit(Resource.Error(ctx.getString(R.string.no_products_found)))
+                emit(Resource.Error("filter empty"))
             }
 
         } catch (e: Exception) {
-            emit(Resource.Error(ctx.getString(R.string.unknown_problem)))
+            //emit(Resource.Error(ctx.getString(R.string.unknown_problem)))
+            emit(Resource.Error(e.message.toString()))
         }
+    }.catch {
+        emit(Resource.Error(it.message.toString()))
     }
 }

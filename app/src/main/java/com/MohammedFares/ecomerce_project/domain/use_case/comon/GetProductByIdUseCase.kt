@@ -9,6 +9,7 @@ import com.MohammedFares.ecomerce_project.domain.repository.AdminRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
@@ -23,11 +24,13 @@ class GetProductByIdUseCase @Inject constructor(
             if (products != null) {
                 emit(Resource.Success(products))
             } else {
-                emit(Resource.Error(ctx.getString(R.string.unknown_problem)))
+                emit(Resource.Error("ffffff"))
             }
 
         } catch (e: Exception) {
             emit(Resource.Error(ctx.getString(R.string.unknown_problem)))
         }
+    }.catch {
+        emit(Resource.Error(ctx.getString(R.string.unknown_problem)))
     }
 }

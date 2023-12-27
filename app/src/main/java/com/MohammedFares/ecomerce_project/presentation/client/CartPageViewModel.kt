@@ -51,7 +51,7 @@ class CartPageViewModel @Inject constructor(
     }
 
 
-    fun checkOut(order: Order, cart: Cart) = viewModelScope.launch {
+    fun checkOut(order: Order, cart: Cart, getNewCart: (clientId: Long)->Unit) = viewModelScope.launch {
         updateCart(cart).join()
         clientRepository.order(order)
     }

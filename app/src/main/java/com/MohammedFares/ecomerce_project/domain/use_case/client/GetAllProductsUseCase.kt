@@ -10,6 +10,7 @@ import com.MohammedFares.ecomerce_project.domain.repository.AdminRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
@@ -24,11 +25,15 @@ class GetAllProductsUseCase @Inject constructor(
             if (products.isNotEmpty()) {
                 emit(Resource.Success(products))
             } else {
-                emit(Resource.Error(ctx.getString(R.string.no_products_found)))
+                //emit(Resource.Error(ctx.getString(R.string.no_products_found)))
+                emit(Resource.Error("main product empty"))
             }
 
         } catch (e: Exception) {
-            emit(Resource.Error(ctx.getString(R.string.unknown_problem)))
+            //emit(Resource.Error(ctx.getString(R.string.unknown_problem)))
+            emit(Resource.Error(e.message.toString()))
         }
+    }.catch {
+        emit(Resource.Error(it.message.toString()))
     }
 }

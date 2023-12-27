@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -34,7 +35,6 @@ class home_page : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        productsViewModel.getProduct()
     }
 
 
@@ -59,11 +59,7 @@ class home_page : Fragment() {
 
         val filterGenderAdapter =
             FilterGenderAdapter(ctx = requireActivity(), action = { selectedGender ->
-                productsViewModel.setProductsLitState(
-                    productsViewModel.productsListScreenState.value.copy(
-                        selctedGender = selectedGender
-                    )
-                )
+                productsViewModel.setProductsLitState(selectedGender = selectedGender)
             })
         filterGenderAdapter.setFilters(genderFilters)
         binding.filter.genderRv.setHasFixedSize(true)
@@ -75,9 +71,7 @@ class home_page : Fragment() {
             FilterTypeAdapter(ctx = requireActivity(), action = { selectedType ->
                 Toast.makeText(requireContext(), selectedType, Toast.LENGTH_SHORT).show()
                 productsViewModel.setProductsLitState(
-                    productsViewModel.productsListScreenState.value.copy (
-                        selctedType = selectedType
-                    )
+                    selectedType = selectedType
                 )
             })
         filterTypeAdapter.setFilters(typeFilters)
@@ -87,7 +81,7 @@ class home_page : Fragment() {
         binding.filter.typeRv.adapter = filterTypeAdapter
 
 
-        productsViewModel.getProduct()
+        productsViewModel.getProducts()
 
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -95,20 +89,13 @@ class home_page : Fragment() {
             launch {
                 productsViewModel.typesStateFlow.collect { types ->
                     when (types) {
-                        is Resource.Empty -> {
-                            Toast.makeText(requireContext(), "empty", Toast.LENGTH_SHORT).show()
-                        }
+                        is Resource.Empty -> {}
 
-                        is Resource.Error -> {
-                            Toast.makeText(requireContext(), "error", Toast.LENGTH_SHORT).show()
-                        }
+                        is Resource.Error -> {}
 
-                        is Resource.Loading -> {
-                            Toast.makeText(requireContext(), "loading", Toast.LENGTH_SHORT).show()
-                        }
+                        is Resource.Loading -> {}
 
                         is Resource.Success -> {
-                            Toast.makeText(requireContext(), "success", Toast.LENGTH_SHORT).show()
                             val adapter = types.data?.let { TypesAdapter(it) }
                             binding.filterRv.adapter = adapter
                             Log.d("ahahhhhhh", types.data.toString())
@@ -119,17 +106,7 @@ class home_page : Fragment() {
 
             launch {
                 productsViewModel.productsListScreenState.collect {
-                    productsViewModel.getFilteredProducts(
-                        searchParam = it.searchParam,
-                        delevry = it.freeDelevry,
-                        gender = it.selctedGender,
-                        type = it.selctedType,
-                        size = it.selctedType,
-                        color = it.selctedColor,
-                        maxPrice = it.maxPrice,
-                        minPrice = it.minPrice,
-                        promo = it.promo
-                    )
+                    productsViewModel.getFilteredProducts(it)
                 }
             }
 
@@ -137,34 +114,32 @@ class home_page : Fragment() {
 
             productsViewModel.productStateFlow.collect {
                 when (it) {
-                    is Resource.Empty -> {
-                        Toast.makeText(requireContext(), "empty", Toast.LENGTH_SHORT).show()
-                    }
+                    is Resource.Empty -> {}
 
                     is Resource.Error -> {
-                        Toast.makeText(requireContext(), "error", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
                     }
 
-                    is Resource.Loading -> {
-                        Toast.makeText(requireContext(), "loading", Toast.LENGTH_SHORT).show()
-                    }
+                    is Resource.Loading -> {}
 
                     is Resource.Success -> {
-                        Toast.makeText(requireContext(), "success", Toast.LENGTH_SHORT).show()
-                        val adapter = ProductsAdapter(ctx = requireContext(), action =  {
-                            requireActivity().startActivity(Intent(
-                                requireContext(), ProductActivity::class.java
-                            ).apply {
-                                this.putExtra(Constantes.PRODUCT_ID_KEY, it)
+
+                        if (it.data!!.size > 0 && !it.data.isEmpty()) {
+                            val adapter = ProductsAdapter(ctx = requireContext(), action =  {
+                                requireActivity().startActivity(Intent(
+                                    requireContext(), ProductActivity::class.java
+                                ).apply {
+                                    this.putExtra(Constantes.PRODUCT_ID_KEY, it)
+                                })
+                            }, putLike = { productId, clientId ->
+                                productsViewModel.putLike(productId,clientId)
+                            }, removeLike = { productLike ->
+                                productsViewModel.removeLike(productLike)
                             })
-                        }, putLike = { productId, clientId ->
-                            productsViewModel.putLike(productId,clientId)
-                        }, removeLike = { productLike ->
-                            productsViewModel.removeLike(productLike)
-                        })
-                        binding.products.adapter = adapter
-                        adapter.submitList(it.data)
-                        Log.d("ahahhhhhh", it.data.toString())
+                            binding.products.adapter = adapter
+                            adapter.submitList(it.data)
+                            Log.d("ahahhhhhh", it.data.toString())
+                        }
                     }
                 }
             }
@@ -178,17 +153,18 @@ class home_page : Fragment() {
             showFilter()
         }
 
-        binding.filter.filterFreeDelevry.setOnClickListener {
-            if (binding.filter.filterFreeDelevry.isChecked) {
-                productsViewModel.setProductsLitState(
-                    productsViewModel.productsListScreenState.value.copy(
-                        freeDelevry = true
-                    )
-                )
-            } else {
-                productsViewModel.setProductsLitState()
+
+
+        binding.filter.filterFreeDelevry.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener{
+            override fun onCheckedChanged(p0: CompoundButton?, p1: Boolean) {
+                if (p1) {
+                    productsViewModel.setProductsLitState(freeDelevry = true)
+                } else {
+                    productsViewModel.setProductsLitState(freeDelevry = null)
+                }
             }
-        }
+
+        })
 
 
         binding.filter.filterPromo.setOnClickListener {
