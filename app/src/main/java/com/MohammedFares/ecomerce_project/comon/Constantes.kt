@@ -1,6 +1,7 @@
 package com.MohammedFares.ecomerce_project.comon
 
 object Constantes {
+    const val ACTIVE_CLIENT: String = "active"
     const val ADMIN_KEY = "admin"
     const val CLIENT_KEY = "client"
 

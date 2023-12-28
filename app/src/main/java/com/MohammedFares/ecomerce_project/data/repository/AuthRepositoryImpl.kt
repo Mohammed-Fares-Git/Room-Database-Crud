@@ -10,12 +10,30 @@ import javax.inject.Inject
 class AuthRepositoryImpl @Inject constructor(
     val adminDao: AdminDao,
     val clientDao: ClientDao
-)  : AuthRepository {
+) : AuthRepository {
     override suspend fun adminAuth(firstName: String, lastName: String): Admin {
-        return adminDao.getAdmin(firstName,lastName)
+        return adminDao.getAdmin(firstName, lastName)
     }
 
     override suspend fun clientAuth(firstName: String, lastName: String): Client {
-        return clientDao.getClient(firstName,lastName)
+        return clientDao.getClient(firstName, lastName)
+    }
+
+    override suspend fun clientSignUp(
+        firstName: String,
+        lastName: String,
+        email: String,
+        pass: String,
+        gender: String
+    ): Long {
+        return clientDao.insert(
+            Client(
+                firstname = firstName,
+                lastname = lastName,
+                email = email,
+                password = pass,
+                gender = gender
+            )
+        )
     }
 }

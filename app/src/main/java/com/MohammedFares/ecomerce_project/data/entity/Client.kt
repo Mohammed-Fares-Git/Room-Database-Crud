@@ -2,6 +2,7 @@ package com.MohammedFares.ecomerce_project.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.MohammedFares.ecomerce_project.comon.Constantes
 
 @Entity(tableName = "clients")
 data class Client(
@@ -11,6 +12,6 @@ data class Client(
     val lastname: String,
     val email: String,
     val password: String,
-    val state: String,
+    val state: String = Constantes.ACTIVE_CLIENT,
     val gender: String
 )
