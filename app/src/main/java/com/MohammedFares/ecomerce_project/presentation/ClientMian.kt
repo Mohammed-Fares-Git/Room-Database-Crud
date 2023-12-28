@@ -41,7 +41,7 @@ class ClientMian : AppCompatActivity() {
         val loginState = authManager.isLoggedIn and authManager.isClientLoggedIn()
 
 
-        if (loginState) {
+        if (!loginState) {
             startActivity(Intent(this@ClientMian,LoginMain::class.java))
             finish()
         } else {

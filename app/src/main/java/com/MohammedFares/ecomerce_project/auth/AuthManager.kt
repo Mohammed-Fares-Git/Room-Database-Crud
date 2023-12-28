@@ -34,18 +34,20 @@ class AuthManager( private val context: Context) {
         get() = sharedPreferences.getString(KEY_PROFILE, null)
         set(value) = sharedPreferences.edit().putString(KEY_PROFILE, value).apply()
 
-    fun login(username: String, id: Long,email: String, profile: String) {
+    fun login(username: String, id: Long,email: String, profile: String, cartId: Long = -1) {
         isLoggedIn = true
         this.username = username
         this.id = id
         this.email = email
         this.profile = profile
+        this.cartId = cartId
     }
 
     fun logout() {
         isLoggedIn = false
         username = null
-        id = 1
+        id = -1
+        cartId = -1
         email = null
         profile = null
     }
@@ -55,7 +57,7 @@ class AuthManager( private val context: Context) {
     }
 
     fun isClientLoggedIn(): Boolean {
-        return isLoggedIn && profile == Constantes.CLIENT_KEY
+        return isLoggedIn && profile == Constantes.CLIENT_KEY && cartId.toInt() != -1
     }
 
     companion object {

@@ -22,6 +22,7 @@ class AdminMain : AppCompatActivity() {
 
         if (!loginState) {
             startActivity(Intent(this@AdminMain,LoginMain::class.java))
+            finish()
         }
     }
 }
