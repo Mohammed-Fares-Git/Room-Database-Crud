@@ -25,6 +25,10 @@ class ClientRootViewModel @Inject constructor(
     val cartItemsCountStateFlow: StateFlow<Int> = _cartItemsCountStateFlow
 
 
+    private val _LikesCountStateFlow = MutableStateFlow<Int>(0)
+    val likesCountStateFlow: StateFlow<Int> = _LikesCountStateFlow
+
+
 
     private val _cartIdStateFlow = MutableStateFlow<Long>(-1)
     val cartIdStateFlow: StateFlow<Long> = _cartIdStateFlow
@@ -34,6 +38,12 @@ class ClientRootViewModel @Inject constructor(
                 _cartItemsCountStateFlow.value = it
             }
     }
+
+    fun getLikesCount(clientId: Long) = viewModelScope.launch {
+        client.getLikesCount(clientId).collect {
+            _LikesCountStateFlow.value = it
+        }
+    }
     fun getCurrentCart(clientId: Long, action: (cartId: Long)->Unit): Job = viewModelScope.launch {
         var nonCheckedOutCartsCount = async { client.getCurrentCarts(clientId) }
 
@@ -41,8 +51,8 @@ class ClientRootViewModel @Inject constructor(
             val id = client.creatCart(Cart(clientId = clientId))
             action(id)
         } else {
-            val cart = async{ client.currentCart(clientId) }
-            action(cart.await()[0].cartId)
+            val cart = async{ client.currentCart(clientId) }.await()
+            action(cart[0].cartId)
         }
     }
 

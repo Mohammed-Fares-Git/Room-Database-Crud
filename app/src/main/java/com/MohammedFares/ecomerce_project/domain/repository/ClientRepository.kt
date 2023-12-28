@@ -19,6 +19,7 @@ interface ClientRepository {
     suspend fun likeProduct(productId: Long, clienttId: Long)
     suspend fun removeLikeProduct(productLike: ProductLike)
     fun getCartItemsCount(cartId: Long): Flow<Int>
+    fun getLikesCount(clientId: Long): Flow<Int>
     suspend fun getCarts(): List<Cart>
     suspend fun getCartItems(cartId: Long): List<CartItemDetails>
     suspend fun getCurrentCarts(clientId: Long): Int

@@ -33,11 +33,28 @@
         app:layout_constraintTop_toBottomOf="@id/cart_page_titel"
         app:layout_constraintTop_toTopOf="@id/cart_page_titel" />
 
+    <TextView
+        android:id="@+id/error_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="30dp"
+        android:text="@string/unknown_problem"
+        android:textColor="@color/red"
+        android:textSize="25sp"
+        android:gravity="center"
+        android:textStyle="italic"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cart_page_titel" />
+
+
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/if_success"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:paddingBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@id/checkous_section"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cart_page_titel">
@@ -56,6 +73,7 @@
                 tools:itemCount="2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
 
             <View
                 android:id="@+id/hr_1"
@@ -183,37 +201,40 @@
 
             </LinearLayout>
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/checkous_section"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginTop="10dp"
+                app:cardBackgroundColor="@color/black"
+                app:cardCornerRadius="40dp"
+                app:cardElevation="8dp"
+                app:layout_constraintTop_toBottomOf="@id/apply_copon_form"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/check_out_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:paddingHorizontal="40dp"
+                    android:paddingVertical="10dp"
+                    android:text="Checkout"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="normal" />
+            </androidx.cardview.widget.CardView>
+
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/checkous_section"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|end"
-        android:layout_marginTop="10dp"
-        app:cardBackgroundColor="@color/black"
-        app:cardCornerRadius="40dp"
-        app:cardElevation="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/check_out_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@android:color/transparent"
-            android:paddingHorizontal="40dp"
-            android:paddingVertical="10dp"
-            android:text="Checkout"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="normal" />
-    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

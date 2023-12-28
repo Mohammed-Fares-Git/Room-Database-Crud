@@ -61,6 +61,8 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
 
+
+
     // dagger hilt
     implementation("com.google.dagger:hilt-android:2.49")
     kapt("com.google.dagger:hilt-android-compiler:2.49")
@@ -92,6 +94,10 @@ dependencies {
 
 
     implementation("com.nex3z:notification-badge:1.0.4")
+
+
+
+
 
 
 

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,7 +34,7 @@ class CartPage : Fragment() {
     private lateinit var order: Order
     private lateinit var cart: Cart
     val cartPageViewModel: CartPageViewModel by viewModels()
-    val rootViewModel: ClientRootViewModel by viewModels()
+    val rootViewModel: ClientRootViewModel by activityViewModels()
     var cartId: Long = -1
 
     override fun onCreateView(
@@ -56,16 +57,15 @@ class CartPage : Fragment() {
         cartPageViewModel.getCartItemsCount(authManager.cartId)
 
         binding.checkOutBtn.setOnClickListener {
-
             if (cartId.toInt() != -1) {
                 cartPageViewModel.checkOut(order, cart){
                     rootViewModel.getCurrentCart(1) {
-                        authManager.cartId
-                        rootViewModel.setCartId(authManager.cartId)
+                        authManager.cartId = it
+                        //rootViewModel.setCartId(authManager.cartId)
+                        cartPageViewModel.getProduct(it)
+                        rootViewModel.getCartItemsCount(it)
                     }
                 }
-                cartPageViewModel.getCartItemsCount(authManager.cartId)
-                cartPageViewModel.getProduct(authManager.cartId)
             } else {
                 Toast.makeText(requireContext(), "can't ${cartId}", Toast.LENGTH_SHORT).show()
             }
@@ -99,7 +99,7 @@ class CartPage : Fragment() {
 
 
             viewLifecycleOwner.lifecycleScope.launch {
-                cartPageViewModel.cartItemsCountStateFlow.collect {
+                rootViewModel.cartItemsCountStateFlow.collect {
                     binding.cartItemsNbr.text = it.toString()
                 }
             }
@@ -108,13 +108,22 @@ class CartPage : Fragment() {
 
                 cartPageViewModel.itemesStateFlow.collect {
                     when (it) {
-                        is Resource.Empty -> {}
                         is Resource.Error -> {
-                            Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+
+                            binding.errorMessage.text = it.message
+                            binding.errorMessage.visibility = View.VISIBLE
+                            binding.ifSuccess.visibility = View.GONE
+                            binding.totalPrice.text = "0 ${getText(R.string.moroccan_dirham_acronym)}"
+
                         }
-                        is Resource.Loading -> {}
                         is Resource.Success -> {
+                            binding.errorMessage.visibility = View.GONE
+                            binding.ifSuccess.visibility = View.VISIBLE
+
+
                             val cartItems = it.data
+
+
 
                             adapter.submitList(cartItems)
                             var price = 0.0
@@ -125,8 +134,9 @@ class CartPage : Fragment() {
                             }
                             order.totalPrice = price
 
-                            binding.totalPrice.text = "${ price } ${R.string.moroccan_dirham_acronym}"
+                            binding.totalPrice.text = "${ price } ${getText(R.string.moroccan_dirham_acronym)}"
                         }
+                        else -> {}
                     }
                 }
 
@@ -158,29 +168,15 @@ class CartPage : Fragment() {
 
                      */
 
-
-
-
                 }
             }
 
-
-
-
-            cartId?.let {
-                cartPageViewModel.getProduct(it)
-            }
 
             cartPageViewModel.getProduct(authManager.cartId)
 
         }
 
-
-
-
-
         return binding.root
     }
-
 
 }

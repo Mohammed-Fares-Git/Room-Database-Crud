@@ -59,6 +59,10 @@ class ClientRepositoryImpl @Inject constructor(
         return cartProducts.getCartItemsCount(cartId)
     }
 
+    override fun getLikesCount(clientId: Long): Flow<Int> {
+        return likeDao.getLikesCount(clientId)
+    }
+
     override suspend fun getCarts(): List<Cart> {
         return emptyList()
     }

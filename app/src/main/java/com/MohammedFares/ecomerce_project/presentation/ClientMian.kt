@@ -10,22 +10,20 @@ import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.MohammedFares.ecomerce_project.R
 import com.MohammedFares.ecomerce_project.auth.AuthManager
-import com.MohammedFares.ecomerce_project.data.entity.Cart
 import com.MohammedFares.ecomerce_project.databinding.ActivityClientMianBinding
-import com.MohammedFares.ecomerce_project.databinding.UtilBadgeBinding
 import com.google.android.material.badge.BadgeDrawable
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+
 @AndroidEntryPoint
 class ClientMian : AppCompatActivity() {
     private lateinit var authManager: AuthManager
     private lateinit var binding: ActivityClientMianBinding
     //private lateinit var badgeBinding: UtilBadgeBinding
-    private lateinit var badge: BadgeDrawable
+    private lateinit var cartBadge: BadgeDrawable
+    private lateinit var likesBadge: BadgeDrawable
     val clientViewModel: ClientViewModel by viewModels()
+    val rootViewModel: ClientRootViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +49,10 @@ class ClientMian : AppCompatActivity() {
             NavigationUI.setupWithNavController(binding.bnvMain, navController);
 
             val cartMenuItem: MenuItem = binding.bnvMain.menu.findItem(R.id.cartPage)
-            badge = binding.bnvMain.getOrCreateBadge(cartMenuItem.itemId)
+            cartBadge = binding.bnvMain.getOrCreateBadge(cartMenuItem.itemId)
+
+            val favoriteMenuItem: MenuItem = binding.bnvMain.menu.findItem(R.id.favoritesPage)
+            likesBadge = binding.bnvMain.getOrCreateBadge(favoriteMenuItem.itemId)
 
 
             //badgeBinding = UtilBadgeBinding.inflate(layoutInflater,binding.bnvMain,false)
@@ -67,15 +68,34 @@ class ClientMian : AppCompatActivity() {
                     }
                 ).join()
 
-                clientViewModel.getCartItemsCount(authManager.cartId)
+                rootViewModel.getCartItemsCount(authManager.cartId)
+                rootViewModel.getLikesCount(1)
+                //rootViewModel.getLikesCount(authManager.id)
 
-                clientViewModel.cartItemsCountStateFlow.collect {
+                rootViewModel.cartItemsCountStateFlow.collect {
                     if (it > 0) {
-                        badge.isVisible = true
-                        badge.number = it
+                        cartBadge.isVisible = true
+                        cartBadge.number = it
                     } else {
-                        badge.isVisible = false
-                        badge.number = it
+                        cartBadge.isVisible = false
+                        cartBadge.number = it
+                    }
+                }
+            }
+
+            lifecycleScope.launch {
+
+
+                rootViewModel.getLikesCount(1)
+                //rootViewModel.getLikesCount(authManager.id)
+
+                rootViewModel.likesCountStateFlow.collect {
+                    if (it > 0) {
+                        likesBadge.isVisible = true
+                        likesBadge.number = it
+                    } else {
+                        likesBadge.isVisible = false
+                        likesBadge.number = it
                     }
                 }
             }
