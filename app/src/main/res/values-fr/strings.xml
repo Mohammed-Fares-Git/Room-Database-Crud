@@ -63,5 +63,6 @@
 
     <string name="free_delivery">Livraison gratuite</string>
     <string name="promotion">Promotion</string>
+    <string name="logout">Log Out</string>
 
 </resources>

@@ -19,6 +19,10 @@ class AuthRepositoryImpl @Inject constructor(
         return clientDao.getClient(firstName, lastName)
     }
 
+    override suspend fun clientAuthById(clientId: Long): Client {
+        return clientDao.getClientById(clientId)
+    }
+
     override suspend fun clientSignUp(
         firstName: String,
         lastName: String,

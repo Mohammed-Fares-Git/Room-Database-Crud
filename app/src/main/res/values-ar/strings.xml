@@ -65,6 +65,7 @@
 
     <string name="free_delivery">توصيل مجاني</string>
     <string name="promotion">Promotion</string>
+    <string name="logout">Log Out</string>
 
 
 </resources>

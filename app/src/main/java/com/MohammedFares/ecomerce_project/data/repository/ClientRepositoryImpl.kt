@@ -112,5 +112,9 @@ class ClientRepositoryImpl @Inject constructor(
         return cartProducts.update(cart)
     }
 
+    override suspend fun getOrders(clientId: Long): List<Order> {
+        return orderDao.getAll(clientId)
+    }
+
 
 }

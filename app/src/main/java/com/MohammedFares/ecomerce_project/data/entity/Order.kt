@@ -24,5 +24,6 @@ data class Order(
     val clientId: Long,
     val cartId: Long,
     var totalPrice: Double = 0.0,
+    var state: String = "Procicing",
     val orderDate: Long
 )

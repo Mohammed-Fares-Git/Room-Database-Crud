@@ -67,11 +67,11 @@
     <string name="free_delivery">Free Delivery</string>
 
 
-
     <string name="t_shirt">T-shirt</string>
     <string name="dress">Dress</string>
     <string name="hoodie">Hoodie</string>
     <string name="promotion">Promotion</string>
+    <string name="logout">Log Out</string>
 
 
 </resources>

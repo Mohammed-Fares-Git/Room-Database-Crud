@@ -5,56 +5,67 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.MohammedFares.ecomerce_project.R
+import com.MohammedFares.ecomerce_project.databinding.ProfilePageBinding
+import com.MohammedFares.ecomerce_project.presentation.ClientRootViewModel
+import com.squareup.picasso.Picasso
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ProfilePage.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ProfilePage : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+
+    private lateinit var binding: ProfilePageBinding
+    val rootViewModel: ClientRootViewModel by activityViewModels()
+    val profileViewModel: ProfilePageViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.profile_page, container, false)
-    }
+        binding = ProfilePageBinding.inflate(inflater,container, false)
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProfilePage.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProfilePage().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            profileViewModel.clientStateFlow.collect {nullableClient->
+                nullableClient?.let {
+                    binding.clientName.text = "${ it.firstname.lowercase().capitalize() } ${ it.lastname.lowercase().capitalize() }"
+                    try {
+                        Picasso.get().load(it.profileImage).resize(250,250).into(binding.clientImage)
+                    } catch (e: Exception) {
+                        Toast.makeText(requireContext(), getText(R.string.provide_valid_url), Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            rootViewModel.likesCountStateFlow.collect {
+                if (it > 0) {
+                    binding.likesCount.text = it.toString()
+                    binding.likesCount.visibility = View.VISIBLE
+                } else {
+                    binding.likesCount.visibility = View.INVISIBLE
+                }
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            rootViewModel.cartItemsCountStateFlow.collect {
+                if (it > 0) {
+                    binding.cartItemsCount.text = it.toString()
+                    binding.cartItemsCount.visibility = View.VISIBLE
+                } else {
+                    binding.cartItemsCount.visibility = View.INVISIBLE
+                }
+            }
+        }
+
+
+        return binding.root
     }
+
 }

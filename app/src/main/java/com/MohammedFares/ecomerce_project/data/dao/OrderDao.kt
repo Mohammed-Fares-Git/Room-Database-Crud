@@ -17,5 +17,7 @@ interface OrderDao {
 
     @Query("SELECT COUNT(*) as orders_count FROM orders WHERE clientId = :clienId")
     fun getOrdersCount(clienId: Long): Flow<Int>
+    @Query("SELECT * FROM orders WHERE clientId = :clientId")
+    fun getAll(clientId: Long): List<Order>
 
 }

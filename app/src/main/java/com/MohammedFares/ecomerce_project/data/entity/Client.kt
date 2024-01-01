@@ -12,6 +12,7 @@ data class Client(
     val lastname: String,
     val email: String,
     val password: String,
+    val profileImage: String = "",
     val state: String = Constantes.ACTIVE_CLIENT,
     val gender: String
 )

@@ -32,6 +32,7 @@ interface ClientRepository {
     suspend fun getOrdersCount(clientId: Long): Flow<Int>
     suspend fun getCart(cartId: Long): List<Cart>
     suspend fun updateCart(cart: Cart): Int
+    suspend fun getOrders(clientId: Long): List<Order>
 
 
 }
