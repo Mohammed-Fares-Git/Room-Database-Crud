@@ -78,6 +78,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <LinearLayout
+                android:id="@+id/my_orders"
                 android:paddingHorizontal="25dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -121,6 +122,7 @@
 
 
             <LinearLayout
+                android:id="@+id/my_cart"
                 android:paddingHorizontal="25dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -163,6 +165,7 @@
                 app:layout_constraintStart_toStartOf="parent"/>
 
             <LinearLayout
+                android:id="@+id/my_favorites"
                 android:paddingHorizontal="25dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

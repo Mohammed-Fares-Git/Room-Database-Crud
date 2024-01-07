@@ -24,5 +24,20 @@
         android:id="@+id/profilePage"
         android:name="com.MohammedFares.ecomerce_project.presentation.client.ProfilePage"
         android:label="profile_page"
-        tools:layout="@layout/profile_page" />
+        tools:layout="@layout/profile_page" >
+        <action
+            android:id="@+id/action_profilePage_to_ordersPage"
+            app:destination="@id/ordersPage" />
+        <action
+            android:id="@+id/action_profilePage_to_cartPage"
+            app:destination="@id/cartPage" />
+        <action
+            android:id="@+id/action_profilePage_to_favoritesPage"
+            app:destination="@id/favoritesPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/ordersPage"
+        android:name="com.MohammedFares.ecomerce_project.presentation.client.OrdersPage"
+        android:label="orders_page"
+        tools:layout="@layout/orders_page" />
 </navigation>
