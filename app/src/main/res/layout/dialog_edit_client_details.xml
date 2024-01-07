@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/auth_forms_bg"
+    >
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="550dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="15dp"
+            android:gravity="center">
+
+
+            <ImageView
+                android:id="@+id/dialog_image"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/upload_ic"/>
+
+            <EditText
+                android:maxLines="1"
+                android:id="@+id/dialog_et_client_name"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/first_name_hint"
+                android:textColorHint="#777"
+                android:textColor="#fff"
+                android:textSize="25sp"
+                android:layout_marginBottom="10dp"
+                android:padding="15dp"
+                />
+            <EditText
+                android:maxLines="1"
+                android:id="@+id/dialog_et_client_last_name"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/last_name_hint"
+                android:textColorHint="#777"
+                android:textColor="#fff"
+                android:textSize="25sp"
+                android:layout_marginBottom="10dp"
+                android:padding="15dp"
+                />
+
+            <EditText
+                android:maxLines="2"
+                android:id="@+id/dialog_et_client_email"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/email_hint"
+                android:textColorHint="#777"
+                android:textColor="#fff"
+                android:textSize="25sp"
+                android:layout_marginBottom="10dp"
+                android:padding="15dp"
+                />
+
+            <EditText
+                android:maxLines="1"
+                android:inputType="number"
+                android:id="@+id/dialog_et_phone_number"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/phone"
+                android:textColorHint="#777"
+                android:textColor="#fff"
+                android:textSize="25sp"
+                android:layout_marginBottom="10dp"
+                android:padding="15dp"
+                />
+
+
+
+            <RadioGroup
+                android:id="@+id/client_gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/auth_btn_bg">
+                <RadioButton
+                    android:background="@drawable/rb_bg"
+                    android:gravity="center"
+                    android:button="@android:color/transparent"
+                    android:id="@+id/client_rb_sex_f"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/female"
+                    android:buttonTint="@android:color/transparent"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:textSize="@dimen/min_text_size"
+                    android:textColor="@color/auth_form_text_color"/>
+                <RadioButton
+                    android:background="@drawable/rb_bg"
+                    android:gravity="center"
+                    android:id="@+id/client_rb_sex_m"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/male"
+                    android:buttonTint="@android:color/transparent"
+                    android:layout_weight="1"
+                    android:button="@android:color/transparent"
+
+                    android:padding="10dp"
+                    android:textSize="@dimen/min_text_size"
+                    android:textColor="@color/auth_form_text_color"/>
+            </RadioGroup>
+
+            <EditText
+                android:maxLines="1"
+                android:id="@+id/dialog_et_clien_profile_image"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/image_url_hint"
+                android:textColorHint="#777"
+                android:textColor="#fff"
+                android:textSize="25sp"
+                android:layout_marginBottom="10dp"
+                android:padding="15dp"
+                />
+
+
+
+
+            <EditText
+                android:maxLines="1"
+                android:inputType="textPassword"
+                android:id="@+id/dialog_et_client_password"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/pass"
+                android:textColorHint="#777"
+                android:textColor="#fff"
+                android:textSize="25sp"
+                android:layout_marginBottom="10dp"
+                android:padding="15dp"
+                />
+
+            <include layout="@layout/edit_button" android:id="@+id/dialog_edit_btn"/>
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+
+
+
+
+</LinearLayout>

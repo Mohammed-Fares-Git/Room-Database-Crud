@@ -72,6 +72,7 @@
     <string name="hoodie">Hoodie</string>
     <string name="promotion">Promotion</string>
     <string name="logout">Log Out</string>
+    <string name="phone">Phone\n</string>
 
 
 </resources>
