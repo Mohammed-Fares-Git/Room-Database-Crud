@@ -31,12 +31,12 @@ import com.MohammedFares.ecomerce_project.databinding.DialogProductMainDetailsBi
 import com.MohammedFares.ecomerce_project.databinding.ProfilePageBinding
 import com.MohammedFares.ecomerce_project.presentation.ClientRootViewModel
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class ProfilePage : Fragment() {
-
 
     private lateinit var binding: ProfilePageBinding
     private lateinit var dialodbinding: DialogEditClientDetailsBinding
@@ -135,20 +135,9 @@ class ProfilePage : Fragment() {
             }
 
 
-
-
-
-
-
-
             dialodbinding.dialogEditBtn.root.setOnClickListener {
 
-
-
-
-
                 editAction(client)
-
 
                 dialog.dismiss()
             }

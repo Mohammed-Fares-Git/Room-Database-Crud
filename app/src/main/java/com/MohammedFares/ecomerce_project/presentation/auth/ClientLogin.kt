@@ -17,9 +17,11 @@ import com.MohammedFares.ecomerce_project.comon.Constantes
 import com.MohammedFares.ecomerce_project.comon.Resource
 import com.MohammedFares.ecomerce_project.databinding.ClientLoginBinding
 import com.MohammedFares.ecomerce_project.presentation.AdminMain
+import com.MohammedFares.ecomerce_project.presentation.ClientMian
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class ClientLogin : Fragment() {
 
     private lateinit var binding: ClientLoginBinding
@@ -29,6 +31,9 @@ class ClientLogin : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        authManager = AuthManager(this.requireContext())
+
         binding = ClientLoginBinding.inflate(inflater,container,false)
         binding.goToAdministrationBtn.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(R.id.action_client_login_to_admin_login)
@@ -36,7 +41,6 @@ class ClientLogin : Fragment() {
         binding.loginSignupBtn.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(R.id.action_client_login_to_client_signin)
         }
-
 
 
         binding.loginBtn.setOnClickListener {
@@ -60,8 +64,8 @@ class ClientLogin : Fragment() {
                         hideProgressBar()
                         Toast.makeText(requireContext(),"${it.data?.firstname} ${it.data?.lastname}", Toast.LENGTH_LONG).show()
                         authManager.login("${it.data!!.firstname} ${it.data!!.lastname}",it.data.clientId,it.data!!.email,
-                            Constantes.ADMIN_KEY)
-                        startActivity(Intent(requireActivity(), AdminMain::class.java))
+                            Constantes.CLIENT_KEY)
+                        startActivity(Intent(requireActivity(), ClientMian::class.java))
                         requireActivity().finish()
                     }
                     else -> {}

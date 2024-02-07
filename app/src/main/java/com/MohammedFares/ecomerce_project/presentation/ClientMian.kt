@@ -25,8 +25,13 @@ class ClientMian : AppCompatActivity() {
     val clientViewModel: ClientViewModel by viewModels()
     val rootViewModel: ClientRootViewModel by viewModels()
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        authManager = AuthManager(this)
+        val loginState = authManager.isClientLoggedIn()
 
         binding = ActivityClientMianBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -36,9 +41,8 @@ class ClientMian : AppCompatActivity() {
 
 
 
-        authManager = AuthManager(this)
 
-        val loginState = authManager.isLoggedIn and authManager.isClientLoggedIn()
+
 
 
         if (!loginState) {

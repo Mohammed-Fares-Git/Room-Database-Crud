@@ -11,10 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.MohammedFares.ecomerce_project.R
 import com.MohammedFares.ecomerce_project.databinding.OrdersPageBinding
 import com.MohammedFares.ecomerce_project.presentation.adapters.OrdersClientAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class OrdersPage : Fragment() {
 
     private lateinit var binding: OrdersPageBinding
