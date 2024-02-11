@@ -6,14 +6,14 @@ import com.MohammedFares.ecomerce_project.R
 sealed class ClothingType (val type: String, var isSelected: Boolean = false) {
     abstract fun getLocalizedLabel(context: Context): String
 
-    object TShirt : ClothingType(Constantes.T_SHIRT) {
+    object TShirt : ClothingType(Constants.T_SHIRT) {
         override fun getLocalizedLabel(context: Context): String = context.getString(R.string.t_shirt)
     }
-    object Dress : ClothingType(Constantes.DRESS) {
+    object Dress : ClothingType(Constants.DRESS) {
         override fun getLocalizedLabel(context: Context): String = context.getString(R.string.dress)
     }
 
-    object Hoodie : ClothingType(Constantes.HOODIE) {
+    object Hoodie : ClothingType(Constants.HOODIE) {
         override fun getLocalizedLabel(context: Context): String = context.getString(R.string.hoodie)
     }
 }

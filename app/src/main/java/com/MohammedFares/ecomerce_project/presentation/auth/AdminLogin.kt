@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.MohammedFares.ecomerce_project.auth.AuthManager
-import com.MohammedFares.ecomerce_project.comon.Constantes
+import com.MohammedFares.ecomerce_project.comon.Constants
 import com.MohammedFares.ecomerce_project.comon.Resource
 import com.MohammedFares.ecomerce_project.databinding.AdminLoginBinding
 import com.MohammedFares.ecomerce_project.presentation.AdminMain
@@ -49,7 +49,7 @@ class AdminLogin : Fragment() {
                     is Resource.Success -> {
                         hideProgressBar()
                         Toast.makeText(requireContext(),"${it.data?.firstname} ${it.data?.lastname}", Toast.LENGTH_LONG).show()
-                        authManager.login("${it.data!!.firstname} ${it.data!!.lastname}",it.data.adminId,it.data!!.email,Constantes.ADMIN_KEY)
+                        authManager.login("${it.data!!.firstname} ${it.data!!.lastname}",it.data.adminId,it.data!!.email,Constants.ADMIN_KEY)
                         startActivity(Intent(requireActivity(),AdminMain::class.java))
                         requireActivity().finish()
                     }

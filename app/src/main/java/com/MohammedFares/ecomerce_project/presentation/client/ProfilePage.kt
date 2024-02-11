@@ -8,10 +8,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.activityViewModels
@@ -19,20 +15,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import com.MohammedFares.ecomerce_project.R
-import com.MohammedFares.ecomerce_project.comon.Constantes
-import com.MohammedFares.ecomerce_project.comon.Resource
-import com.MohammedFares.ecomerce_project.comon.Utils
+import com.MohammedFares.ecomerce_project.comon.Constants
 import com.MohammedFares.ecomerce_project.data.entity.Client
-import com.MohammedFares.ecomerce_project.data.entity.Product
-import com.MohammedFares.ecomerce_project.data.entity.ProductBrand
-import com.MohammedFares.ecomerce_project.data.entity.ProductType
 import com.MohammedFares.ecomerce_project.databinding.DialogEditClientDetailsBinding
-import com.MohammedFares.ecomerce_project.databinding.DialogProductMainDetailsBinding
 import com.MohammedFares.ecomerce_project.databinding.ProfilePageBinding
 import com.MohammedFares.ecomerce_project.presentation.ClientRootViewModel
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -128,7 +117,7 @@ class ProfilePage : Fragment() {
             dialodbinding.dialogEtClientEmail.text = Editable.Factory.getInstance().newEditable(it.email)
             dialodbinding.dialogEtClienProfileImage.text = Editable.Factory.getInstance().newEditable(it.profileImage)
             dialodbinding.dialogEtClientPassword.text = Editable.Factory.getInstance().newEditable(it.password)
-            if (it.gender == Constantes.MALE_KEY) {
+            if (it.gender == Constants.MALE_KEY) {
                 dialodbinding.clientRbSexM.isChecked = true
             } else {
                 dialodbinding.clientRbSexF.isChecked = true

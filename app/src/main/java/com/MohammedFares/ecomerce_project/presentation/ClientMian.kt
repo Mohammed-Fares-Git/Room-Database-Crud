@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
@@ -37,18 +38,15 @@ class ClientMian : AppCompatActivity() {
         setContentView(binding.root)
 
 
-
-
-
-
-
-
-
-
         if (!loginState) {
+            Toast.makeText(this, "client main not logged In", Toast.LENGTH_SHORT).show()
             startActivity(Intent(this@ClientMian,LoginMain::class.java))
             finish()
         } else {
+
+
+            Toast.makeText(this, authManager.toString(), Toast.LENGTH_SHORT).show()
+
             val navController = Navigation.findNavController(this, R.id.client_main_container);
             NavigationUI.setupWithNavController(binding.bnvMain, navController);
 

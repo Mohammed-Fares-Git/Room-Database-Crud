@@ -74,7 +74,9 @@ class CartPage : Fragment() {
 
 
 
-        if (true) {
+        if (authManager.isClientLoggedIn()) {
+
+            Toast.makeText(requireContext(), "cart page client loged in", Toast.LENGTH_SHORT).show()
 
             cartId = authManager.cartId
             cartId = 1

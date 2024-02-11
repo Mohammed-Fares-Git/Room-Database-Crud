@@ -6,13 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.MohammedFares.ecomerce_project.auth.AuthManager
-import com.MohammedFares.ecomerce_project.comon.Constantes
+import com.MohammedFares.ecomerce_project.comon.Constants
 import com.MohammedFares.ecomerce_project.comon.Resource
 import com.MohammedFares.ecomerce_project.databinding.FavoritesPageBinding
 import com.MohammedFares.ecomerce_project.presentation.ClientRootViewModel
@@ -47,7 +46,7 @@ class FavoritesPage : Fragment() {
                     Intent(
                     requireContext(), ProductActivity::class.java
                 ).apply {
-                    this.putExtra(Constantes.PRODUCT_ID_KEY, it)
+                    this.putExtra(Constants.PRODUCT_ID_KEY, it)
                 })
             },
 
@@ -64,7 +63,7 @@ class FavoritesPage : Fragment() {
 
         authManager = AuthManager(requireContext())
 
-        if (true) {
+        if (authManager.isClientLoggedIn()) {
             viewLifecycleOwner.lifecycleScope.launch {
                 favoritesPageViewModel.favoriteProductStateFlow.collect {
                     when (it) {

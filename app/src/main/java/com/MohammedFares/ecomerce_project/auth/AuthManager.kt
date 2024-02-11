@@ -2,7 +2,7 @@ package com.MohammedFares.ecomerce_project.auth
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.MohammedFares.ecomerce_project.comon.Constantes
+import com.MohammedFares.ecomerce_project.comon.Constants
 
 
 class AuthManager( private val context: Context) {
@@ -53,11 +53,15 @@ class AuthManager( private val context: Context) {
     }
 
     fun isAdminLoggedIn(): Boolean {
-        return isLoggedIn && profile == Constantes.ADMIN_KEY
+        return isLoggedIn && profile == Constants.ADMIN_KEY
     }
 
     fun isClientLoggedIn(): Boolean {
-        return isLoggedIn && profile == Constantes.CLIENT_KEY && cartId.toInt() != -1
+        return isLoggedIn //&& profile == Constants.CLIENT_KEY && cartId.toInt() != -1
+    }
+
+    override fun toString(): String {
+        return "$username $isLoggedIn $cartId $profile"
     }
 
     companion object {

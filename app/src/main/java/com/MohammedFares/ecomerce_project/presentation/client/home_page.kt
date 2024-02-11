@@ -14,7 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.MohammedFares.ecomerce_project.comon.ClothingType
-import com.MohammedFares.ecomerce_project.comon.Constantes
+import com.MohammedFares.ecomerce_project.comon.Constants
 import com.MohammedFares.ecomerce_project.comon.GenderOption
 import com.MohammedFares.ecomerce_project.comon.Resource
 import com.MohammedFares.ecomerce_project.databinding.ClientHomePageBinding
@@ -129,7 +129,7 @@ class home_page : Fragment() {
                                 requireActivity().startActivity(Intent(
                                     requireContext(), ProductActivity::class.java
                                 ).apply {
-                                    this.putExtra(Constantes.PRODUCT_ID_KEY, it)
+                                    this.putExtra(Constants.PRODUCT_ID_KEY, it)
                                 })
                             }, putLike = { productId, clientId ->
                                 productsViewModel.putLike(productId,clientId)

@@ -13,10 +13,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import com.MohammedFares.ecomerce_project.R
 import com.MohammedFares.ecomerce_project.auth.AuthManager
-import com.MohammedFares.ecomerce_project.comon.Constantes
+import com.MohammedFares.ecomerce_project.comon.Constants
 import com.MohammedFares.ecomerce_project.comon.Resource
 import com.MohammedFares.ecomerce_project.databinding.ClientLoginBinding
-import com.MohammedFares.ecomerce_project.presentation.AdminMain
 import com.MohammedFares.ecomerce_project.presentation.ClientMian
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -64,7 +63,7 @@ class ClientLogin : Fragment() {
                         hideProgressBar()
                         Toast.makeText(requireContext(),"${it.data?.firstname} ${it.data?.lastname}", Toast.LENGTH_LONG).show()
                         authManager.login("${it.data!!.firstname} ${it.data!!.lastname}",it.data.clientId,it.data!!.email,
-                            Constantes.CLIENT_KEY)
+                            Constants.CLIENT_KEY)
                         startActivity(Intent(requireActivity(), ClientMian::class.java))
                         requireActivity().finish()
                     }

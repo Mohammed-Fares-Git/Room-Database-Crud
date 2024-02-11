@@ -22,7 +22,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.MohammedFares.ecomerce_project.R
-import com.MohammedFares.ecomerce_project.comon.Constantes
+import com.MohammedFares.ecomerce_project.comon.Constants
 import com.MohammedFares.ecomerce_project.comon.Resource
 import com.MohammedFares.ecomerce_project.comon.Utils
 import com.MohammedFares.ecomerce_project.data.entity.Product
@@ -777,7 +777,7 @@ class AdminProductControl : Fragment() {
             dialogProductDetails.dialogEtProductPromotion.text = Editable.Factory.getInstance().newEditable(it.sold.toString())
             dialogProductDetails.dialogEtProductQuantity.text = Editable.Factory.getInstance().newEditable(it.quantity.toString())
             dialogProductDetails.dialogSwitchDelevry.isChecked = it.livreson
-            if (it.gender == Constantes.MALE_KEY) {
+            if (it.gender == Constants.MALE_KEY) {
                 dialogProductDetails.productRbSexF.isChecked = true
             } else {
                 dialogProductDetails.productRbSexM.isChecked = true

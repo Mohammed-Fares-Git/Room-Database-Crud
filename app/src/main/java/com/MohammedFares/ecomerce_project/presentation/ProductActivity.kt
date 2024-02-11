@@ -3,28 +3,24 @@ package com.MohammedFares.ecomerce_project.presentation
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.MohammedFares.ecomerce_project.R
 import com.MohammedFares.ecomerce_project.auth.AuthManager
-import com.MohammedFares.ecomerce_project.comon.Constantes
+import com.MohammedFares.ecomerce_project.comon.Constants
 import com.MohammedFares.ecomerce_project.comon.Resource
 import com.MohammedFares.ecomerce_project.data.entity.CartItem
 import com.MohammedFares.ecomerce_project.data.entity.ProductLike
 import com.MohammedFares.ecomerce_project.databinding.ActivityProductBinding
 import com.MohammedFares.ecomerce_project.domain.model.SelectebleColor
 import com.MohammedFares.ecomerce_project.domain.model.SelectebleSize
-import com.MohammedFares.ecomerce_project.presentation.adapters.ColorAdapter
 import com.MohammedFares.ecomerce_project.presentation.adapters.ColorAdapter2
-import com.MohammedFares.ecomerce_project.presentation.adapters.SizeAdapter
 import com.MohammedFares.ecomerce_project.presentation.adapters.SizeAdapter2
 import com.denzcoskun.imageslider.models.SlideModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -64,8 +60,8 @@ class ProductActivity : AppCompatActivity() {
         intent = getIntent()
 
         intent?.let {
-            if (it.hasExtra(Constantes.PRODUCT_ID_KEY)) {
-                productId = it.getLongExtra(Constantes.PRODUCT_ID_KEY,1L)
+            if (it.hasExtra(Constants.PRODUCT_ID_KEY)) {
+                productId = it.getLongExtra(Constants.PRODUCT_ID_KEY,1L)
                 productViewModel.getProduct(productId)
             }
         }
@@ -95,7 +91,7 @@ class ProductActivity : AppCompatActivity() {
 
             binding.addToCartBtn.setOnClickListener {
 
-                if (cartId != Constantes.NO_CART_ID) {
+                if (cartId != Constants.NO_CART_ID) {
                     productViewModel.addToCart(cartItem)
                     Toast.makeText(baseContext, "add to ${cartId} cart", Toast.LENGTH_SHORT).show()
                 } else {
