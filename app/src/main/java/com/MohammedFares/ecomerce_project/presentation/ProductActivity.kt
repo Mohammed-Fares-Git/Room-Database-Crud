@@ -82,7 +82,7 @@ class ProductActivity : AppCompatActivity() {
         binding.sizesRv.adapter = sizeAdapter
 
 
-        if (!authManager.isClientLoggedIn()) {
+        if (authManager.isClientLoggedIn()) {
 
             clientId = authManager.id
             cartId = authManager.cartId

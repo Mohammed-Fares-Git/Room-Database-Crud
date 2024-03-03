@@ -126,7 +126,8 @@ class home_page : Fragment() {
 
                         if (it.data!!.size > 0 && !it.data.isEmpty()) {
                             val adapter = ProductsAdapter(ctx = requireContext(), action =  {
-                                requireActivity().startActivity(Intent(
+                                Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
+                                requireContext().startActivity(Intent(
                                     requireContext(), ProductActivity::class.java
                                 ).apply {
                                     this.putExtra(Constants.PRODUCT_ID_KEY, it)

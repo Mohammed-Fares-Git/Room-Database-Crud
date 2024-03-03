@@ -65,6 +65,10 @@ class AdminRepositoryImpl @Inject constructor(
         return productDao.update(product)
     }
 
+    override suspend fun addProduct(product: Product) {
+        productDao.insertProduct(product)
+    }
+
     override suspend fun editProductSize(productSize: ProductSize): Int {
         delay(400L)
         return productSizeDao.update(productSize)

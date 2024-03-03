@@ -18,6 +18,7 @@ interface AdminRepository {
     suspend fun editProductBrand(productBrand: ProductBrand): Int
     suspend fun editProductType(productType: ProductType): Int
     suspend fun editProduct(product: Product): Int
+    suspend fun addProduct(product: Product)
     suspend fun editProductSize(productSize: ProductSize): Int
     suspend fun addProductSize(productSize: ProductSize): Long
     suspend fun editProductColor(productColor: ProductColor): Int

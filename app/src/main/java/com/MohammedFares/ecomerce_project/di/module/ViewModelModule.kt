@@ -1,5 +1,6 @@
 package com.MohammedFares.ecomerce_project.di.module
 
+import com.MohammedFares.ecomerce_project.domain.repository.AdminRepository
 import com.MohammedFares.ecomerce_project.domain.use_case.admin.GetAllProductsUseCase
 import com.MohammedFares.ecomerce_project.presentation.admin.ProductsForAdminViewModel
 import dagger.Module
@@ -14,8 +15,9 @@ object ViewModelModule {
     @Provides
     @ViewModelScoped
     fun provideProductsForAdminViewModel(
-        getProducts: GetAllProductsUseCase
+        getProducts: GetAllProductsUseCase,
+        repo: AdminRepository
     ): ProductsForAdminViewModel {
-        return ProductsForAdminViewModel(getProducts)
+        return ProductsForAdminViewModel(getProducts,repo)
     }
 }

@@ -1,6 +1,7 @@
 package com.MohammedFares.ecomerce_project.presentation.client
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,11 +16,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import com.MohammedFares.ecomerce_project.R
+import com.MohammedFares.ecomerce_project.auth.AuthManager
 import com.MohammedFares.ecomerce_project.comon.Constants
 import com.MohammedFares.ecomerce_project.data.entity.Client
 import com.MohammedFares.ecomerce_project.databinding.DialogEditClientDetailsBinding
 import com.MohammedFares.ecomerce_project.databinding.ProfilePageBinding
 import com.MohammedFares.ecomerce_project.presentation.ClientRootViewModel
+import com.MohammedFares.ecomerce_project.presentation.LoginMain
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -28,6 +31,7 @@ import kotlinx.coroutines.launch
 class ProfilePage : Fragment() {
 
     private lateinit var binding: ProfilePageBinding
+    private lateinit var auth: AuthManager
     private lateinit var dialodbinding: DialogEditClientDetailsBinding
     val rootViewModel: ClientRootViewModel by activityViewModels()
     val profileViewModel: ProfilePageViewModel by viewModels()
@@ -39,6 +43,7 @@ class ProfilePage : Fragment() {
         binding = ProfilePageBinding.inflate(inflater,container, false)
 
 
+        auth = AuthManager(requireContext())
         binding.myOrders.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(R.id.action_profilePage_to_ordersPage)
         }
@@ -49,6 +54,12 @@ class ProfilePage : Fragment() {
 
         binding.myCart.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(R.id.action_profilePage_to_cartPage)
+        }
+
+        binding.logOutBtn.setOnClickListener {
+            auth.logout()
+            requireActivity().startActivity(Intent(requireActivity(),LoginMain::class.java))
+            requireActivity().finish()
         }
 
         viewLifecycleOwner.lifecycleScope.launch {

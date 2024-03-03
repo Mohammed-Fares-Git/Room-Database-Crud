@@ -98,6 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:gravity="start"
+                android:textColor="#777"
                 android:text="hjsq  qkxjbjqx qxqjbxkjqhxkqjx  xxkxbkqxjq x x xkj ax a x akxazb xx axkzax x ak x ak xakx akxkakx ax  x  aa"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"

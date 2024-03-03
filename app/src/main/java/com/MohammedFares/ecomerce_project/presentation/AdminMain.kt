@@ -25,4 +25,14 @@ class AdminMain : AppCompatActivity() {
             finish()
         }
     }
+
+    override fun onPause() {
+        super.onPause()
+        authManager.logout()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        authManager.logout()
+    }
 }
