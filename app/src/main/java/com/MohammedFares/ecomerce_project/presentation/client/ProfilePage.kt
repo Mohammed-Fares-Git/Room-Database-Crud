@@ -44,6 +44,8 @@ class ProfilePage : Fragment() {
 
 
         auth = AuthManager(requireContext())
+
+        binding.clientName.text = auth.username ?: "client name"
         binding.myOrders.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(R.id.action_profilePage_to_ordersPage)
         }
